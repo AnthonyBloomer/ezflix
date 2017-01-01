@@ -18,7 +18,7 @@ Run ```python ezflix.py [query]``` then from the list, select the TV episode you
 python ezflix.py "The Man in the High Castle"
 ```
 
-You can also pass an optional argument "latest" to watch the latest episode. For example:
+You can also pass an optional argument "latest" to watch the latest episode of a given TV series. For example:
 
 ```bash
 python ezflix.py "South Park" latest
