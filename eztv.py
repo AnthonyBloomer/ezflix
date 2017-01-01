@@ -6,6 +6,7 @@ import sys
 
 parser = argparse.ArgumentParser()
 parser.add_argument('query')
+parser.add_argument('latest', nargs='?', default='0')
 
 args = parser.parse_args()
 
@@ -26,17 +27,25 @@ if __name__ == '__main__':
         results.append({'id': i, 'title': magnets['title'], 'magnet': magnets['href']})
         i += 1
 
-    print 'Results...'
+    if args.latest == "latest":
+        latest = results[0]
+        print 'Playing %s!' % latest['title']
+        command = 'peerflix "%s" --mpv' % latest['magnet']
+        subprocess.Popen(['/bin/bash', '-c', command])
 
-    for result in results:
-        print '%s %s' % (result['id'], result['title'])
+    else:
 
-    print 'Select show'
+        print 'Results:'
 
-    while True:
-        read = input()
         for result in results:
-            if result['id'] == read:
-                print 'Playing %s!' % result['title']
-                command = 'peerflix "%s" --mpv' % result['magnet']
-                subprocess.Popen(['/bin/bash', '-c', command])
+            print '%s %s' % (result['id'], result['title'])
+
+        print 'Select episode:'
+        
+        while True:
+            read = input()
+            for result in results:
+                if result['id'] == read:
+                    print 'Playing %s!' % result['title']
+                    command = 'peerflix "%s" --mpv' % result['magnet']
+                    subprocess.Popen(['/bin/bash', '-c', command])
