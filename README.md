@@ -10,13 +10,20 @@ pip install -r requirements.txt
 
 #### Usage
 
-Run ```python eztv.py [query]``` then from the list, select the TV episode you want to watch.
+Run ```python eztv.py [query]``` then from the list, select the TV episode you want to watch. 
 
 #### Example 
 
 ```bash
 python eztv.py "The man in the high castle"
 ```
+
+You can also pass an optional argument "latest" to watch the latest episode. For example:
+
+```bash
+python eztv.py "The man in the high castle" latest
+```
+
 
 #### Requires
 
