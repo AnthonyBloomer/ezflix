@@ -1,5 +1,7 @@
 # eztvflix
 
+Command line utility to search for TV shows on EZTV and open in Peerflix automatically.
+
 #### Install 
 
 ```
@@ -18,4 +20,4 @@ python eztv.py "The man in the high castle"
 
 #### Requires
 
-Peerflix  
+[Peerflix](https://github.com/mafintosh/peerflix)
