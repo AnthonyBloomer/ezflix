@@ -15,13 +15,13 @@ Run ```python eztv.py [query]``` then from the list, select the TV episode you w
 #### Example 
 
 ```bash
-python eztv.py "The man in the high castle"
+python eztv.py "The Man in the High Castle"
 ```
 
 You can also pass an optional argument "latest" to watch the latest episode. For example:
 
 ```bash
-python eztv.py "The man in the high castle" latest
+python eztv.py "South Park" latest
 ```
 
 
