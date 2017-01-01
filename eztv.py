@@ -16,16 +16,18 @@ url = 'https://eztv.ag/search/' + query
 req = requests.get(url)
 soup = BeautifulSoup(req.text, 'html.parser')
 
-results = []
-i = 1
 if __name__ == '__main__':
-    print 'Searching...'
+    results = []
+    id = 1
 
-    for magnets in soup.find_all('a', {'class': 'magnet'}, href=True):
-        if magnets is None:
-            sys.exit('No results found')
-        results.append({'id': i, 'title': magnets['title'], 'magnet': magnets['href']})
-        i += 1
+    magnets = soup.find_all('a', {'class': 'magnet'}, href=True)
+
+    if magnets is None:
+        sys.exit('No results found')
+
+    for magnet in magnets:
+        results.append({'id': id, 'title': magnet['title'], 'magnet': magnet['href']})
+        id += 1
 
     if args.latest == "latest":
         latest = results[0]
@@ -34,14 +36,11 @@ if __name__ == '__main__':
         subprocess.Popen(['/bin/bash', '-c', command])
 
     else:
-
-        print 'Results:'
-
         for result in results:
             print '%s %s' % (result['id'], result['title'])
 
-        print 'Select episode:'
-        
+        print 'Select TV show:'
+
         while True:
             read = input()
             for result in results:
