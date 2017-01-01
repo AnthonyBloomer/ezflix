@@ -19,5 +19,3 @@ python eztv.py "The man in the high castle"
 #### Requires
 
 Peerflix  
-BeautifulSoup  
-Requests  
