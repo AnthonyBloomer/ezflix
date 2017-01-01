@@ -1,4 +1,4 @@
-# eztvflix
+# ezflix
 
 Command line utility to search for TV shows on EZTV and open in Peerflix automatically.
 
