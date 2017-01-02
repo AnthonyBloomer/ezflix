@@ -31,8 +31,7 @@ if __name__ == '__main__':
     if args.latest == "latest":
         latest = results[0]
         print 'Playing %s!' % latest['title']
-        command = 'peerflix "%s" --mpv' % latest['magnet']
-        subprocess.Popen(['/bin/bash', '-c', command])
+        subprocess.Popen(['/bin/bash', '-c', 'peerflix "%s" --mpv' % latest['magnet']])
 
     else:
         for result in results:
@@ -55,8 +54,7 @@ if __name__ == '__main__':
                 if result['id'] == int(read):
                     found = True
                     print 'Playing %s!' % result['title']
-                    command = 'peerflix "%s" --mpv' % result['magnet']
-                    subprocess.Popen(['/bin/bash', '-c', command])
+                    subprocess.Popen(['/bin/bash', '-c', 'peerflix "%s" --mpv' % result['magnet']])
 
             if not found:
                 print 'Not found'
