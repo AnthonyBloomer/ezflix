@@ -17,14 +17,13 @@ req = requests.get(url)
 soup = BeautifulSoup(req.text, 'html.parser')
 
 if __name__ == '__main__':
-    results = []
-    id = 1
-
     magnets = soup.find_all('a', {'class': 'magnet'}, href=True)
 
     if magnets is None:
         sys.exit('No results found')
-
+    
+    results = []
+    id = 1
     for magnet in magnets:
         results.append({'id': id, 'title': magnet['title'][:-12], 'magnet': magnet['href']})
         id += 1
