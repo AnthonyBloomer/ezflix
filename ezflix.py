@@ -26,7 +26,7 @@ if __name__ == '__main__':
         sys.exit('No results found')
 
     for magnet in magnets:
-        results.append({'id': id, 'title': magnet['title'], 'magnet': magnet['href']})
+        results.append({'id': id, 'title': magnet['title'][:-12], 'magnet': magnet['href']})
         id += 1
 
     if args.latest == "latest":
@@ -47,11 +47,11 @@ if __name__ == '__main__':
             try:
                 val = int(read)
             except ValueError:
-                print 'Expected int.'
+                print('Expected int.')
                 continue
 
             found = False
-            
+
             for result in results:
                 if result['id'] == int(read):
                     found = True
