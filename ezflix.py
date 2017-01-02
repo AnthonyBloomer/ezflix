@@ -35,7 +35,7 @@ if __name__ == '__main__':
 
     else:
         for result in results:
-            print '%s %s' % (result['id'], result['title'])
+            print '| %s | %s' % (result['id'], result['title'])
 
         print 'Select TV show:'
 
