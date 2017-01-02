@@ -42,9 +42,22 @@ if __name__ == '__main__':
         print 'Select TV show:'
 
         while True:
-            read = input()
+            read = raw_input()
+
+            try:
+                val = int(read)
+            except ValueError:
+                print('Expected int.')
+                continue
+
+            found = False
+            
             for result in results:
-                if result['id'] == read:
+                if result['id'] == int(read):
+                    found = True
                     print 'Playing %s!' % result['title']
                     command = 'peerflix "%s" --mpv' % result['magnet']
                     subprocess.Popen(['/bin/bash', '-c', command])
+
+            if not found:
+                print 'Not found'
