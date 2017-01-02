@@ -47,7 +47,7 @@ if __name__ == '__main__':
             try:
                 val = int(read)
             except ValueError:
-                print('Expected int.')
+                print 'Expected int.'
                 continue
 
             found = False
