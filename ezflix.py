@@ -43,8 +43,7 @@ def movie(q):
                 return arr
 
 
-if __name__ == '__main__':
-
+def main():
     query = args.query
 
     results = []
@@ -95,3 +94,10 @@ if __name__ == '__main__':
 
             if not found:
                 print 'Invalid selection.'
+
+
+if __name__ == '__main__':
+    try:
+        main()
+    except KeyboardInterrupt:
+        sys.exit()
