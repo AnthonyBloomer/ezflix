@@ -1,32 +1,58 @@
-from bs4 import BeautifulSoup
-import requests
 import subprocess
 import argparse
+from bs4 import BeautifulSoup
+import requests
 import sys
+from urllib import quote_plus
 
 parser = argparse.ArgumentParser()
-parser.add_argument('query')
-parser.add_argument('latest', nargs='?', default='0')
-
+parser.add_argument('media_type', nargs='?', choices=["movie", "tv"], default='tv', help='Can be set to tv or movie.')
+parser.add_argument('query', help='Search query')
+parser.add_argument('latest', nargs='?', default='0', help='If set to latest, the latest episode will play.')
 args = parser.parse_args()
 
-query = args.query.replace(' ', '-').lower()
-url = 'https://eztv.ag/search/' + query
 
-req = requests.get(url)
-soup = BeautifulSoup(req.text, 'html.parser')
-
-if __name__ == '__main__':
+def show(q):
+    url = 'https://eztv.ag/search/' + q
+    req = requests.get(url)
+    soup = BeautifulSoup(req.text, 'html.parser')
     magnets = soup.find_all('a', {'class': 'magnet'}, href=True)
 
     if magnets is None:
         sys.exit('No results found')
-    
-    results = []
-    id = 1
+
+    arr, count = [], 1
     for magnet in magnets:
-        results.append({'id': id, 'title': magnet['title'][:-12], 'magnet': magnet['href']})
-        id += 1
+        arr.append({'id': count, 'title': magnet['title'][:-12], 'magnet': magnet['href']})
+        count += 1
+
+    return arr
+
+
+def movie(q):
+    req = requests.get('https://yts.ag/api/v2/list_movies.json?query_term=%s' % q)
+    if req.status_code == 200:
+        req = req.json()
+        if req['status'] == 'ok':
+            if req['data']['movie_count'] > 0:
+                arr, count = [], 1
+                for r in req['data']['movies']:
+                    arr.append({'id': count, 'title': r['title'], 'magnet': r['torrents'][0]['url']})
+                    count += 1
+                return arr
+
+
+if __name__ == '__main__':
+
+    query = args.query
+
+    results = []
+
+    if args.media_type == 'tv':
+        results = show(query.replace(' ', '-').lower())
+
+    elif args.media_type == 'movie':
+        results = movie(quote_plus(query))
 
     if args.latest == "latest":
         latest = results[0]
@@ -34,10 +60,13 @@ if __name__ == '__main__':
         subprocess.Popen(['/bin/bash', '-c', 'peerflix "%s" --mpv' % latest['magnet']])
 
     else:
-        for result in results:
-            print '| %s | %s' % (result['id'], result['title'])
 
-        print 'Select TV show:'
+        if results is not None:
+            for result in results:
+                print '| %s | %s' % (result['id'], result['title'])
+            print 'Select TV Show:' if args.media_type == 'tv' else 'Select Movie:'
+        else:
+            sys.exit('No movie results found.')
 
         while True:
             read = raw_input()
@@ -50,11 +79,14 @@ if __name__ == '__main__':
 
             found = False
 
-            for result in results:
-                if result['id'] == int(read):
-                    found = True
-                    print 'Playing %s!' % result['title']
-                    subprocess.Popen(['/bin/bash', '-c', 'peerflix "%s" --mpv' % result['magnet']])
+            if results is not None:
+                for result in results:
+                    if result['id'] == int(read):
+                        found = True
+                        print 'Playing %s!' % result['title']
+                        subprocess.Popen(['/bin/bash', '-c', 'peerflix "%s" --mpv' % result['magnet']])
+            else:
+                sys.exit('No movie results found.')
 
             if not found:
-                print 'Not found'
+                print 'Invalid selection.'
