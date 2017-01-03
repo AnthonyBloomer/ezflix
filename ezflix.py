@@ -62,14 +62,18 @@ if __name__ == '__main__':
     else:
 
         if results is not None:
+            print 'Enter quit to close the program.'
+            print 'Select TV Show:' if args.media_type == 'tv' else 'Select Movie:'
             for result in results:
                 print '| %s | %s' % (result['id'], result['title'])
-            print 'Select TV Show:' if args.media_type == 'tv' else 'Select Movie:'
         else:
             sys.exit('No movie results found.')
 
         while True:
             read = raw_input()
+
+            if read == 'quit':
+                sys.exit()
 
             try:
                 val = int(read)
