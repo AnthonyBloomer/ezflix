@@ -6,9 +6,9 @@ import sys
 from urllib import quote_plus
 
 parser = argparse.ArgumentParser()
-parser.add_argument('media_type', nargs='?', default='tv')
-parser.add_argument('query')
-parser.add_argument('latest', nargs='?', default='0')
+parser.add_argument('media_type', nargs='?', default='tv', help='Can be set to tv or movie. Default is tv.')
+parser.add_argument('query', help='Search query')
+parser.add_argument('latest', nargs='?', default='0', help='If set to latest, the latest episode will play.')
 args = parser.parse_args()
 
 
@@ -21,11 +21,10 @@ def show(q):
     if magnets is None:
         sys.exit('No results found')
 
-    arr = []
-    c = 1
+    arr, count = [], 1
     for magnet in magnets:
-        arr.append({'id': c, 'title': magnet['title'][:-12], 'magnet': magnet['href']})
-        c += 1
+        arr.append({'id': count, 'title': magnet['title'][:-12], 'magnet': magnet['href']})
+        count += 1
 
     return arr
 
@@ -33,15 +32,14 @@ def show(q):
 def movie(q):
     request = requests.get('https://yts.ag/api/v2/list_movies.json?query_term=%s' % q)
     if request.status_code == 200:
-        arr = request.json()
-        if arr['status'] == 'ok':
-            if arr['data']['movie_count'] > 0:
-                l = []
-                c = 1
-                for r in arr['data']['movies']:
-                    l.append({'id': c, 'title': r['title'], 'magnet': r['torrents'][0]['url']})
-                    c += 1
-                return l
+        req = request.json()
+        if req['status'] == 'ok':
+            if req['data']['movie_count'] > 0:
+                arr, count = [], 1
+                for r in req['data']['movies']:
+                    arr.append({'id': count, 'title': r['title'], 'magnet': r['torrents'][0]['url']})
+                    count += 1
+                return arr
 
 
 if __name__ == '__main__':
