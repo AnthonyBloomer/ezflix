@@ -6,7 +6,7 @@ import sys
 from urllib import quote_plus
 
 parser = argparse.ArgumentParser()
-parser.add_argument('media_type')
+parser.add_argument('media_type', nargs='?', default='tv')
 parser.add_argument('query')
 parser.add_argument('latest', nargs='?', default='0')
 args = parser.parse_args()
