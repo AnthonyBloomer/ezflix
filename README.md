@@ -2,17 +2,17 @@
 
 Command line utility to search for TV shows and movie torrents and stream using Peerflix automatically.
 
-#### Install 
+### Install 
 
 ```
 pip install -r requirements.txt
 ```
 
-#### Usage
+### Usage
 
 Run ```python ezflix.py [query]``` then from the list, select the TV episode or movie you want to stream. 
 
-#### Example 
+### Examples
 
 ```bash
 python ezflix.py "The Man in the High Castle"
@@ -30,6 +30,6 @@ To search for movies, pass the "movie" argument. For example:
 python ezflix.py movie "Mad Max"
 ```
 
-#### Requires
+### Requires
 
 [Peerflix](https://github.com/mafintosh/peerflix)
