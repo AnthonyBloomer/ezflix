@@ -32,4 +32,8 @@ python ezflix.py movie "Mad Max"
 
 ### Requires
 
-[Peerflix](https://github.com/mafintosh/peerflix)
+This program requires [Peerflix](https://github.com/mafintosh/peerflix). You can install Peerflix via NPM.
+
+```
+npm install -g peerflix
+```
