@@ -4,6 +4,8 @@ Command line utility to search for TV shows and movie torrents and stream using 
 
 ### Install 
 
+Clone the repo, then run: 
+
 ```
 pip install -r requirements.txt
 ```
