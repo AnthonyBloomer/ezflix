@@ -66,10 +66,12 @@ if __name__ == '__main__':
 
     else:
 
-        for result in results:
-            print '| %s | %s' % (result['id'], result['title'])
-
-        print 'Select TV Show:' if args.media_type == 'tv' else 'Select Movie:'
+        if results is not None:
+            for result in results:
+                print '| %s | %s' % (result['id'], result['title'])
+            print 'Select TV Show:' if args.media_type == 'tv' else 'Select Movie:'
+        else:
+            sys.exit('No movie results found.')
 
         while True:
             read = raw_input()
@@ -82,11 +84,14 @@ if __name__ == '__main__':
 
             found = False
 
-            for result in results:
-                if result['id'] == int(read):
-                    found = True
-                    print 'Playing %s!' % result['title']
-                    subprocess.Popen(['/bin/bash', '-c', 'peerflix "%s" --mpv' % result['magnet']])
+            if results is not None:
+                for result in results:
+                    if result['id'] == int(read):
+                        found = True
+                        print 'Playing %s!' % result['title']
+                        subprocess.Popen(['/bin/bash', '-c', 'peerflix "%s" --mpv' % result['magnet']])
+            else:
+                sys.exit('No movie results found.')
 
             if not found:
-                print 'Not found'
+                print 'Invalid selection.'
