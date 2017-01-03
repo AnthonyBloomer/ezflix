@@ -8,6 +8,12 @@ Command line utility to search for TV shows and movie torrents and stream using 
 pip install -r requirements.txt
 ```
 
+This program requires [Peerflix](https://github.com/mafintosh/peerflix). You can install Peerflix via NPM.
+
+```
+npm install -g peerflix
+```
+
 ### Usage
 
 Run ```python ezflix.py [query]``` then from the list, select the TV episode or movie you want to stream. 
@@ -28,12 +34,4 @@ To search for movies, pass the "movie" argument. For example:
 
 ```bash
 python ezflix.py movie "Mad Max"
-```
-
-### Requires
-
-This program requires [Peerflix](https://github.com/mafintosh/peerflix). You can install Peerflix via NPM.
-
-```
-npm install -g peerflix
 ```
