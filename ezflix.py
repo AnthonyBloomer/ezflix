@@ -6,7 +6,7 @@ import sys
 from urllib import quote_plus
 
 parser = argparse.ArgumentParser()
-parser.add_argument('media_type', nargs='?', default='tv', help='Can be set to tv or movie. Default is tv.')
+parser.add_argument('media_type', nargs='?', choices=["movie", "tv"], default='tv', help='Can be set to tv or movie.')
 parser.add_argument('query', help='Search query')
 parser.add_argument('latest', nargs='?', default='0', help='If set to latest, the latest episode will play.')
 args = parser.parse_args()
@@ -30,9 +30,9 @@ def show(q):
 
 
 def movie(q):
-    request = requests.get('https://yts.ag/api/v2/list_movies.json?query_term=%s' % q)
-    if request.status_code == 200:
-        req = request.json()
+    req = requests.get('https://yts.ag/api/v2/list_movies.json?query_term=%s' % q)
+    if req.status_code == 200:
+        req = req.json()
         if req['status'] == 'ok':
             if req['data']['movie_count'] > 0:
                 arr, count = [], 1
@@ -53,9 +53,6 @@ if __name__ == '__main__':
 
     elif args.media_type == 'movie':
         results = movie(quote_plus(query))
-
-    else:
-        sys.exit('Incorrect media type.')
 
     if args.latest == "latest":
         latest = results[0]
