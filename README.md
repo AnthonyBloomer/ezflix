@@ -18,18 +18,18 @@ npm install -g peerflix
 
 ### Usage
 
-Run ```python ezflix.py [query]``` then from the list, select the TV episode or movie you want to stream. 
+Run ```python ezflix.py [tv/movie] [query]``` then from the list, select the torrent you want to stream. 
 
 ### Examples
 
 ```bash
-python ezflix.py "The Man in the High Castle"
+python ezflix.py tv "The Man in the High Castle"
 ```
 
 You can also pass an optional argument "latest" to watch the latest episode of a given TV series. For example:
 
 ```bash
-python ezflix.py "South Park" latest
+python ezflix.py tv "South Park" latest
 ```
 
 To search for movies, pass the "movie" argument. For example:
