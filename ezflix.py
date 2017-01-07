@@ -54,15 +54,14 @@ def movie(q):
                 return arr
 
 
-def main():
-    query = args.query
-
+def main(q=None, mt=None):
+    query = args.query if q is None else q
     results = []
 
-    if args.media_type == 'tv':
+    if args.media_type == 'tv' or mt == 'tv':
         results = show(query.replace(' ', '-').lower())
 
-    elif args.media_type == 'movie':
+    elif args.media_type == 'movie' or mt == 'movie':
         results = movie(quote_plus(query))
 
     if args.latest == "latest":
@@ -73,10 +72,10 @@ def main():
     else:
 
         if results is not None:
-            print Color.BOLD + 'Enter quit to close the program.' + Color.ENDC
+            print Color.BOLD + 'Enter quit to close the program or search to refine your query.' + Color.ENDC
             print '%sSelect TV Show: %s' % (
-            Color.OKBLUE, Color.ENDC) if args.media_type == 'tv' else '%sSelect Movie: %s' % (
-            Color.OKBLUE, Color.ENDC)
+                Color.OKBLUE, Color.ENDC) if args.media_type == 'tv' else '%sSelect Movie: %s' % (
+                Color.OKBLUE, Color.ENDC)
             for result in results:
                 print '%s| %s |%s %s%s%s' % (
                     Color.BOLD, result['id'], Color.ENDC, Color.OKGREEN, result['title'], Color.ENDC)
@@ -88,6 +87,12 @@ def main():
 
             if read == 'quit':
                 sys.exit()
+
+            if read == 'search':
+                print "Enter the search query: (media-type query)"
+                search = raw_input()
+                search = search.split()
+                main(mt=search[0], q=" ".join(search[1:]))
 
             try:
                 val = int(read)
