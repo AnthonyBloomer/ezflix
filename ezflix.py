@@ -73,13 +73,15 @@ def main():
     else:
 
         if results is not None:
-            print Color.HEADER + 'Enter quit to close the program.' + Color.ENDC
-            print 'Select TV Show:' if args.media_type == 'tv' else 'Select Movie:'
+            print Color.BOLD + 'Enter quit to close the program.' + Color.ENDC
+            print '%sSelect TV Show: %s' % (
+            Color.OKBLUE, Color.ENDC) if args.media_type == 'tv' else '%s Select Movie: %s' % (
+            Color.OKBLUE, Color.ENDC)
             for result in results:
                 print '%s| %s |%s %s%s%s' % (
                     Color.BOLD, result['id'], Color.ENDC, Color.OKGREEN, result['title'], Color.ENDC)
         else:
-            sys.exit(Color.FAIL + 'No movie results found.' + Color.ENDC)
+            sys.exit('%s%s%s' + Color.FAIL + 'No movie results found.' + Color.ENDC)
 
         while True:
             read = raw_input()
