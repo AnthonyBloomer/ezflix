@@ -12,6 +12,17 @@ parser.add_argument('latest', nargs='?', default='0', help='If set to latest, th
 args = parser.parse_args()
 
 
+class Color:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
+
 def show(q):
     url = 'https://eztv.ag/search/' + q
     req = requests.get(url)
@@ -62,12 +73,13 @@ def main():
     else:
 
         if results is not None:
-            print 'Enter quit to close the program.'
+            print Color.HEADER + 'Enter quit to close the program.' + Color.ENDC
             print 'Select TV Show:' if args.media_type == 'tv' else 'Select Movie:'
             for result in results:
-                print '| %s | %s' % (result['id'], result['title'])
+                print '%s| %s |%s %s%s%s' % (
+                    Color.BOLD, result['id'], Color.ENDC, Color.OKGREEN, result['title'], Color.ENDC)
         else:
-            sys.exit('No movie results found.')
+            sys.exit(Color.FAIL + 'No movie results found.' + Color.ENDC)
 
         while True:
             read = raw_input()
@@ -78,7 +90,7 @@ def main():
             try:
                 val = int(read)
             except ValueError:
-                print('Expected int.')
+                print(Color.FAIL + 'Expected int.' + Color.ENDC)
                 continue
 
             found = False
@@ -90,10 +102,10 @@ def main():
                         print 'Playing %s!' % result['title']
                         subprocess.Popen(['/bin/bash', '-c', 'peerflix "%s" --mpv' % result['magnet']])
             else:
-                sys.exit('No movie results found.')
+                sys.exit(Color.FAIL + 'No movie results found.' + Color.ENDC)
 
             if not found:
-                print 'Invalid selection.'
+                print Color.FAIL + 'Invalid selection.' + Color.ENDC
 
 
 if __name__ == '__main__':
