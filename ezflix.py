@@ -73,9 +73,7 @@ def main(q=None, mt=None):
 
         if results is not None:
             print Color.BOLD + 'Enter quit to close the program or search to refine your query.' + Color.ENDC
-            print '%sSelect TV Show: %s' % (
-                Color.OKBLUE, Color.ENDC) if args.media_type == 'tv' else '%sSelect Movie: %s' % (
-                Color.OKBLUE, Color.ENDC)
+            print 'Select TV Show:' if args.media_type == 'tv' else 'Select Movie:'
             for result in results:
                 print '%s| %s |%s %s%s%s' % (
                     Color.BOLD, result['id'], Color.ENDC, Color.OKGREEN, result['title'], Color.ENDC)
