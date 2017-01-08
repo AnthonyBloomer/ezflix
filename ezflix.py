@@ -56,12 +56,13 @@ def movie(q):
 
 def main(q=None, mt=None):
     query = args.query if q is None else q
+    mt = args.media_type if mt is None else mt
     results = []
 
-    if args.media_type == 'tv' or mt == 'tv':
+    if mt == 'tv':
         results = show(query.replace(' ', '-').lower())
 
-    elif args.media_type == 'movie' or mt == 'movie':
+    elif mt == 'movie':
         results = movie(quote_plus(query))
 
     if args.latest == "latest":
@@ -73,7 +74,7 @@ def main(q=None, mt=None):
 
         if results is not None:
             print Color.BOLD + 'Enter quit to close the program or search to refine your query.' + Color.ENDC
-            print 'Select TV Show:' if args.media_type == 'tv' else 'Select Movie:'
+            print 'Select TV Show:' if mt  == 'tv' else 'Select Movie:'
             for result in results:
                 print '%s| %s |%s %s%s%s' % (
                     Color.BOLD, result['id'], Color.ENDC, Color.OKGREEN, result['title'], Color.ENDC)
@@ -89,8 +90,6 @@ def main(q=None, mt=None):
 
             if read == 'search':
                 print "Enter the search query: (media-type query)"
-		args.media_type = None
-		args.query = None
                 search = raw_input()
                 search = search.split()
 		main(mt=search[0], q=" ".join(search[1:]))
