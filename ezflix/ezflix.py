@@ -80,7 +80,6 @@ def main(q=None, mt=None):
     else:
 
         if results is not None:
-            print(Color.BOLD + 'Enter quit to close the program or search to refine your query.' + Color.ENDC)
             print('Select TV Show:' if mt == 'tv' else 'Select Movie:')
             for result in results:
                 print ('%s| %s |%s %s%s%s' % (
@@ -91,14 +90,17 @@ def main(q=None, mt=None):
         while True:
             read = input()
 
+            '''
             if read == 'quit':
                 sys.exit()
 
-            if read == 'search':
+
+              if read == 'search':
                 print("Enter the search query: (media-type query)")
                 search = input()
                 search = search.split()
                 main(mt=search[0], q=" ".join(search[1:]))
+            '''
 
             try:
                 val = int(read)
