@@ -3,7 +3,11 @@ import argparse
 from bs4 import BeautifulSoup
 import requests
 import sys
-from urllib import quote_plus
+
+try:
+    from urllib import quote_plus
+except:
+    from urllib import parse
 
 parser = argparse.ArgumentParser()
 parser.add_argument('media_type', nargs='?', choices=["movie", "tv"], default='tv', help='Can be set to tv or movie.')
@@ -63,33 +67,36 @@ def main(q=None, mt=None):
     if mt == 'tv':
         results = show(query.replace(' ', '-').lower())
     elif mt == 'movie':
-        results = movie(quote_plus(query))
+        try:
+            results = movie(quote_plus(query))
+        except:
+            results = movie(parse.quote_plus(query))
 
     if args.latest == "latest":
         latest = results[0]
-        print 'Playing %s!' % latest['title']
+        print('Playing %s!' % latest['title'])
         subprocess.Popen(['/bin/bash', '-c', 'peerflix "%s" --mpv' % latest['magnet']])
 
     else:
 
         if results is not None:
-            print Color.BOLD + 'Enter quit to close the program or search to refine your query.' + Color.ENDC
-            print 'Select TV Show:' if mt == 'tv' else 'Select Movie:'
+            print(Color.BOLD + 'Enter quit to close the program or search to refine your query.' + Color.ENDC)
+            print('Select TV Show:' if mt == 'tv' else 'Select Movie:')
             for result in results:
-                print '%s| %s |%s %s%s%s' % (
-                    Color.BOLD, result['id'], Color.ENDC, Color.OKBLUE, result['title'], Color.ENDC)
+                print ('%s| %s |%s %s%s%s' % (
+                    Color.BOLD, result['id'], Color.ENDC, Color.OKBLUE, result['title'], Color.ENDC))
         else:
             sys.exit('%s%s%s' % (Color.FAIL, 'No movie results found.', Color.ENDC))
 
         while True:
-            read = raw_input()
+            read = input()
 
             if read == 'quit':
                 sys.exit()
 
             if read == 'search':
-                print "Enter the search query: (media-type query)"
-                search = raw_input()
+                print("Enter the search query: (media-type query)")
+                search = input()
                 search = search.split()
                 main(mt=search[0], q=" ".join(search[1:]))
 
@@ -105,13 +112,13 @@ def main(q=None, mt=None):
                 for result in results:
                     if result['id'] == int(read):
                         found = True
-                        print 'Playing %s!' % result['title']
+                        print('Playing %s!' % result['title'])
                         subprocess.Popen(['/bin/bash', '-c', 'peerflix "%s" --mpv' % result['magnet']])
             else:
                 sys.exit(Color.FAIL + 'No movie results found.' + Color.ENDC)
 
             if not found:
-                print Color.FAIL + 'Invalid selection.' + Color.ENDC
+                print(Color.FAIL + 'Invalid selection.' + Color.ENDC)
 
 
 if __name__ == '__main__':
