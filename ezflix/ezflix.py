@@ -10,7 +10,7 @@ except:
     from urllib import parse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('player', nargs='?', default='--vlc', help='Set the video player to stream the torrent.')
+parser.add_argument('player', nargs='?', default='vlc', help='Set the video player to stream the torrent.')
 parser.add_argument('media_type', nargs='?', choices=["movie", "tv"], default='tv', help='Can be set to tv or movie.')
 parser.add_argument('query', help='Search query')
 parser.add_argument('latest', nargs='?', default='0', help='If set to latest, the latest episode will play.')
