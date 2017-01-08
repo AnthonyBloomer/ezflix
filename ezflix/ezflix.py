@@ -10,6 +10,7 @@ except:
     from urllib import parse
 
 parser = argparse.ArgumentParser()
+parser.add_argument('player', nargs='?', default='--vlc', help='Set the video player to stream the torrent.')
 parser.add_argument('media_type', nargs='?', choices=["movie", "tv"], default='tv', help='Can be set to tv or movie.')
 parser.add_argument('query', help='Search query')
 parser.add_argument('latest', nargs='?', default='0', help='If set to latest, the latest episode will play.')
@@ -75,7 +76,7 @@ def main(q=None, mt=None):
     if args.latest == "latest":
         latest = results[0]
         print('Playing %s!' % latest['title'])
-        subprocess.Popen(['/bin/bash', '-c', 'peerflix "%s"' % latest['magnet']])
+        subprocess.Popen(['/bin/bash', '-c', 'peerflix "%s" --%s' % (latest['magnet'], args.player)])
 
     else:
 
@@ -115,7 +116,7 @@ def main(q=None, mt=None):
                     if result['id'] == int(read):
                         found = True
                         print('Playing %s!' % result['title'])
-                        subprocess.Popen(['/bin/bash', '-c', 'peerflix "%s"' % result['magnet']])
+                        subprocess.Popen(['/bin/bash', '-c', 'peerflix "%s" --%s' % (result['magnet'], args.player)])
             else:
                 sys.exit(Color.FAIL + 'No movie results found.' + Color.ENDC)
 
