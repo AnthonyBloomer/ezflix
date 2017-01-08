@@ -79,6 +79,7 @@ def main(q=None, mt=None):
                     Color.BOLD, result['id'], Color.ENDC, Color.OKGREEN, result['title'], Color.ENDC)
         else:
             sys.exit('%s%s%s' % (Color.FAIL, 'No movie results found.', Color.ENDC))
+	
 
         while True:
             read = raw_input()
@@ -88,9 +89,11 @@ def main(q=None, mt=None):
 
             if read == 'search':
                 print "Enter the search query: (media-type query)"
+		args.media_type = None
+		args.query = None
                 search = raw_input()
                 search = search.split()
-                main(mt=search[0], q=" ".join(search[1:]))
+		main(mt=search[0], q=" ".join(search[1:]))
 
             try:
                 val = int(read)
