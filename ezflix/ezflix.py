@@ -75,7 +75,7 @@ def main(q=None, mt=None):
     if args.latest == "latest":
         latest = results[0]
         print('Playing %s!' % latest['title'])
-        subprocess.Popen(['/bin/bash', '-c', 'peerflix "%s" --mpv' % latest['magnet']])
+        subprocess.Popen(['/bin/bash', '-c', 'peerflix "%s"' % latest['magnet']])
 
     else:
 
@@ -115,7 +115,7 @@ def main(q=None, mt=None):
                     if result['id'] == int(read):
                         found = True
                         print('Playing %s!' % result['title'])
-                        subprocess.Popen(['/bin/bash', '-c', 'peerflix "%s" --mpv' % result['magnet']])
+                        subprocess.Popen(['/bin/bash', '-c', 'peerflix "%s"' % result['magnet']])
             else:
                 sys.exit(Color.FAIL + 'No movie results found.' + Color.ENDC)
 
