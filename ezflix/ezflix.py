@@ -3,19 +3,12 @@ import argparse
 from bs4 import BeautifulSoup
 import requests
 import sys
+import click
 
 try:
     from urllib import quote_plus
 except:
     from urllib import parse
-
-parser = argparse.ArgumentParser()
-parser.add_argument('player', nargs='?', default='vlc', help='Set the video player to stream the torrent.')
-parser.add_argument('media_type', nargs='?', choices=["movie", "tv"], default='tv', help='Can be set to tv or movie.')
-parser.add_argument('query', help='Search query')
-parser.add_argument('latest', nargs='?', default='0', help='If set to latest, the latest episode will play.')
-args = parser.parse_args()
-
 
 class Color:
     HEADER = '\033[95m'
@@ -59,29 +52,33 @@ def movie(q):
                 return arr
 
 
-def main(q=None, mt=None):
-    query = args.query if q is None else q
-    mt = args.media_type if mt is None else mt
+@click.command()
+@click.option('--player', default='vlc', help='The default player')
+@click.option('--media_type', help='The media type.', required=True)
+@click.option('--query', help='Search query', required=True)
+@click.option('--latest', default=0, help='Set to 1 to play the latest TV episode of a given TV series.')
+def main(player, media_type, query, latest):
+
 
     results = []
 
-    if mt == 'tv':
+    if media_type == 'tv':
         results = show(query.replace(' ', '-').lower())
-    elif mt == 'movie':
+    elif media_type == 'movie':
         try:
             results = movie(quote_plus(query))
         except:
             results = movie(parse.quote_plus(query))
 
-    if args.latest == "latest":
+    if latest == 1:
         latest = results[0]
         print('Playing %s!' % latest['title'])
-        subprocess.Popen(['/bin/bash', '-c', 'peerflix "%s" --%s' % (latest['magnet'], args.player)])
+        subprocess.Popen(['/bin/bash', '-c', 'peerflix "%s" --%s' % (latest['magnet'], player)])
 
     else:
 
         if results is not None:
-            print('Select TV Show:' if mt == 'tv' else 'Select Movie:')
+            print('Select TV Show:' if media_type == 'tv' else 'Select Movie:')
             for result in results:
                 print ('%s| %s |%s %s%s%s' % (
                     Color.BOLD, result['id'], Color.ENDC, Color.OKBLUE, result['title'], Color.ENDC))
@@ -116,7 +113,7 @@ def main(q=None, mt=None):
                     if result['id'] == int(read):
                         found = True
                         print('Playing %s!' % result['title'])
-                        subprocess.Popen(['/bin/bash', '-c', 'peerflix "%s" --%s' % (result['magnet'], args.player)])
+                        subprocess.Popen(['/bin/bash', '-c', 'peerflix "%s" --%s' % (result['magnet'], player)])
             else:
                 sys.exit(Color.FAIL + 'No movie results found.' + Color.ENDC)
 
