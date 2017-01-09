@@ -35,9 +35,3 @@ To search for movies, pass the "movie" argument. For example:
 ```bash
 ezflix movie "Mad Max"
 ```
-
-VLC is the default video player but if you use MPV (recommended), you can pass in an optional argument.
-
-```bash
-ezflix mpv tv "Silicon Valley" latest
-```
