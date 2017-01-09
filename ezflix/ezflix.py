@@ -1,10 +1,7 @@
-import subprocess
 import argparse
 from bs4 import BeautifulSoup
 import requests
 import sys
-import os
-import platform
 import subprocess
 
 try:
