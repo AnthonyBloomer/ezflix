@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import requests
 import sys
 import subprocess
+import re
 
 try:
     from urllib import quote_plus
@@ -14,6 +15,8 @@ parser.add_argument('media_type', nargs='?', choices=["movie", "tv"], default='t
 parser.add_argument('query', help='Search query')
 parser.add_argument('latest', nargs='?', default='0', help='If set to latest, the latest episode will play.')
 args = parser.parse_args()
+
+is_music = False
 
 
 class Color:
@@ -31,7 +34,32 @@ def cmd_exists(cmd):
     return subprocess.call("type " + cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE) == 0
 
 
-def show(q):
+def search1337(query):
+    try:
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.0; WOW64; rv:24.0) Gecko/20100101 Firefox/24.0'}
+        base = 'http://1337x.to'
+        url = 'http://1337x.to/sort-search/%s/seeders/desc/1/' % query
+        req = requests.get(url, headers=headers)
+        torrents, count = [], 1
+        soup = BeautifulSoup(req.text, 'html.parser')
+        links = soup.find_all('a', href=True)
+        for link in links:
+            if re.search('/torrent/', link['href']):
+                url = base + link['href']
+                req = requests.get(url, headers=headers)
+                soup = BeautifulSoup(req.text, 'html.parser')
+                title = soup.find('div', {'class', 'box-info-heading'})
+                title = title.find('h1')
+                rows = soup.find('ul', {'class': 'download-links'})
+                magnet = rows.find('a', {'class': 'btn-magnet'})
+                torrents.append({'id': count, 'title': title.text.strip(), 'magnet': magnet['href'].strip()})
+                count += 1
+        return torrents
+    except:
+        return None
+
+
+def eztv(q):
     url = 'https://eztv.ag/search/' + q
     req = requests.get(url)
     soup = BeautifulSoup(req.text, 'html.parser')
@@ -48,7 +76,7 @@ def show(q):
     return arr
 
 
-def movie(q):
+def yts(q):
     req = requests.get('https://yts.ag/api/v2/list_movies.json?query_term=%s&sort_by=seeds&limit=50' % q)
     if req.status_code == 200:
         req = req.json()
@@ -74,12 +102,12 @@ def main(q=None, mt=None):
     results = []
 
     if mt == 'tv':
-        results = show(query.replace(' ', '-').lower())
+        results = eztv(query.replace(' ', '-').lower())
     elif mt == 'movie':
         try:
-            results = movie(quote_plus(query))
+            results = search1337(quote_plus(query))
         except:
-            results = movie(parse.quote_plus(query))
+            results = search1337(parse.quote_plus(query))
 
     if args.latest == "latest":
         latest = results[0]
@@ -87,8 +115,7 @@ def main(q=None, mt=None):
         subprocess.Popen(['/bin/bash', '-c', 'peerflix "%s" --%s' % (latest['magnet'], player)])
 
     else:
-
-        if results is not None:
+        if results:
             print('Select TV Show:' if mt == 'tv' else 'Select Movie:')
             for result in results:
                 print ('%s| %s |%s %s%s%s' % (
@@ -97,19 +124,15 @@ def main(q=None, mt=None):
             sys.exit('%s%s%s' % (Color.FAIL, 'No movie results found.', Color.ENDC))
 
         while True:
-            read = input()
+            read = raw_input()
 
-            '''
             if read == 'quit':
                 sys.exit()
-
-
-              if read == 'search':
+            if read == 'search':
                 print("Enter the search query: (media-type query)")
-                search = input()
+                search = raw_input()
                 search = search.split()
                 main(mt=search[0], q=" ".join(search[1:]))
-            '''
 
             try:
                 val = int(read)
