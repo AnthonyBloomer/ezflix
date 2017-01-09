@@ -16,8 +16,6 @@ parser.add_argument('query', help='Search query')
 parser.add_argument('latest', nargs='?', default='0', help='If set to latest, the latest episode will play.')
 args = parser.parse_args()
 
-is_music = False
-
 
 class Color:
     HEADER = '\033[95m'
