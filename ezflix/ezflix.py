@@ -34,13 +34,13 @@ def cmd_exists(cmd):
     return subprocess.call("type " + cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE) == 0
 
 
-def search1337(query):
+def search1337(query, count=1):
     try:
         headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.0; WOW64; rv:24.0) Gecko/20100101 Firefox/24.0'}
         base = 'http://1337x.to'
-        url = 'http://1337x.to/sort-search/%s/seeders/desc/1/' % query
+        url = '%s/sort-category-search/%s/Movies/seeders/desc/1/' % (base, query)
         req = requests.get(url, headers=headers)
-        torrents, count = [], 1
+        torrents, count = [], count
         soup = BeautifulSoup(req.text, 'html.parser')
         links = soup.find_all('a', href=True)
         for link in links:
@@ -103,7 +103,14 @@ def main(q=None, mt=None):
 
     if mt == 'tv':
         results = eztv(query.replace(' ', '-').lower())
+
+        try:
+            results.append(search1337(quote_plus(query)))
+        except:
+            results.append(search1337(parse.quote_plus(query)))
+
     elif mt == 'movie':
+
         try:
             results = search1337(quote_plus(query))
         except:
