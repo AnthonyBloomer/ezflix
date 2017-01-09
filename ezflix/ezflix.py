@@ -49,9 +49,15 @@ def main(q=None, mt=None):
 
     elif mt == 'movie':
         try:
-            results = xtorrent(quote_plus(query), mt)
+            results = yts(quote_plus(query))
         except:
-            results = xtorrent(parse.quote_plus(query), mt)
+            results = yts(parse.quote_plus(query))
+
+        if results is None:
+            try:
+                results = xtorrent(quote_plus(query), mt)
+            except:
+                results = xtorrent(parse.quote_plus(query), mt)
 
     elif mt == 'music':
         try:
@@ -71,7 +77,7 @@ def main(q=None, mt=None):
                 print ('%s| %s |%s %s%s%s' % (
                     Color.BOLD, result['id'], Color.ENDC, Color.OKBLUE, result['title'], Color.ENDC))
         else:
-            sys.exit('%s%s%s' % (Color.FAIL, 'No movie results found.', Color.ENDC))
+            sys.exit('%s%s%s' % (Color.FAIL, 'No results found.', Color.ENDC))
 
         while True:
             read = raw_input()
@@ -97,10 +103,11 @@ def main(q=None, mt=None):
                     if result['id'] == int(read):
                         found = True
                         print('Playing %s!' % result['title'])
-                        p = '-a' if mt == 'music' else ''
-                        subprocess.Popen(['/bin/bash', '-c', 'peerflix "%s" %s --%s' % (result['magnet'], p, player)])
+                        is_audio = '-a' if mt == 'music' else ''
+                        subprocess.Popen(['/bin/bash', '-c',
+                                          'peerflix "%s" %s --%s' % (result['magnet'], is_audio, player)])
             else:
-                sys.exit(Color.FAIL + 'No movie results found.' + Color.ENDC)
+                sys.exit(Color.FAIL + 'No results found.' + Color.ENDC)
 
             if not found:
                 print(Color.FAIL + 'Invalid selection.' + Color.ENDC)

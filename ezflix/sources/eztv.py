@@ -3,7 +3,10 @@ from bs4 import BeautifulSoup
 import sys
 
 
-def eztv(q):
+
+
+
+def eztv(q, mt=None):
     url = 'https://eztv.ag/search/' + q
     req = requests.get(url)
     soup = BeautifulSoup(req.text, 'html.parser')
