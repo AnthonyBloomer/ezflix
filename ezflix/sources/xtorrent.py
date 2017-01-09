@@ -3,12 +3,12 @@ from bs4 import BeautifulSoup
 import re
 
 
-def search1337(query, count=1):
+def xtorrent(query, category):
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.0; WOW64; rv:24.0) Gecko/20100101 Firefox/24.0'}
     base = 'http://1337x.to'
-    url = '%s/sort-category-search/%s/Movies/seeders/desc/1/' % (base, query)
+    url = '%s/sort-category-search/%s/%s/seeders/desc/1/' % (base, query, category.title())
     req = requests.get(url, headers=headers)
-    torrents, count = [], count
+    torrents, count = [], 1
     soup = BeautifulSoup(req.text, 'html.parser')
     links = soup.find_all('a', href=True)
     for link in links:

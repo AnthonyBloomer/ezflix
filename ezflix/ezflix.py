@@ -8,13 +8,13 @@ except:
     from urllib import parse
 
 from sources.eztv import eztv
-from sources.xtorrent import search1337
+from sources.xtorrent import xtorrent
 from sources.yts import yts
 
 parser = argparse.ArgumentParser()
-parser.add_argument('media_type', nargs='?', choices=["movie", "tv"], default='tv', help='Can be set to tv or movie.')
-parser.add_argument('query', help='Search query')
-parser.add_argument('latest', nargs='?', default='0', help='If set to latest, the latest episode will play.')
+parser.add_argument('media_type', nargs='?', choices=["movie", "tv", "music"], default='tv')
+parser.add_argument('query')
+parser.add_argument('latest', nargs='?', default='0')
 args = parser.parse_args()
 
 
@@ -48,11 +48,16 @@ def main(q=None, mt=None):
         results = eztv(query.replace(' ', '-').lower())
 
     elif mt == 'movie':
-
         try:
-            results = search1337(quote_plus(query))
+            results = xtorrent(quote_plus(query), mt)
         except:
-            results = search1337(parse.quote_plus(query))
+            results = xtorrent(parse.quote_plus(query), mt)
+
+    elif mt == 'music':
+        try:
+            results = xtorrent(quote_plus(query), mt)
+        except:
+            results = xtorrent(parse.quote_plus(query), mt)
 
     if args.latest == "latest":
         latest = results[0]
@@ -61,7 +66,7 @@ def main(q=None, mt=None):
 
     else:
         if results:
-            print('Select TV Show:' if mt == 'tv' else 'Select Movie:')
+            print('Select %s' % mt.title())
             for result in results:
                 print ('%s| %s |%s %s%s%s' % (
                     Color.BOLD, result['id'], Color.ENDC, Color.OKBLUE, result['title'], Color.ENDC))
@@ -92,7 +97,8 @@ def main(q=None, mt=None):
                     if result['id'] == int(read):
                         found = True
                         print('Playing %s!' % result['title'])
-                        subprocess.Popen(['/bin/bash', '-c', 'peerflix "%s" --%s' % (result['magnet'], player)])
+                        p = '-a' if mt == 'music' else ''
+                        subprocess.Popen(['/bin/bash', '-c', 'peerflix "%s" %s --%s' % (result['magnet'], p, player)])
             else:
                 sys.exit(Color.FAIL + 'No movie results found.' + Color.ENDC)
 
