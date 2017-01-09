@@ -16,7 +16,6 @@ parser.add_argument('query', help='Search query')
 parser.add_argument('latest', nargs='?', default='0', help='If set to latest, the latest episode will play.')
 args = parser.parse_args()
 
-
 class Color:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -98,11 +97,6 @@ def main(q=None, mt=None):
 
     if mt == 'tv':
         results = eztv(query.replace(' ', '-').lower())
-
-        try:
-            results.append(search1337(quote_plus(query)))
-        except:
-            results.append(search1337(parse.quote_plus(query)))
 
     elif mt == 'movie':
 
