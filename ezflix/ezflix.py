@@ -3,6 +3,9 @@ import argparse
 from bs4 import BeautifulSoup
 import requests
 import sys
+import os
+import platform
+import subprocess
 
 try:
     from urllib import quote_plus
@@ -10,7 +13,7 @@ except:
     from urllib import parse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('player', nargs='?', default='vlc', help='Set the video player to stream the torrent.')
+parser.add_argument('player', nargs='?', default='mpv', help='Set the video player to stream the torrent.')
 parser.add_argument('media_type', nargs='?', choices=["movie", "tv"], default='tv', help='Can be set to tv or movie.')
 parser.add_argument('query', help='Search query')
 parser.add_argument('latest', nargs='?', default='0', help='If set to latest, the latest episode will play.')
@@ -26,6 +29,10 @@ class Color:
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
+
+
+def cmd_exists(cmd):
+    return subprocess.call("type " + cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE) == 0
 
 
 def show(q):
@@ -62,6 +69,10 @@ def movie(q):
 def main(q=None, mt=None):
     query = args.query if q is None else q
     mt = args.media_type if mt is None else mt
+
+    if not cmd_exists("mpv"):
+        print 'MPV not found. Defaulting to vlc.'
+        args.player = 'vlc'
 
     results = []
 
