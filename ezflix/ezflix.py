@@ -55,8 +55,9 @@ def eztv(q, mt=None):
 
     arr, count = [], 1
     for magnet in magnets:
-        arr.append({'id': count, 'title': magnet['title'][:-12], 'magnet': magnet['href']})
-        count += 1
+        if q.lower() in magnet['title'].lower():
+            arr.append({'id': count, 'title': magnet['title'][:-12], 'magnet': magnet['href']})
+            count += 1
 
     return arr
 
@@ -88,12 +89,12 @@ def xtorrent(query, category):
 
     for link in links:
         if re.search('/torrent/', link['href']):
+
             url = base + link['href']
             req = requests.get(url, headers=headers)
             soup = BeautifulSoup(req.text, 'html.parser')
             for script in soup(["script", "style"]):
-                script.extract()  # rip it out
-
+                script.extract()
             title = soup.find('div', {'class', 'box-info-heading'})
             title = title.find('h1')
             rows = soup.find('ul', {'class': 'download-links'})
@@ -119,6 +120,11 @@ def main(q=None, mt=None):
 
     if mt == 'tv':
         results = eztv(query.replace(' ', '-').lower())
+        if not results:
+            try:
+                results = xtorrent(quote_plus(query), mt)
+            except:
+                results = xtorrent(parse.quote_plus(query), mt)
 
     elif mt == 'movie':
         try:
