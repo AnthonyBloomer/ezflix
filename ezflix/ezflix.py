@@ -55,7 +55,7 @@ def eztv(q, mt=None):
 
     arr, count = [], 1
     for magnet in magnets:
-        if q.lower() in magnet['title'].lower():
+        if q.lower().strip()[0] in magnet['title'].lower():
             arr.append({'id': count, 'title': magnet['title'][:-12], 'magnet': magnet['href']})
             count += 1
 
@@ -145,10 +145,13 @@ def main(q=None, mt=None):
             results = xtorrent(parse.quote_plus(query), mt)
 
     if args.latest == "latest":
-        latest = results[0]
-        peerflix(latest['title'], latest['magnet'], player, mt)
-
+        if results:
+            latest = results[0]
+            peerflix(latest['title'], latest['magnet'], player, mt)
+        else:
+            sys.exit('Latest not found.')
     else:
+
         if results:
             print('Select %s' % mt.title())
             for result in results:
