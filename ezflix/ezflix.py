@@ -1,15 +1,14 @@
 import argparse
-import sys
 import subprocess
+import re
 
 try:
     from urllib import quote_plus
 except:
     from urllib import parse
-
-from sources.eztv import eztv
-from sources.xtorrent import xtorrent
-from sources.yts import yts
+import requests
+from bs4 import BeautifulSoup
+import sys
 
 parser = argparse.ArgumentParser()
 parser.add_argument('media_type', nargs='?', choices=["movie", "tv", "music"], default='tv')
@@ -29,6 +28,12 @@ class Color:
     UNDERLINE = '\033[4m'
 
 
+class Category(object):
+    MOVIE = 'Movies'
+    TV = 'TV'
+    MUSIC = 'Music'
+
+
 def cmd_exists(cmd):
     return subprocess.call("type " + cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE) == 0
 
@@ -37,6 +42,62 @@ def peerflix(title, magnet, player, mt):
     is_audio = '-a' if mt == 'music' else ''
     print('Playing %s!' % title)
     subprocess.Popen(['/bin/bash', '-c', 'peerflix "%s" %s --%s' % (magnet, is_audio, player)])
+
+
+def eztv(q, mt=None):
+    url = 'https://eztv.ag/search/' + q
+    req = requests.get(url)
+    soup = BeautifulSoup(req.text, 'html.parser')
+    magnets = soup.find_all('a', {'class': 'magnet'}, href=True)
+
+    if magnets is None:
+        sys.exit('No results found')
+
+    arr, count = [], 1
+    for magnet in magnets:
+        arr.append({'id': count, 'title': magnet['title'][:-12], 'magnet': magnet['href']})
+        count += 1
+
+    return arr
+
+
+def yts(q):
+    req = requests.get('https://yts.ag/api/v2/list_movies.json?query_term=%s&sort_by=seeds&limit=50' % q)
+    if req.status_code == 200:
+        req = req.json()
+        if req['status'] == 'ok':
+            if req['data']['movie_count'] > 0:
+                arr, count = [], 1
+                for r in req['data']['movies']:
+                    title = '%s (%s) (%s)' % (r['title'], r['year'], r['torrents'][0]['quality'])
+                    arr.append({'id': count, 'title': title, 'magnet': r['torrents'][0]['url']})
+                    count += 1
+                return arr
+
+
+def xtorrent(query, category):
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.0; WOW64; rv:24.0) Gecko/20100101 Firefox/24.0'}
+    base = 'http://1337x.to'
+    category = Category.MOVIE if category == 'movie' else Category.MUSIC
+    url = '%s/category-search/%s/%s/1/' % (base, query, category)
+    req = requests.get(url, headers=headers)
+    torrents, count = [], 1
+    soup = BeautifulSoup(req.text, 'html.parser')
+    links = soup.find_all('a', href=True)
+    for script in soup(["script", "style"]):
+        script.extract()
+    for link in links:
+        if re.search('/torrent/', link['href']):
+            url = base + link['href']
+            req = requests.get(url, headers=headers)
+            soup = BeautifulSoup(req.text, 'html.parser')
+            title = soup.find('div', {'class', 'box-info-heading'})
+            title = title.find('h1')
+            rows = soup.find('ul', {'class': 'download-links'})
+            magnet = rows.find('a', {'class': 'btn-magnet'})
+            torrents.append({'id': count, 'title': title.text.strip(), 'magnet': magnet['href'].strip()})
+            count += 1
+    return torrents
 
 
 def main(q=None, mt=None):
