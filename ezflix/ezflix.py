@@ -39,7 +39,7 @@ def cmd_exists(cmd):
 
 
 def peerflix(title, magnet, player, mt):
-    is_audio = '-a' if mt == 'music' else ''
+    is_audio = '-a --no-video' if mt == 'music' else ''
     print('Playing %s!' % title)
     subprocess.Popen(['/bin/bash', '-c', 'peerflix "%s" %s --%s' % (magnet, is_audio, player)])
 
@@ -83,14 +83,17 @@ def xtorrent(query, category):
     req = requests.get(url, headers=headers)
     torrents, count = [], 1
     soup = BeautifulSoup(req.text, 'html.parser')
+
     links = soup.find_all('a', href=True)
-    for script in soup(["script", "style"]):
-        script.extract()
+
     for link in links:
         if re.search('/torrent/', link['href']):
             url = base + link['href']
             req = requests.get(url, headers=headers)
             soup = BeautifulSoup(req.text, 'html.parser')
+            for script in soup(["script", "style"]):
+                script.extract()  # rip it out
+
             title = soup.find('div', {'class', 'box-info-heading'})
             title = title.find('h1')
             rows = soup.find('ul', {'class': 'download-links'})
