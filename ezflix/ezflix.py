@@ -39,7 +39,7 @@ def cmd_exists(cmd):
 
 
 def peerflix(title, magnet, player, mt):
-    is_audio = '-a --no-video' if mt == 'music' else ''
+    is_audio = '-a' if mt == 'music' else ''
     print('Playing %s!' % title)
     subprocess.Popen(['/bin/bash', '-c', 'peerflix "%s" %s --%s' % (magnet, is_audio, player)])
 
