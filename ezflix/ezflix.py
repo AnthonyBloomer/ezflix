@@ -33,6 +33,12 @@ def cmd_exists(cmd):
     return subprocess.call("type " + cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE) == 0
 
 
+def peerflix(title, magnet, player, mt):
+    is_audio = '-a' if mt == 'music' else ''
+    print('Playing %s!' % title)
+    subprocess.Popen(['/bin/bash', '-c', 'peerflix "%s" %s --%s' % (magnet, is_audio, player)])
+
+
 def main(q=None, mt=None):
     query = args.query if q is None else q
     mt = args.media_type if mt is None else mt
@@ -67,8 +73,7 @@ def main(q=None, mt=None):
 
     if args.latest == "latest":
         latest = results[0]
-        print('Playing %s!' % latest['title'])
-        subprocess.Popen(['/bin/bash', '-c', 'peerflix "%s" --%s' % (latest['magnet'], player)])
+        peerflix(latest['title'], latest['magnet'], player, mt)
 
     else:
         if results:
@@ -102,10 +107,8 @@ def main(q=None, mt=None):
                 for result in results:
                     if result['id'] == int(read):
                         found = True
-                        print('Playing %s!' % result['title'])
-                        is_audio = '-a' if mt == 'music' else ''
-                        subprocess.Popen(['/bin/bash', '-c',
-                                          'peerflix "%s" %s --%s' % (result['magnet'], is_audio, player)])
+                        peerflix(result['title'], result['magnet'], player, mt)
+
             else:
                 sys.exit(Color.FAIL + 'No results found.' + Color.ENDC)
 
