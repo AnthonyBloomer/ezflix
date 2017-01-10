@@ -48,6 +48,9 @@ def main(q=None, mt=None):
         print 'MPV not found. Defaulting to vlc.'
         player = 'vlc'
 
+    if not cmd_exists("peerflix"):
+        sys.exit('This program requires Peerflix. https://github.com/mafintosh/peerflix')
+
     results = []
 
     if mt == 'tv':
