@@ -35,3 +35,9 @@ To search for movies, pass the "movie" argument. For example:
 ```bash
 ezflix movie "Mad Max"
 ```
+
+To search for music, pass the "music" argument. For example:
+
+```bash
+ezflix music "Taylor Swift"
+```
