@@ -1,22 +1,20 @@
+import sys
 import argparse
 import subprocess
-
+from extractor.eztv import eztv
+from extractor.xtorrent import xtorrent
+from extractor.yts import yts
 try:
     from urllib import quote_plus
 except:
     from urllib import parse
 
-import sys
 
 parser = argparse.ArgumentParser()
 parser.add_argument('media_type', nargs='?', choices=["movie", "tv", "music"], default='tv')
 parser.add_argument('query')
 parser.add_argument('latest', nargs='?', default='0')
 args = parser.parse_args()
-
-from extractor.eztv import eztv
-from extractor.xtorrent import xtorrent
-from extractor.yts import yts
 
 
 class Color:
