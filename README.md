@@ -16,7 +16,7 @@ npm install -g peerflix
 
 ### Usage
 
-Run ```ezflix [tv/movie] [query]``` then from the list, select the torrent you want to stream. 
+Run ```ezflix [tv/movie/music] [query]``` then from the list, select the torrent you want to stream. 
 
 ### Examples
 
@@ -24,19 +24,19 @@ Run ```ezflix [tv/movie] [query]``` then from the list, select the torrent you w
 ezflix tv "The Man in the High Castle"
 ```
 
-You can also pass an optional argument "latest" to watch the latest episode of a given TV series. For example:
+You can also pass an optional argument "latest" to watch the latest episode of a given TV series.
 
 ```bash
 ezflix tv "South Park" latest
 ```
 
-To search for movies, pass the "movie" argument. For example:
+To search for movies, pass the "movie" argument.
 
 ```bash
 ezflix movie "Mad Max"
 ```
 
-To search for music, pass the "music" argument. For example:
+To search for music, pass the "music" argument.
 
 ```bash
 ezflix music "Taylor Swift"
