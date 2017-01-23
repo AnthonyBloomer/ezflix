@@ -11,7 +11,7 @@ except:
     from urllib import parse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('media_type', nargs='?', choices=["movie", "tv", "music"], default='tv')
+parser.add_argument('media_type', choices=["movie", "tv", "music"])
 parser.add_argument('query')
 parser.add_argument('latest', nargs='?', default='0')
 args = parser.parse_args()
