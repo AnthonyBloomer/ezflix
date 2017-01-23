@@ -4,11 +4,11 @@ import subprocess
 from extractor.eztv import eztv
 from extractor.xtorrent import xtorrent
 from extractor.yts import yts
+
 try:
     from urllib import quote_plus
 except:
     from urllib import parse
-
 
 parser = argparse.ArgumentParser()
 parser.add_argument('media_type', nargs='?', choices=["movie", "tv", "music"], default='tv')
@@ -38,13 +38,23 @@ def peerflix(title, magnet, player, media_type):
     subprocess.Popen(['/bin/bash', '-c', 'peerflix "%s" %s --%s' % (magnet, is_audio, player)])
 
 
+def search():
+    print("Enter the search query: (media-type query)")
+    input = raw_input()
+    input = input.split()
+    if len(input) > 0:
+        main(media_type=input[0], q=" ".join(input[1:]))
+    else:
+        search()
+
+
 def main(q=None, media_type=None):
     query = args.query if q is None else q
     media_type = args.media_type if media_type is None else media_type
     player = 'mpv'
 
     if not cmd_exists("mpv"):
-        print('MPV not found. Defaulting to vlc.')
+        print('MPV not found. Setting default player as vlc.')
         player = 'vlc'
 
     if not cmd_exists("peerflix"):
@@ -101,11 +111,7 @@ def main(q=None, media_type=None):
             if read == 'quit':
                 sys.exit()
             if read == 'search':
-                print("Enter the search query: (media-type query)")
-                search = raw_input()
-                search = search.split()
-                main(media_type=search[0], q=" ".join(search[1:]))
-
+                search()
             try:
                 val = int(read)
             except ValueError:

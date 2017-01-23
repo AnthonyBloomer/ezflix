@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 
+
 class Category(object):
     MOVIE = 'Movies'
     TV = 'TV'
