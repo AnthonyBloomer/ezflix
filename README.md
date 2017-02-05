@@ -8,7 +8,7 @@ Command line utility to search for TV shows and movie torrents and stream using 
 pip install ezflix
 ```
 
-This program requires [Peerflix](https://github.com/mafintosh/peerflix). You can install Peerflix via NPM.
+This program requires [Peerflix](https://github.com/mafintosh/peerflix). You can install Peerflix via [NPM](https://www.npmjs.com).
 
 ```
 npm install -g peerflix
