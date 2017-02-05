@@ -1,6 +1,6 @@
 import argparse
-import subprocess
 import sys
+import subprocess
 from color import Color
 from yts import yts
 from eztv import eztv
@@ -22,6 +22,14 @@ def peerflix(title, magnet, player, media_type):
     subprocess.Popen(['/bin/bash', '-c', 'peerflix "%s" %s --%s' % (magnet, is_audio, player)])
 
 
+if not cmd_exists("mpv"):
+    print('MPV not found. Setting default player as vlc.')
+    player = 'vlc'
+
+if not cmd_exists("peerflix"):
+    sys.exit('This program requires Peerflix. https://github.com/mafintosh/peerflix')
+
+
 def search():
     print("Enter the search query: (media-type query)")
     input = raw_input()
@@ -38,13 +46,6 @@ def main(q=None, media_type=None):
     query = args.query if q is None else q
     media_type = args.media_type if media_type is None else media_type
     player = 'mpv'
-
-    if not cmd_exists("mpv"):
-        print('MPV not found. Setting default player as vlc.')
-        player = 'vlc'
-
-    if not cmd_exists("peerflix"):
-        sys.exit('This program requires Peerflix. https://github.com/mafintosh/peerflix')
 
     results = []
 
