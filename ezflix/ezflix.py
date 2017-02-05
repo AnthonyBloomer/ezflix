@@ -26,10 +26,7 @@ def search():
     print("Enter the search query: (media-type query)")
     input = raw_input()
     input = input.split()
-    if len(input) > 0:
-        main(media_type=input[0], q=" ".join(input[1:]))
-    else:
-        search()
+    main(media_type=input[0], q=" ".join(input[1:])) if len(input) > 0 else search()
 
 
 def main(q=None, media_type=None):
