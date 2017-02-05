@@ -4,28 +4,12 @@ import subprocess
 from extractor.eztv import eztv
 from extractor.xtorrent import xtorrent
 from extractor.yts import yts
+from color import Color
 
 try:
-    from urllib import quote_plus
+    from urllib import quote_plus as quote_plus
 except:
-    from urllib import parse
-
-parser = argparse.ArgumentParser()
-parser.add_argument('media_type', choices=["movie", "tv", "music"])
-parser.add_argument('query')
-parser.add_argument('latest', nargs='?', default='0')
-args = parser.parse_args()
-
-
-class Color:
-    HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
-    OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    ENDC = '\033[0m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
+    from urllib import parse as quote_plus
 
 
 def cmd_exists(cmd):
@@ -49,6 +33,11 @@ def search():
 
 
 def main(q=None, media_type=None):
+    parser = argparse.ArgumentParser()
+    parser.add_argument('media_type', choices=["movie", "tv", "music"])
+    parser.add_argument('query')
+    parser.add_argument('latest', nargs='?', default='0')
+    args = parser.parse_args()
     query = args.query if q is None else q
     media_type = args.media_type if media_type is None else media_type
     player = 'mpv'
@@ -65,29 +54,17 @@ def main(q=None, media_type=None):
     if media_type == 'tv':
         results = eztv(query.replace(' ', '-').lower())
         if not results:
-            try:
-                results = xtorrent(quote_plus(query), media_type)
-            except:
-                results = xtorrent(parse.quote_plus(query), media_type)
+            results = xtorrent(quote_plus(query), media_type)
 
     elif media_type == 'movie':
+        results = yts(quote_plus(query))
 
-        try:
-            results = yts(quote_plus(query))
-        except:
-            results = yts(parse.quote_plus(query))
-
-        if results is None:
-            try:
-                results = xtorrent(quote_plus(query), media_type)
-            except:
-                results = xtorrent(parse.quote_plus(query), media_type)
+    if results is None:
+        results = xtorrent(quote_plus(query), media_type)
 
     elif media_type == 'music':
-        try:
-            results = xtorrent(quote_plus(query), media_type)
-        except:
-            results = xtorrent(parse.quote_plus(query), media_type)
+
+        results = xtorrent(quote_plus(query), media_type)
 
     if args.latest == "latest":
         if results:
@@ -110,8 +87,9 @@ def main(q=None, media_type=None):
 
             if read == 'quit':
                 sys.exit()
-            if read == 'search':
+            elif read == 'search':
                 search()
+
             try:
                 val = int(read)
             except ValueError:
