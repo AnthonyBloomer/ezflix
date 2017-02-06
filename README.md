@@ -49,6 +49,6 @@ git clone https://github.com/AnthonyBloomer/ezflix.git && cd ezflix
 virtualenv env
 source env/bin/activate
 pip install -r requirements.txt
-python -m ezflix [tv/movie/music] [query]
+python -m ezflix [tv/movie/music] query [latest]
 
 ```
