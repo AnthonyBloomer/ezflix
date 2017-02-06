@@ -73,9 +73,16 @@ def main(q=None, media_type=None):
 
     if args.latest == "latest":
         if results:
-            latest = results[0]
-            peerflix(latest['title'], latest['magnet'], player, media_type)
+            if need_magnet:
+                results = xt.get_magnet(1)
+                if results:
+                    peerflix(results[0], results[1], player, media_type)
+            else:
+
+                latest = results[0]
+                peerflix(latest['title'], latest['magnet'], player, media_type)
         else:
+
             sys.exit('Latest not found.')
     else:
 
