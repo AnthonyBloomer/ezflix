@@ -9,36 +9,54 @@ class Category(object):
     MUSIC = 'Music'
 
 
-def xtorrent(query, category):
+class XTorrent(object):
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.0; WOW64; rv:24.0) Gecko/20100101 Firefox/24.0'}
     base = 'http://1337x.to'
 
-    if category == 'movie':
-        category = Category.MOVIE
-    elif category == 'tv':
-        category = Category.TV
-    else:
-        category = Category.MUSIC
+    def __init__(self, query, category):
+        self.query = query
+        self.category = category
+        self.torrents = []
+        if self.category == 'movie':
+            self.category = Category.MOVIE
+        elif category == 'tv':
+            self.category = Category.TV
+        else:
+            self.category = Category.MUSIC
 
-    url = '%s/category-search/%s/%s/1/' % (base, query, category)
-    req = requests.get(url, headers=headers)
-    torrents, count = [], 1
-    soup = BeautifulSoup(req.text, 'html.parser')
+    def get_magnet(self, torrent_id):
+        for torrent in self.torrents:
+            if torrent['id'] == torrent_id:
+                url = self.base + torrent['href']
+                req = requests.get(url, headers=self.headers)
+                soup = BeautifulSoup(req.text, 'html.parser')
+                for script in soup(["script", "style"]):
+                    script.extract()
+                title = soup.find('div', {'class', 'box-info-heading'})
+                title = title.find('h1')
+                rows = soup.find('ul', {'class': 'download-links'})
+                magnet = rows.find('a', {'class': 'btn-magnet'})
+                magnet = [title.text.strip(), magnet['href'].strip()]
+                return magnet
 
-    links = soup.find_all('a', href=True)
+    def get_torrents(self):
+        soup = self._call(self.base, self.query, self.category)
+        links = soup.find_all('a', href=True)
+        count = 1
 
-    for link in links:
-        if re.search('/torrent/', link['href']):
+        for link in links:
+            if re.search('/torrent/', link['href']):
+                self.torrents.append({
+                    'id': count,
+                    'title': link.text,
+                    'href': link['href']
+                })
+                count += 1
 
-            url = base + link['href']
-            req = requests.get(url, headers=headers)
-            soup = BeautifulSoup(req.text, 'html.parser')
-            for script in soup(["script", "style"]):
-                script.extract()
-            title = soup.find('div', {'class', 'box-info-heading'})
-            title = title.find('h1')
-            rows = soup.find('ul', {'class': 'download-links'})
-            magnet = rows.find('a', {'class': 'btn-magnet'})
-            torrents.append({'id': count, 'title': title.text.strip(), 'magnet': magnet['href'].strip()})
-            count += 1
-    return torrents
+        return self.torrents
+
+    def _call(self, base, query, category):
+        url = '%s/category-search/%s/%s/1/' % (base, query, category)
+        req = requests.get(url, headers=self.headers)
+        soup = BeautifulSoup(req.text, 'html.parser')
+        return soup

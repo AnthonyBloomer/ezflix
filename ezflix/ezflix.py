@@ -4,7 +4,7 @@ import subprocess
 from color import Color
 from yts import yts
 from eztv import eztv
-from xtorrent import xtorrent
+from xtorrent import XTorrent
 
 try:
     from urllib import quote_plus as quote_plus
@@ -46,23 +46,30 @@ def main(q=None, media_type=None):
     query = args.query if q is None else q
     media_type = args.media_type if media_type is None else media_type
     player = 'mpv'
+    need_magnet = False
 
     results = []
+    xt = []
 
     if media_type == 'tv':
         results = eztv(query.replace(' ', '-').lower())
         if not results:
-            results = xtorrent(quote_plus(query), media_type)
+            xt = XTorrent(quote_plus(query), media_type)
+            results = xt.get_torrents()
+            need_magnet = True
 
     elif media_type == 'movie':
         results = yts(quote_plus(query))
 
-    if results is None:
-        results = xtorrent(quote_plus(query), media_type)
+        if results is None:
+            xt = XTorrent(quote_plus(query), media_type)
+            results = xt.get_torrents()
+            need_magnet = True
 
     elif media_type == 'music':
-
-        results = xtorrent(quote_plus(query), media_type)
+        xt = XTorrent(quote_plus(query), media_type)
+        results = xt.get_torrents()
+        need_magnet = True
 
     if args.latest == "latest":
         if results:
@@ -77,6 +84,7 @@ def main(q=None, media_type=None):
             for result in results:
                 print ('%s| %s |%s %s%s%s' % (
                     Color.BOLD, result['id'], Color.ENDC, Color.OKBLUE, result['title'], Color.ENDC))
+
         else:
             sys.exit('%s%s%s' % (Color.FAIL, 'No results found.', Color.ENDC))
 
@@ -96,11 +104,19 @@ def main(q=None, media_type=None):
 
             found = False
 
+            if need_magnet:
+                results = xt.get_magnet(val)
+
             if results is not None:
-                for result in results:
-                    if result['id'] == int(read):
-                        found = True
-                        peerflix(result['title'], result['magnet'], player, media_type)
+
+                if need_magnet:
+                    found = True
+                    peerflix(results[0], results[1], player, media_type)
+                else:
+                    for result in results:
+                        if result['id'] == int(read):
+                            found = True
+                            peerflix(result['title'], result['magnet'], player, media_type)
 
             else:
                 sys.exit(Color.FAIL + 'No results found.' + Color.ENDC)
