@@ -13,85 +13,81 @@ except:
 
 
 def cmd_exists(cmd):
-    return subprocess.call("type " + cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE) == 0
+    return subprocess.call('type ' + cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE) == 0
 
 
-def peerflix(title, magnet, player, media_type):
+def peerflix(title, magnet_link, media_player, media_type):
     is_audio = '-a' if media_type == 'music' else ''
     print('Playing %s!' % title)
-    subprocess.Popen(['/bin/bash', '-c', 'peerflix "%s" %s --%s' % (magnet, is_audio, player)])
+    subprocess.Popen(['/bin/bash', '-c', 'peerflix "%s" %s --%s' % (magnet_link, is_audio, media_player)])
 
 
-if not cmd_exists("mpv"):
+if not cmd_exists('mpv'):
     print('MPV not found. Setting default player as vlc.')
     player = 'vlc'
 
-if not cmd_exists("peerflix"):
+if not cmd_exists('peerflix'):
     sys.exit('This program requires Peerflix. https://github.com/mafintosh/peerflix')
 
 
 def search():
-    print("Enter the search query: (media-type query)")
+    print('Enter the search query: (media-type query)')
     input = raw_input()
     input = input.split()
-    main(media_type=input[0], q=" ".join(input[1:])) if len(input) > 0 else search()
+    main(mt=input[0], q=' '.join(input[1:])) if len(input) > 0 else search()
 
 
-def main(q=None, media_type=None):
+def main(q=None, mt=None):
     parser = argparse.ArgumentParser()
-    parser.add_argument('media_type', choices=["movie", "tv", "music"])
+    parser.add_argument('media_type', choices=['movie', 'tv', 'music'])
     parser.add_argument('query')
     parser.add_argument('latest', nargs='?', default='0')
     args = parser.parse_args()
     query = args.query if q is None else q
-    media_type = args.media_type if media_type is None else media_type
-    player = 'mpv'
+    mt = args.media_type if mt is None else mt
+    p = 'mpv'
     need_magnet = False
     found = False
-    results = []
+    torrents = []
     xt = []
 
-    if media_type == 'tv':
-        results = eztv(query.replace(' ', '-').lower())
-        if not results:
-            xt = XTorrent(quote_plus(query), media_type)
-            results = xt.get_torrents()
+    if mt == 'tv':
+        torrents = eztv(query.replace(' ', '-').lower())
+        if not torrents:
+            xt = XTorrent(quote_plus(query), mt)
+            torrents = xt.get_torrents()
             need_magnet = True
 
-    elif media_type == 'movie':
-        results = yts(quote_plus(query))
+    elif mt == 'movie':
+        torrents = yts(quote_plus(query))
 
-        if results is None:
-            xt = XTorrent(quote_plus(query), media_type)
-            results = xt.get_torrents()
+        if torrents is None:
+            xt = XTorrent(quote_plus(query), mt)
+            torrents = xt.get_torrents()
             need_magnet = True
 
-    elif media_type == 'music':
-        xt = XTorrent(quote_plus(query), media_type)
-        results = xt.get_torrents()
+    elif mt == 'music':
+        xt = XTorrent(quote_plus(query), mt)
+        torrents = xt.get_torrents()
         need_magnet = True
 
-    if args.latest == "latest":
-        if results:
+    if args.latest == 'latest':
+        if torrents:
             if need_magnet:
-                results = xt.get_magnet(1)
-                if results:
-                    peerflix(results[0], results[1], player, media_type)
+                torrents = xt.get_magnet(1)
+                if torrents:
+                    peerflix(title=torrents[0], magnet_link=torrents[1], media_player=p, media_type=mt)
             else:
-
-                latest = results[0]
-                peerflix(latest['title'], latest['magnet'], player, media_type)
+                latest = torrents[0]
+                peerflix(title=latest['title'], magnet_link=latest['magnet'], media_player=p, media_type=mt)
         else:
-
             sys.exit('Latest not found.')
     else:
-
-        if results:
-            print('Select %s' % media_type.title())
-            for result in results:
+        if torrents:
+            print('Select %s' % mt.title())
+            for result in torrents:
                 print ('%s| %s |%s %s%s%s' % (
                     Color.BOLD, result['id'], Color.ENDC, Color.OKBLUE, result['title'], Color.ENDC))
-
         else:
             sys.exit('%s%s%s' % (Color.FAIL, 'No results found.', Color.ENDC))
 
@@ -109,21 +105,21 @@ def main(q=None, media_type=None):
                 print(Color.FAIL + 'Expected int.' + Color.ENDC)
                 continue
 
-            if results is not None:
+            if torrents is not None:
 
                 if need_magnet:
-                    results = xt.get_magnet(val)
-                    if results:
+                    torrents = xt.get_magnet(val)
+                    if torrents:
                         found = True
-                        peerflix(results[0], results[1], player, media_type)
+                        peerflix(torrents[0], torrents[1], p, mt)
                     else:
                         found = False
 
                 else:
-                    for result in results:
+                    for result in torrents:
                         if result['id'] == int(read):
                             found = True
-                            peerflix(result['title'], result['magnet'], player, media_type)
+                            peerflix(result['title'], result['magnet'], p, mt)
 
             else:
                 sys.exit(Color.FAIL + 'No results found.' + Color.ENDC)
