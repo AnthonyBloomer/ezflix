@@ -47,7 +47,7 @@ def main(q=None, media_type=None):
     media_type = args.media_type if media_type is None else media_type
     player = 'mpv'
     need_magnet = False
-
+    found = False
     results = []
     xt = []
 
@@ -102,16 +102,16 @@ def main(q=None, media_type=None):
                 print(Color.FAIL + 'Expected int.' + Color.ENDC)
                 continue
 
-            found = False
-
-            if need_magnet:
-                results = xt.get_magnet(val)
-
             if results is not None:
 
                 if need_magnet:
-                    found = True
-                    peerflix(results[0], results[1], player, media_type)
+                    results = xt.get_magnet(val)
+                    if results:
+                        found = True
+                        peerflix(results[0], results[1], player, media_type)
+                    else:
+                        found = False
+
                 else:
                     for result in results:
                         if result['id'] == int(read):

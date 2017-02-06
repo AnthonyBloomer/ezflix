@@ -36,6 +36,8 @@ class XTorrent(object):
                 magnet = [title.text.strip(), magnet['href'].strip()]
                 return magnet
 
+        return False
+
     def get_torrents(self):
         url = '%s/category-search/%s/%s/1/' % (self.base, self.query, self.category)
         soup = self._call(url)
