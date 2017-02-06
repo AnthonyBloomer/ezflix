@@ -40,7 +40,7 @@ class XTorrent(object):
                 return magnet
 
     def get_torrents(self):
-        soup = self._call(self.base, self.query, self.category)
+        soup = self._call()
         links = soup.find_all('a', href=True)
         count = 1
 
@@ -55,8 +55,8 @@ class XTorrent(object):
 
         return self.torrents
 
-    def _call(self, base, query, category):
-        url = '%s/category-search/%s/%s/1/' % (base, query, category)
+    def _call(self):
+        url = '%s/category-search/%s/%s/1/' % (self.base, self.query, self.category)
         req = requests.get(url, headers=self.headers)
         soup = BeautifulSoup(req.text, 'html.parser')
         return soup
