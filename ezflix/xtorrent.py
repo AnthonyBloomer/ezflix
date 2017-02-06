@@ -28,10 +28,7 @@ class XTorrent(object):
         for torrent in self.torrents:
             if torrent['id'] == torrent_id:
                 url = self.base + torrent['href']
-                req = requests.get(url, headers=self.headers)
-                soup = BeautifulSoup(req.text, 'html.parser')
-                for script in soup(["script", "style"]):
-                    script.extract()
+                soup = self._call(url)
                 title = soup.find('div', {'class', 'box-info-heading'})
                 title = title.find('h1')
                 rows = soup.find('ul', {'class': 'download-links'})
@@ -40,7 +37,8 @@ class XTorrent(object):
                 return magnet
 
     def get_torrents(self):
-        soup = self._call()
+        url = '%s/category-search/%s/%s/1/' % (self.base, self.query, self.category)
+        soup = self._call(url)
         links = soup.find_all('a', href=True)
         count = 1
 
@@ -55,8 +53,9 @@ class XTorrent(object):
 
         return self.torrents
 
-    def _call(self):
-        url = '%s/category-search/%s/%s/1/' % (self.base, self.query, self.category)
+    def _call(self, url):
         req = requests.get(url, headers=self.headers)
         soup = BeautifulSoup(req.text, 'html.parser')
+        for script in soup(["script", "style"]):
+            script.extract()
         return soup
