@@ -7,11 +7,12 @@ with open("README.md", "rb") as f:
 
 setup(
     name="ezflix",
-    packages=["ezflix"],
+    packages=["ezflix", "ezflix.extractor"],
     entry_points={
         "console_scripts": ['ezflix = ezflix.ezflix:main']
     },
-    version='0.0.6',
+    version='0.0.7',
+    keywords=['torrents', 'streaming'],
     description="Command line utility to search for TV shows and movie torrents and stream using Peerflix automatically.",
     long_description=long_descr,
     author="Anthony Bloomer",
@@ -20,5 +21,14 @@ setup(
     install_requires=[
         'beautifulsoup4',
         'requests'
+    ],
+    classifiers=[
+        'Development Status :: 3 - Alpha',
+        'Environment :: Console',
+        'Intended Audience :: Developers',
+        'Intended Audience :: End Users/Desktop',
+        'Operating System :: OS Independent',
+        'License :: OSI Approved :: MIT License',
+        'Programming Language :: Python :: 2.7'
     ],
 )

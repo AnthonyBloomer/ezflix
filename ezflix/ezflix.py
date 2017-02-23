@@ -1,10 +1,13 @@
 import argparse
-import sys
 import subprocess
+import sys
+
+from extractor.xtorrent import XTorrent
+from extractor.yts import yts
+from extractor.eztv import eztv
+
 from color import Color
-from yts import yts
-from eztv import eztv
-from xtorrent import XTorrent
+
 
 try:
     from urllib import quote_plus as quote_plus
