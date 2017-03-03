@@ -32,6 +32,8 @@ Usage
   optional arguments:
     -h, --help        show this help message and exit
 
+To refine your search query, enter ``search`` then run ``media_type query`` where media_type can be movie, tv or music.
+
 Examples
 ~~~~~~~~
 
