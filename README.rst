@@ -20,17 +20,17 @@ This program requires Peerflix. You can install Peerflix via NPM.
 Usage
 ~~~~~
 
-  ::
-  
-      usage: ezflix [-h] {movie,tv,music} query [latest]
+::
 
-      positional arguments:
-        {movie,tv,music}
-        query
-        latest
+  usage: ezflix [-h] {movie,tv,music} query [latest]
 
-      optional arguments:
-        -h, --help        show this help message and exit
+  positional arguments:
+    {movie,tv,music}
+    query
+    latest
+
+  optional arguments:
+    -h, --help        show this help message and exit
 
 Examples
 ~~~~~~~~
