@@ -83,8 +83,9 @@ def main(q=None, media_type=None):
 
     else:
         if not torrents:
-            print(colorful.red('No results found.'))
+            sys.exit(colorful.red('No results found.'))
         print('Select %s' % media_type.title())
+
         for result in torrents:
             print(colorful.bold('| ' + str(result['id'])) + ' | ' + result['title'])
 
@@ -99,7 +100,7 @@ def main(q=None, media_type=None):
             try:
                 val = int(read)
             except ValueError:
-                print('Expected int.')
+                print(colorful.red('Expected int.'))
                 continue
 
             if torrents is None:
