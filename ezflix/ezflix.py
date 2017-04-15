@@ -34,7 +34,7 @@ def search():
     print('Enter the search query: (media-type query)')
     query = raw_input()
     query = query.split()
-    if len(query) == 2:
+    if len(query) >= 2:
         main(media_type=query[0], q=' '.join(query[1:]))
     else:
         search()
@@ -71,23 +71,22 @@ def main(q=None, media_type=None):
         need_magnet = True
 
     if args.latest == 'latest':
-        if torrents:
-            if need_magnet:
-                torrents = xt.get_magnet(1)
-                if torrents:
-                    peerflix(torrents[0], torrents[1], media_player, media_type)
+        if not torrents:
+            sys.exit(colorful.red('Latest not found.'))
+        if need_magnet:
+            torrents = xt.get_magnet(1)
+            if torrents:
+                peerflix(torrents[0], torrents[1], media_player, media_type)
             else:
                 latest = torrents[0]
                 peerflix(latest['title'], latest['magnet'], media_player, media_type)
-        else:
-            sys.exit(colorful.red('Latest not found.'))
+
     else:
-        if torrents:
-            print('Select %s' % media_type.title())
-            for result in torrents:
-                print(colorful.bold('| ' + str(result['id'])) + ' | ' + result['title'])
-        else:
+        if not torrents:
             print(colorful.red('No results found.'))
+        print('Select %s' % media_type.title())
+        for result in torrents:
+            print(colorful.bold('| ' + str(result['id'])) + ' | ' + result['title'])
 
         while True:
             read = raw_input()
@@ -103,24 +102,22 @@ def main(q=None, media_type=None):
                 print('Expected int.')
                 continue
 
-            if torrents is not None:
+            if torrents is None:
+                sys.exit(colorful.red('No results found.'))
 
-                if need_magnet:
-                    torrents = xt.get_magnet(val)
-                    if torrents:
-                        found = True
-                        peerflix(torrents[0], torrents[1], media_player, media_type)
-                    else:
-                        found = False
-
+            if need_magnet:
+                torrents = xt.get_magnet(val)
+                if torrents:
+                    found = True
+                    peerflix(torrents[0], torrents[1], media_player, media_type)
                 else:
-                    for result in torrents:
-                        if result['id'] == int(read):
-                            found = True
-                            peerflix(result['title'], result['magnet'], media_player, media_type)
+                    found = False
 
             else:
-                print(colorful.red('No results found.'))
+                for result in torrents:
+                    if result['id'] == int(read):
+                        found = True
+                        peerflix(result['title'], result['magnet'], media_player, media_type)
 
             if not found:
                 print(colorful.red('Invalid selection.'))
