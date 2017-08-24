@@ -39,7 +39,7 @@ class Ezflix:
 
 def main():
     p = argparse.ArgumentParser()
-    p.add_argument('media_type', choices=['movie', 'tv', 'music'])
+    p.add_argument('media_type', default='tv', nargs='?', choices=['movie', 'tv', 'music'])
     p.add_argument('query')
     p.add_argument('--latest', dest='latest', action='store_true')
     args = p.parse_args()
