@@ -13,10 +13,9 @@ except:
 
 
 class Ezflix:
-    def __init__(self, media_type, search_query, latest=False):
+    def __init__(self, media_type, search_query):
         self.media_type = media_type
         self.search_query = search_query
-        self.latest = latest
 
     def get_magnet(self, val, torrents):
         for result in torrents:
@@ -51,8 +50,8 @@ def main():
     if not cmd_exists('mpv'):
         print('MPV not found. Setting default player as vlc.')
         media_player = 'vlc'
-        
-    ezflix = Ezflix(args.media_type, args.query, args.latest)
+
+    ezflix = Ezflix(args.media_type, args.query)
     torrents = ezflix.get_torrents()
 
     if args.latest:
@@ -76,7 +75,6 @@ def main():
             continue
 
         magnet = ezflix.get_magnet(val, torrents)
-
         peerflix(magnet, media_player, args.media_type)
 
 
