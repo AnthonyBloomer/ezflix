@@ -31,8 +31,8 @@ class XTorrent(object):
                 soup = self._call(url)
                 title = soup.find('div', {'class', 'box-info-heading'})
                 title = title.find('h1')
-                rows = soup.find('ul', {'class': 'download-links'})
-                magnet = rows.find('a', {'class': 'btn-magnet'})
+                rows = soup.find('ul', {'class': 'btn-wrap-list'})
+                magnet = rows.find('a', {'class': 'btn'})
                 magnet = [title.text.strip(), magnet['href'].strip()]
                 return magnet
 
