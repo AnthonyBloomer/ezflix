@@ -33,7 +33,6 @@ class Ezflix:
 
         elif self.media_type == 'music':
             xt = XTorrent(quote_plus(self.search_query), self.media_type)
-            self.need_magnet = True
             return xt.get_torrents()
 
 
