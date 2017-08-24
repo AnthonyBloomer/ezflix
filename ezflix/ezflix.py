@@ -17,8 +17,6 @@ class Ezflix:
         self.media_type = media_type
         self.search_query = search_query
         self.latest = latest
-        self.need_magnet = False
-        self.magnet = None
 
     def get_magnet(self, val, torrents):
         for result in torrents:
@@ -26,27 +24,13 @@ class Ezflix:
                 return result['magnet']
 
     def get_torrents(self):
-        arr = []
         if self.media_type == 'tv':
             torrents = eztv(self.search_query.replace(' ', '-').lower())
-
-            if torrents is None:
-                xt = XTorrent(quote_plus(self.search_query), self.media_type)
-                self.need_magnet = True
-                return xt.get_torrents()
-
             return torrents
 
         elif self.media_type == 'movie':
             torrents = yts(quote_plus(self.search_query))
-
-            if torrents is None:
-                xt = XTorrent(quote_plus(self.search_query), self.media_type)
-                self.need_magnet = True
-                return xt.get_torrents()
-
             return torrents
-
 
         elif self.media_type == 'music':
             xt = XTorrent(quote_plus(self.search_query), self.media_type)
@@ -58,7 +42,7 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument('media_type', choices=['movie', 'tv', 'music'])
     p.add_argument('query')
-    p.add_argument('latest', nargs='?', default='0')
+    p.add_argument('--latest', dest='latest', action='store_true')
     args = p.parse_args()
     media_player = 'mpv'
 
@@ -67,8 +51,15 @@ def main():
     if not cmd_exists('mpv'):
         print('MPV not found. Setting default player as vlc.')
         media_player = 'vlc'
+        
     ezflix = Ezflix(args.media_type, args.query, args.latest)
     torrents = ezflix.get_torrents()
+
+    if args.latest:
+        latest = torrents[0]
+        peerflix(latest['magnet'], media_player, args.media_type)
+        sys.exit()
+
     for result in torrents:
         print(colorful.bold('| ' + str(result['id'])) + ' | ' + result['title'])
 
@@ -85,6 +76,7 @@ def main():
             continue
 
         magnet = ezflix.get_magnet(val, torrents)
+
         peerflix(magnet, media_player, args.media_type)
 
 
