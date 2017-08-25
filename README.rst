@@ -22,17 +22,17 @@ Usage
 
 ::
 
-  usage: ezflix [-h] {movie,tv,music} query [latest]
+    usage: __main__.py [-h] [--latest] [{movie,tv,music}] query
 
-  positional arguments:
-    {movie,tv,music}
-    query
-    latest
+    positional arguments:
+        {movie,tv,music}
+        query
 
-  optional arguments:
-    -h, --help        show this help message and exit
+    optional arguments:
+        -h, --help        show this help message and exit
+        --latest
 
-To refine your search query, enter ``search`` then run ``media_type query`` where media_type can be movie, tv or music.
+
 
 Examples
 ~~~~~~~~
