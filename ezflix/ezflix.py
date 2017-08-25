@@ -53,6 +53,9 @@ def main():
     ezflix = Ezflix(args.media_type, args.query)
     torrents = ezflix.get_torrents()
 
+    if torrents is None:
+        sys.exit(colorful.red('No results found.'))
+
     if args.latest:
         latest = torrents[0]
         peerflix(latest['magnet'], media_player, args.media_type)
