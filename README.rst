@@ -42,12 +42,11 @@ Examples
 
     ezflix "The Man in the High Castle"
 
-You can also pass an optional argument 'latest' to watch the latest
-episode of a given TV series.
+Pass '--latest' to watch the latest episode of a given TV series.
 
 .. code:: bash
 
-    ezflix "South Park" latest
+    ezflix "South Park" --latest
 
 To search for movies, pass the 'movie' argument.
 
