@@ -103,7 +103,8 @@ def main():
                     search_query=args.query,
                     latest=args.latest,
                     media_player=media_player,
-                    limit=int(args.limit))
+                    limit=int(args.limit),
+                    subtitles=args.subtitles)
     ezflix.get_torrents()
     ezflix.display()
     ezflix.select()
