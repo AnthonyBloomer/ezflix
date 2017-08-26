@@ -40,14 +40,14 @@ Examples
 
 .. code:: bash
 
-    ezflix tv "The Man in the High Castle"
+    ezflix "The Man in the High Castle"
 
 You can also pass an optional argument 'latest' to watch the latest
 episode of a given TV series.
 
 .. code:: bash
 
-    ezflix tv "South Park" latest
+    ezflix "South Park" latest
 
 To search for movies, pass the 'movie' argument.
 
@@ -55,11 +55,6 @@ To search for movies, pass the 'movie' argument.
 
     ezflix movie "Mad Max"
 
-To search for music, pass the 'music' argument.
-
-.. code:: bash
-
-    ezflix music "Taylor Swift"
 
 Run development version
 ~~~~~~~~~~~~~~~~~~~~~~~
