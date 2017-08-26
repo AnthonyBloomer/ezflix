@@ -22,15 +22,16 @@ Usage
 
 ::
 
-    usage: __main__.py [-h] [--latest] [{movie,tv,music}] query
+    usage: __main__.py [-h] [--limit [LIMIT]] [--latest] [{movie,tv,music}] query
 
     positional arguments:
-        {movie,tv,music}
-        query
+      {movie,tv,music}  The media type
+      query             The search query.
 
     optional arguments:
-        -h, --help        show this help message and exit
-        --latest
+      -h, --help        show this help message and exit
+      --limit [LIMIT]   The number of results to return
+      --latest          Play the latest TV episode.
 
 
 

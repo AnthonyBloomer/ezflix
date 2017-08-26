@@ -66,10 +66,10 @@ class Ezflix:
 
 def main():
     p = argparse.ArgumentParser()
-    p.add_argument('media_type', default='tv', nargs='?', choices=['movie', 'tv', 'music'])
-    p.add_argument('query')
-    p.add_argument('--limit', default='20', nargs='?')
-    p.add_argument('--latest', dest='latest', action='store_true')
+    p.add_argument('media_type', help="The media type", default='tv', nargs='?', choices=['movie', 'tv', 'music'])
+    p.add_argument('query', help="The search query.")
+    p.add_argument('--limit', help="The number of results to return", default='20', nargs='?')
+    p.add_argument('--latest', help="Play the latest TV episode.", dest='latest', action='store_true')
     args = p.parse_args()
     media_player = 'mpv'
 
