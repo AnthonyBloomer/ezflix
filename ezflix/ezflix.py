@@ -26,12 +26,11 @@ class Ezflix:
                 return result
 
     def get_torrents(self):
-        if len(self.search_query) > 0:
-            if self.media_type == 'tv':
-                self.torrents = eztv(self.search_query.replace(' ', '-').lower(), limit=self.limit)
+        if self.media_type == 'tv':
+            self.torrents = eztv(self.search_query.replace(' ', '-').lower(), limit=self.limit)
 
-            elif self.media_type == 'movie':
-                self.torrents = yts(quote_plus(self.search_query), limit=self.limit)
+        elif self.media_type == 'movie':
+            self.torrents = yts(quote_plus(self.search_query), limit=self.limit)
 
     def display(self):
         if self.torrents is None:
