@@ -56,7 +56,7 @@ p.add_argument('--media_player', help="The media player.", default='mpv', nargs=
 p.add_argument('--latest', help="Play the latest TV episode.", dest='latest', action='store_true')
 p.add_argument('--subtitles', help="Load subtitles file.", dest='subtitles', action='store_true')
 p.add_argument('--sort_by', help="Use this flag to sort the torrents.", default='seeds', nargs='?', choices=sort_types)
-p.add_argument('--sort_order', help="Use this flag to set the sort order.", default='seeds', nargs='?',
+p.add_argument('--sort_order', help="Use this flag to set the sort order.", default='desc', nargs='?',
                choices=sort_orders)
 p.add_argument('--quality', help="Use this flag to set the min quality.", default='720p', nargs='?',
                choices=qualities)
@@ -68,23 +68,32 @@ media_player = args.media_player
 if not cmd_exists('peerflix'):
     sys.exit('This program requires Peerflix. https://github.com/mafintosh/peerflix')
 
-if not cmd_exists('mpv') and media_player is 'mpv':
-    media_player = 'vlc'
-
 if media_player not in supported_players:
     sys.exit('Media player not supported.')
+
+if not cmd_exists('mpv') and media_player is 'mpv':
+    media_player = 'vlc'
 
 if len(args.query) == 0:
     sys.exit(colorful.red("Search query not valid."))
 
 
 class Ezflix(object):
-    def __init__(self, media_type, search_query, quality, sort_by, sort_order, latest=False, media_player='mpv', limit=20,
+    def __init__(self,
+                 media_type,
+                 search_query,
+                 quality,
+                 sort_by,
+                 sort_order,
+                 latest=False,
+                 player='mpv',
+                 limit=20,
                  subtitles=False):
+
         self.media_type = media_type
         self.search_query = search_query
         self.latest = latest
-        self.media_player = media_player
+        self.player = player
         self.torrents = []
         self.limit = limit
         self.subtitles = subtitles
@@ -102,7 +111,7 @@ class Ezflix(object):
             self.torrents = eztv(self.search_query.replace(' ', '-').lower(), limit=self.limit)
 
         elif self.media_type == 'movie':
-            self.torrents = yts(quote_plus(self.search_query), limit=self.limit, sort_by=args.sort_by,
+            self.torrents = yts(q=quote_plus(self.search_query), limit=self.limit, sort_by=args.sort_by,
                                 sort_order=args.sort_order, quality=args.quality)
 
     def display(self):
@@ -112,7 +121,7 @@ class Ezflix(object):
         if self.latest:
             latest = self.torrents[0]
             print("Playing " + latest['title'])
-            peerflix(latest['magnet'], self.media_player, self.media_type, self.subtitles)
+            peerflix(latest['magnet'], self.player, self.media_type, self.subtitles)
             sys.exit()
 
         for result in self.torrents:
@@ -134,14 +143,14 @@ class Ezflix(object):
 
             magnet = self.get_magnet(val)
             print("Playing " + magnet['title'])
-            peerflix(magnet['magnet'], self.media_player, self.media_type, self.subtitles)
+            peerflix(magnet['magnet'], self.player, self.media_type, self.subtitles)
 
 
 def main():
     ezflix = Ezflix(media_type=args.media_type,
                     search_query=args.query,
                     latest=args.latest,
-                    media_player=media_player,
+                    player=media_player,
                     limit=int(args.limit),
                     subtitles=args.subtitles,
                     sort_by=args.sort_by,
