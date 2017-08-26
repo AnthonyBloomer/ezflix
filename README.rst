@@ -86,6 +86,8 @@ To search for movies, pass the 'movie' argument.
 Run development version
 ~~~~~~~~~~~~~~~~~~~~~~~
 
+Before any new changes are pushed to PyPi, you can clone the development version to avail of any new features.
+
 .. code:: bash
 
     git clone https://github.com/AnthonyBloomer/ezflix.git && cd ezflix
