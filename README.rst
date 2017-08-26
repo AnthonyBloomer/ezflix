@@ -67,9 +67,11 @@ Usage
       --sort_order [{asc,desc}]
                             Use this flag to set the sort order.
       --quality [{720p,1080p,3d}]
-                            Use this flag to set the min quality.
+                            Use this flag to set the desired quality.
 
 
+
+Please note the filtering options only work for movie torrents.
 
 Examples
 ~~~~~~~~
