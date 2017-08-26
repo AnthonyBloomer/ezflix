@@ -1,8 +1,19 @@
 import requests
 
 
-def yts(q, limit=20):
-    req = requests.get('https://yts.ag/api/v2/list_movies.json?query_term=%s&sort_by=seeds&limit=%s' % (q, limit))
+def yts(q, sort_by, sort_order, quality, limit=20):
+    params = {
+        'query_term': q,
+        'sort_by': sort_by,
+        'sort_order': sort_order,
+        'limit': limit,
+        'quality': quality
+
+    }
+    req = requests.get('https://yts.ag/api/v2/list_movies.json', params=params)
+
+    print req.url
+
     if req.status_code == 200:
         req = req.json()
         if req['status'] == 'ok':

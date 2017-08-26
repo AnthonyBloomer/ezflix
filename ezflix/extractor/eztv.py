@@ -6,6 +6,7 @@ import sys
 def eztv(q, mt=None, limit=20):
     url = 'https://eztv.ag/search/' + q
     req = requests.get(url)
+    print req.url
     soup = BeautifulSoup(req.text, 'html.parser')
     magnets = soup.find_all('a', {'class': 'magnet'}, href=True)
 

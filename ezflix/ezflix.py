@@ -10,9 +10,77 @@ try:
 except:
     from urllib import parse as quote_plus
 
+supported_players = [
+    'mpv',
+    'vlc',
+    'mplayer',
+    'smplayer',
+    'mpchc',
+    'potplayer',
+    'webplay',
+    'omx'
+]
+
+sort_types = [
+    'download_count',
+    'like_count',
+    'date_added',
+    'seeds',
+    'peers',
+    'rating',
+    'title',
+    'year'
+]
+
+sort_orders = [
+    'asc',
+    'desc'
+]
+
+media_types = [
+    'movie',
+    'tv'
+]
+
+qualities = [
+    '720p',
+    '1080p',
+    '3d'
+]
+
+p = argparse.ArgumentParser()
+p.add_argument('media_type', help="The media type.", default='tv', nargs='?', choices=media_types)
+p.add_argument('query', help="The search query.")
+p.add_argument('--limit', help="The number of results to return.", default='20', nargs='?')
+p.add_argument('--media_player', help="The media player.", default='mpv', nargs='?')
+p.add_argument('--latest', help="Play the latest TV episode.", dest='latest', action='store_true')
+p.add_argument('--subtitles', help="Load subtitles file.", dest='subtitles', action='store_true')
+p.add_argument('--sort_by', help="Use this flag to sort the torrents.", default='seeds', nargs='?', choices=sort_types)
+p.add_argument('--sort_order', help="Use this flag to set the sort order.", default='seeds', nargs='?',
+               choices=sort_orders)
+p.add_argument('--quality', help="Use this flag to set the min quality.", default='720p', nargs='?',
+               choices=qualities)
+
+args = p.parse_args()
+
+media_player = args.media_player
+
+if not cmd_exists('peerflix'):
+    sys.exit('This program requires Peerflix. https://github.com/mafintosh/peerflix')
+
+if not cmd_exists('mpv') and media_player is 'mpv':
+    media_player = 'vlc'
+
+if media_player not in supported_players:
+    sys.exit('Media player not supported.')
+
+if len(args.query) == 0:
+    sys.exit(colorful.red("Search query not valid."))
+
 
 class Ezflix(object):
-    def __init__(self, media_type, search_query, latest=False, media_player='mpv', limit=20, subtitles=False):
+    def __init__(self, media_type, search_query, quality, sort_by, sort_order, latest=False, media_player='mpv', limit=20,
+                 subtitles=False):
         self.media_type = media_type
         self.search_query = search_query
         self.latest = latest
@@ -20,6 +88,9 @@ class Ezflix(object):
         self.torrents = []
         self.limit = limit
         self.subtitles = subtitles
+        self.sort_by = sort_by
+        self.sort_order = sort_order
+        self.quality = quality
 
     def get_magnet(self, val):
         for result in self.torrents:
@@ -31,7 +102,8 @@ class Ezflix(object):
             self.torrents = eztv(self.search_query.replace(' ', '-').lower(), limit=self.limit)
 
         elif self.media_type == 'movie':
-            self.torrents = yts(quote_plus(self.search_query), limit=self.limit)
+            self.torrents = yts(quote_plus(self.search_query), limit=self.limit, sort_by=args.sort_by,
+                                sort_order=args.sort_order, quality=args.quality)
 
     def display(self):
         if self.torrents is None or not len(self.torrents) > 0:
@@ -66,45 +138,15 @@ class Ezflix(object):
 
 
 def main():
-    supported_players = [
-        'mpv',
-        'vlc',
-        'mplayer',
-        'smplayer',
-        'mpchc',
-        'potplayer',
-        'webplay',
-        'omx'
-    ]
-
-    p = argparse.ArgumentParser()
-    p.add_argument('media_type', help="The media type.", default='tv', nargs='?', choices=['movie', 'tv', 'music'])
-    p.add_argument('query', help="The search query.")
-    p.add_argument('--limit', help="The number of results to return.", default='20', nargs='?')
-    p.add_argument('--media_player', help="The media player.", default='mpv', nargs='?')
-    p.add_argument('--latest', help="Play the latest TV episode.", dest='latest', action='store_true')
-    p.add_argument('--subtitles', help="Load subtitles file.", dest='subtitles', action='store_true')
-    args = p.parse_args()
-    media_player = args.media_player
-
-    if not cmd_exists('peerflix'):
-        sys.exit('This program requires Peerflix. https://github.com/mafintosh/peerflix')
-
-    if not cmd_exists('mpv') and media_player is 'mpv':
-        media_player = 'vlc'
-
-    if media_player not in supported_players:
-        sys.exit('Media player not supported.')
-
-    if len(args.query) == 0:
-        sys.exit(colorful.red("Search query not valid."))
-
     ezflix = Ezflix(media_type=args.media_type,
                     search_query=args.query,
                     latest=args.latest,
                     media_player=media_player,
                     limit=int(args.limit),
-                    subtitles=args.subtitles)
+                    subtitles=args.subtitles,
+                    sort_by=args.sort_by,
+                    sort_order=args.sort_order,
+                    quality=args.quality)
     ezflix.get_torrents()
     ezflix.display()
     ezflix.select()
