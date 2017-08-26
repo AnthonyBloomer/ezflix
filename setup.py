@@ -11,7 +11,7 @@ setup(
     entry_points={
         "console_scripts": ['ezflix = ezflix.ezflix:main']
     },
-    version='0.0.9',
+    version='1.0.0',
     keywords=['torrents', 'streaming'],
     description="Command line utility to search for TV shows and movie torrents and stream using Peerflix automatically.",
     long_description=long_descr,
@@ -20,7 +20,8 @@ setup(
     url="https://github.com/AnthonyBloomer/ezflix",
     install_requires=[
         'beautifulsoup4',
-        'requests'
+        'requests',
+        'colorful'
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',

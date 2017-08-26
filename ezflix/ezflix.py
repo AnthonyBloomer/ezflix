@@ -33,10 +33,10 @@ class Ezflix:
             self.torrents = yts(quote_plus(self.search_query), limit=self.limit)
 
     def display(self):
-        if self.torrents is None:
+        if self.torrents is None or not len(self.torrents) > 0:
             sys.exit(colorful.red('No results found.'))
 
-        if self.latest and len(self.torrents) > 0:
+        if self.latest:
             latest = self.torrents[0]
             print("Playing " + latest['title'])
             peerflix(latest['magnet'], self.media_player, self.media_type)
