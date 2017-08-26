@@ -17,12 +17,6 @@ class XTorrent(object):
         self.query = query
         self.category = category
         self.torrents = []
-        if self.category == 'movie':
-            self.category = Category.MOVIE
-        elif category == 'tv':
-            self.category = Category.TV
-        else:
-            self.category = Category.MUSIC
 
     def get_magnet(self, torrent_id):
         for torrent in self.torrents:
