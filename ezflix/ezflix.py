@@ -2,7 +2,6 @@ import argparse
 from utils import cmd_exists, peerflix
 import sys
 import colorful
-from extractor.xtorrent import XTorrent
 from extractor.yts import yts
 from extractor.eztv import eztv
 
@@ -13,33 +12,64 @@ except:
 
 
 class Ezflix:
-    def __init__(self, media_type, search_query):
+    def __init__(self, media_type, search_query, latest=False, media_player='mpv', limit=20):
         self.media_type = media_type
         self.search_query = search_query
+        self.latest = latest
+        self.media_player = media_player
+        self.torrents = []
+        self.limit = limit
 
-    def get_magnet(self, val, torrents):
-        for result in torrents:
+    def get_magnet(self, val):
+        for result in self.torrents:
             if result['id'] == int(val):
-                return result['magnet']
+                return result
 
     def get_torrents(self):
-        if self.media_type == 'tv':
-            torrents = eztv(self.search_query.replace(' ', '-').lower())
-            return torrents
+        if len(self.search_query) > 0:
+            if self.media_type == 'tv':
+                self.torrents = eztv(self.search_query.replace(' ', '-').lower(), limit=self.limit)
 
-        elif self.media_type == 'movie':
-            torrents = yts(quote_plus(self.search_query))
-            return torrents
+            elif self.media_type == 'movie':
+                self.torrents = yts(quote_plus(self.search_query), limit=self.limit)
 
-        elif self.media_type == 'music':
-            xt = XTorrent(quote_plus(self.search_query), self.media_type)
-            return xt.get_torrents()
+    def display(self):
+        if self.torrents is None:
+            sys.exit(colorful.red('No results found.'))
+
+        if self.latest and len(self.torrents) > 0:
+            latest = self.torrents[0]
+            print("Playing " + latest['title'])
+            peerflix(latest['magnet'], self.media_player, self.media_type)
+            sys.exit()
+
+        for result in self.torrents:
+            print(colorful.bold('| ' + str(result['id'])) + ' | ' + result['title'])
+
+    def select(self):
+        print("Make selection: ")
+        while True:
+            read = raw_input()
+
+            if read == 'quit':
+                sys.exit()
+
+            try:
+                val = int(read)
+            except ValueError:
+                print(colorful.red('Expected int.'))
+                continue
+
+            magnet = self.get_magnet(val)
+            print("Playing " + magnet['title'])
+            peerflix(magnet['magnet'], self.media_player, self.media_type)
 
 
 def main():
     p = argparse.ArgumentParser()
     p.add_argument('media_type', default='tv', nargs='?', choices=['movie', 'tv', 'music'])
     p.add_argument('query')
+    p.add_argument('--limit', default='20', nargs='?')
     p.add_argument('--latest', dest='latest', action='store_true')
     args = p.parse_args()
     media_player = 'mpv'
@@ -50,34 +80,17 @@ def main():
         print('MPV not found. Setting default player as vlc.')
         media_player = 'vlc'
 
-    ezflix = Ezflix(args.media_type, args.query)
-    torrents = ezflix.get_torrents()
+    if len(args.query) == 0:
+        sys.exit(colorful.red("Search query not valid."))
 
-    if torrents is None:
-        sys.exit(colorful.red('No results found.'))
-
-    if args.latest:
-        latest = torrents[0]
-        peerflix(latest['magnet'], media_player, args.media_type)
-        sys.exit()
-
-    for result in torrents:
-        print(colorful.bold('| ' + str(result['id'])) + ' | ' + result['title'])
-
-    while True:
-        read = raw_input()
-
-        if read == 'quit':
-            sys.exit()
-
-        try:
-            val = int(read)
-        except ValueError:
-            print(colorful.red('Expected int.'))
-            continue
-
-        magnet = ezflix.get_magnet(val, torrents)
-        peerflix(magnet, media_player, args.media_type)
+    ezflix = Ezflix(media_type=args.media_type,
+                    search_query=args.query,
+                    latest=args.latest,
+                    media_player=media_player,
+                    limit=int(args.limit))
+    ezflix.get_torrents()
+    ezflix.display()
+    ezflix.select()
 
 
 if __name__ == '__main__':
