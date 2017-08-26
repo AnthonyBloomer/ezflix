@@ -1,7 +1,7 @@
 ezflix
 ======
 
-Command line utility that allows you to search for TV shows and movie torrents and
+Command line utility that allows you to search for TV and movie torrents and
 stream using Peerflix automatically.
 
 Install
