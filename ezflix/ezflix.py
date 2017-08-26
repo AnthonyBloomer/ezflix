@@ -12,13 +12,14 @@ except:
 
 
 class Ezflix(object):
-    def __init__(self, media_type, search_query, latest=False, media_player='mpv', limit=20):
+    def __init__(self, media_type, search_query, latest=False, media_player='mpv', limit=20, subtitles=False):
         self.media_type = media_type
         self.search_query = search_query
         self.latest = latest
         self.media_player = media_player
         self.torrents = []
         self.limit = limit
+        self.subtitles = subtitles
 
     def get_magnet(self, val):
         for result in self.torrents:
@@ -39,7 +40,7 @@ class Ezflix(object):
         if self.latest:
             latest = self.torrents[0]
             print("Playing " + latest['title'])
-            peerflix(latest['magnet'], self.media_player, self.media_type)
+            peerflix(latest['magnet'], self.media_player, self.media_type, self.subtitles)
             sys.exit()
 
         for result in self.torrents:
@@ -61,7 +62,7 @@ class Ezflix(object):
 
             magnet = self.get_magnet(val)
             print("Playing " + magnet['title'])
-            peerflix(magnet['magnet'], self.media_player, self.media_type)
+            peerflix(magnet['magnet'], self.media_player, self.media_type, self.subtitles)
 
 
 def main():
@@ -77,11 +78,12 @@ def main():
     ]
 
     p = argparse.ArgumentParser()
-    p.add_argument('media_type', help="The media type", default='tv', nargs='?', choices=['movie', 'tv', 'music'])
+    p.add_argument('media_type', help="The media type.", default='tv', nargs='?', choices=['movie', 'tv', 'music'])
     p.add_argument('query', help="The search query.")
-    p.add_argument('--limit', help="The number of results to return", default='20', nargs='?')
+    p.add_argument('--limit', help="The number of results to return.", default='20', nargs='?')
     p.add_argument('--media_player', help="The media player.", default='mpv', nargs='?')
     p.add_argument('--latest', help="Play the latest TV episode.", dest='latest', action='store_true')
+    p.add_argument('--subtitles', help="Load subtitles file.", dest='subtitles', action='store_true')
     args = p.parse_args()
     media_player = args.media_player
 

@@ -46,19 +46,20 @@ Usage
 ::
 
     usage: __main__.py [-h] [--limit [LIMIT]] [--media_player [MEDIA_PLAYER]]
-                       [--latest]
+                       [--latest] [--subtitles]
                        [{movie,tv,music}] query
 
     positional arguments:
-      {movie,tv,music}      The media type
+      {movie,tv,music}      The media type.
       query                 The search query.
 
     optional arguments:
       -h, --help            show this help message and exit
-      --limit [LIMIT]       The number of results to return
+      --limit [LIMIT]       The number of results to return.
       --media_player [MEDIA_PLAYER]
                             The media player.
       --latest              Play the latest TV episode.
+      --subtitles           Load subtitles file.
 
 
 
