@@ -47,10 +47,12 @@ Usage
 
     usage: __main__.py [-h] [--limit [LIMIT]] [--media_player [MEDIA_PLAYER]]
                        [--latest] [--subtitles]
-                       [{movie,tv,music}] query
+                       [--sort_by [{download_count,like_count,date_added,seeds,peers,rating,title,year}]]
+                       [--sort_order [{asc,desc}]] [--quality [{720p,1080p,3d}]]
+                       [{movie,tv}] query
 
     positional arguments:
-      {movie,tv,music}      The media type.
+      {movie,tv}            The media type.
       query                 The search query.
 
     optional arguments:
@@ -60,6 +62,12 @@ Usage
                             The media player.
       --latest              Play the latest TV episode.
       --subtitles           Load subtitles file.
+      --sort_by [{download_count,like_count,date_added,seeds,peers,rating,title,year}]
+                            Use this flag to sort the torrents.
+      --sort_order [{asc,desc}]
+                            Use this flag to set the sort order.
+      --quality [{720p,1080p,3d}]
+                            Use this flag to set the min quality.
 
 
 
