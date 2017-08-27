@@ -63,15 +63,12 @@ Usage
       --latest              Play the latest TV episode.
       --subtitles           Load subtitles file.
       --sort_by [{download_count,like_count,date_added,seeds,peers,rating,title,year}]
-                            Use this flag to sort the torrents.
+                            Use this argument to sort the torrents.
       --sort_order [{asc,desc}]
-                            Use this flag to set the sort order.
+                            Use this argument to set the sort order.
       --quality [{720p,1080p,3d}]
-                            Use this flag to set the desired quality.
+                            Use this argument to set the min quality.
 
-
-
-Please note the filtering options only work for movie torrents.
 
 Examples
 ~~~~~~~~
@@ -92,6 +89,10 @@ To search for movies, pass the 'movie' argument.
 
     ezflix movie "Mad Max"
 
+Search for movies released in 2017 and order by like count descending.
+
+.. code:: bash
+    ezflix movie '2017' --sort_by=like_count --sort_order=desc
 
 Run development version
 ~~~~~~~~~~~~~~~~~~~~~~~

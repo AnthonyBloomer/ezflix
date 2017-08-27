@@ -55,10 +55,10 @@ p.add_argument('--limit', help="The number of results to return.", default='20',
 p.add_argument('--media_player', help="The media player.", default='mpv', nargs='?')
 p.add_argument('--latest', help="Play the latest TV episode.", dest='latest', action='store_true')
 p.add_argument('--subtitles', help="Load subtitles file.", dest='subtitles', action='store_true')
-p.add_argument('--sort_by', help="Use this flag to sort the torrents.", default='seeds', nargs='?', choices=sort_types)
-p.add_argument('--sort_order', help="Use this flag to set the sort order.", default='desc', nargs='?',
+p.add_argument('--sort_by', help="Use this argument to sort the torrents.", default='seeds', nargs='?', choices=sort_types)
+p.add_argument('--sort_order', help="Use this argument to set the sort order.", default='desc', nargs='?',
                choices=sort_orders)
-p.add_argument('--quality', help="Use this flag to set the min quality.", default='720p', nargs='?',
+p.add_argument('--quality', help="Use this argument to set the min quality.", default='720p', nargs='?',
                choices=qualities)
 
 args = p.parse_args()
