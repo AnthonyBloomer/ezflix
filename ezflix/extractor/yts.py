@@ -23,7 +23,4 @@ def yts(q, sort_by, sort_order, quality, limit=20):
                     title = '%s (%s) (%s)' % (r['title'], r['year'], r['torrents'][0]['quality'])
                     arr.append({'id': count, 'title': title, 'magnet': r['torrents'][0]['url']})
                     count += 1
-
-                    if count == limit + 1:
-                        break
                 return arr

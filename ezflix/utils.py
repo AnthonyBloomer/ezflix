@@ -8,5 +8,6 @@ def cmd_exists(cmd):
 def peerflix(magnet_link, media_player, media_type, subtitles):
     is_audio = '-a' if media_type == 'music' else ''
     subtitles = 't' if subtitles else ''
-    print('Playing...')
-    subprocess.Popen(['/bin/bash', '-c', 'peerflix "%s" %s --%s %s' % (magnet_link, is_audio, media_player, subtitles)])
+    cmd = 'peerflix "%s" %s --%s %s' % (magnet_link, is_audio, media_player, subtitles)
+    print("Executing " + cmd)
+    subprocess.Popen(['/bin/bash', '-c', cmd])
