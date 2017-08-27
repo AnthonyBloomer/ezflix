@@ -92,6 +92,7 @@ To search for movies, pass the 'movie' argument.
 Search for movies released in 2017 and order by like count descending.
 
 .. code:: bash
+
     ezflix movie '2017' --sort_by=like_count --sort_order=desc
 
 Run development version
