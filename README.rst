@@ -111,7 +111,7 @@ Before any new changes are pushed to PyPi, you can clone the development version
 
 
 Contributing
-------------
+~~~~~~~~~~~~
 
 - Fork the project and clone locally.
 - Create a new branch for what you're going to work on.
