@@ -74,7 +74,7 @@ if media_player not in supported_players:
 if not cmd_exists('mpv') and media_player is 'mpv':
     media_player = 'vlc'
 
-if len(args.query) == 0:
+if not args.query:
     sys.exit(colorful.red("Search query not valid."))
 
 
@@ -105,6 +105,7 @@ class Ezflix(object):
         for result in self.torrents:
             if result['id'] == int(val):
                 return result
+        return False
 
     def get_torrents(self):
         if self.media_type == 'tv':
@@ -142,7 +143,13 @@ class Ezflix(object):
                 continue
 
             magnet = self.get_magnet(val)
+            
+            if not magnet:
+                print(colorful.red('Invalid selection.'))
+                continue
+                
             print("Playing " + magnet['title'])
+            
             peerflix(magnet['magnet'], self.player, self.media_type, self.subtitles)
 
 
