@@ -45,8 +45,8 @@ Usage
 
 ::
 
-    usage: __main__.py [-h] [--limit [LIMIT]] [--media_player [MEDIA_PLAYER]]
-                       [--latest] [--subtitles]
+    usage: __main__.py [-h] [--limit [LIMIT]] [--minimum_rating [MINIMUM_RATING]]
+                       [--media_player [MEDIA_PLAYER]] [--latest] [--subtitles]
                        [--sort_by [{download_count,like_count,date_added,seeds,peers,rating,title,year}]]
                        [--sort_order [{asc,desc}]] [--quality [{720p,1080p,3d}]]
                        [{movie,tv}] query
@@ -58,6 +58,8 @@ Usage
     optional arguments:
       -h, --help            show this help message and exit
       --limit [LIMIT]       The number of results to return.
+      --minimum_rating [MINIMUM_RATING]
+                            Used to filter movie by a given minimum IMDb rating
       --media_player [MEDIA_PLAYER]
                             The media player.
       --latest              Play the latest TV episode.
@@ -68,7 +70,6 @@ Usage
                             Use this argument to set the sort order.
       --quality [{720p,1080p,3d}]
                             Use this argument to set the min quality.
-
 
 Examples
 ~~~~~~~~
