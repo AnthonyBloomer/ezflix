@@ -1,13 +1,14 @@
 import requests
 
 
-def yts(q, sort_by, sort_order, quality, limit=20):
+def yts(q, sort_by, sort_order, quality, minimum_rating, limit=20):
     params = {
         'query_term': q,
         'sort_by': sort_by,
         'sort_order': sort_order,
         'limit': limit,
-        'quality': quality
+        'quality': quality,
+        'minimum_rating': minimum_rating
 
     }
     req = requests.get('https://yts.ag/api/v2/list_movies.json', params=params)
