@@ -119,10 +119,10 @@ class Ezflix(object):
         elif self.media_type == 'movie':
             self.torrents = yts(q=quote_plus(self.search_query),
                                 limit=self.limit,
-                                sort_by=args.sort_by,
-                                sort_order=args.sort_order,
-                                quality=args.quality,
-                                minimum_rating=args.minimum_rating
+                                sort_by=self.sort_by,
+                                sort_order=self.sort_order,
+                                quality=self.quality,
+                                minimum_rating=self.minimum_rating
                                 )
 
     def display(self):
@@ -146,11 +146,13 @@ class Ezflix(object):
             if read == 'quit':
                 sys.exit()
 
-            if not isinstance(read, int):
-                print(colorful.red('Expected int.'))
+            try:
+                int_val = int(read)
+            except:
+                print(colorful.red('Invalid selection.'))
                 continue
 
-            magnet = self.get_magnet(val)
+            magnet = self.get_magnet(int_val)
 
             if not magnet:
                 print(colorful.red('Invalid selection.'))
