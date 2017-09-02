@@ -49,6 +49,7 @@ qualities = [
 ]
 
 p = argparse.ArgumentParser()
+
 p.add_argument('media_type', help="The media type.", default='tv', nargs='?', choices=media_types)
 p.add_argument('query', help="The search query.")
 p.add_argument('--limit', help="The number of results to return.", default='20', nargs='?')
@@ -135,10 +136,8 @@ class Ezflix(object):
 
             if read == 'quit':
                 sys.exit()
-
-            try:
-                val = int(read)
-            except ValueError:
+                
+            if not isinstance(read, int):
                 print(colorful.red('Expected int.'))
                 continue
 
