@@ -22,6 +22,8 @@ def yts(q, sort_by, sort_order, quality, minimum_rating, limit=20):
                 arr, count = [], 1
                 for r in req['data']['movies']:
                     title = '%s (%s) (%s)' % (r['title'], r['year'], r['torrents'][0]['quality'])
-                    arr.append({'id': count, 'title': title, 'magnet': r['torrents'][0]['url']})
+                    arr.append({'id': count,
+                                'title': title,
+                                'magnet': r['torrents'][0]['url']})
                     count += 1
                 return arr

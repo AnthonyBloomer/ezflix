@@ -3,7 +3,8 @@ from bs4 import BeautifulSoup
 import sys
 
 
-def eztv(q, mt=None, limit=20):
+def eztv(q, limit):
+    limit = int(limit)
     url = 'https://eztv.ag/search/' + q
     req = requests.get(url)
     soup = BeautifulSoup(req.text, 'html.parser')
@@ -21,6 +22,5 @@ def eztv(q, mt=None, limit=20):
             arr.append({'id': count, 'title': magnet['title'][:-12], 'magnet': magnet['href']})
 
         count += 1
-
 
     return arr

@@ -4,6 +4,8 @@ import colorful
 from extractor.yts import yts
 from extractor.eztv import eztv
 from argument_parser import Parser
+import os
+import uuid
 
 try:
     from urllib import quote_plus as quote_plus
@@ -86,7 +88,16 @@ def select(torrents):
 
         print("Playing " + magnet['title'])
 
-        peerflix(magnet['magnet'], media_player, args.media_type, args.subtitles, args.remove)
+        if args.subtitles:
+            os.system("subliminal download -l en '%s'" % magnet['title'])
+            cur_dir = os.getcwd()
+            file_list = os.listdir(cur_dir)
+            file_path = ''
+            for f in file_list:
+                if magnet['title'] in f:
+                    file_path = f
+
+            peerflix(magnet['magnet'], media_player, args.media_type, args.subtitles, args.remove, file_path)
 
 
 def main():
