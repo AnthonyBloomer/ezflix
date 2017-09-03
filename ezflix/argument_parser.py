@@ -117,5 +117,11 @@ class Parser(object):
             action='store_true'
         )
 
+        self._parser.add_argument(
+            '--language',
+            help='Language as IETF code. Set this argument to download subtitles in a given language.',
+            default='en'
+        )
+
     def parse(self):
         return self._parser.parse_args()

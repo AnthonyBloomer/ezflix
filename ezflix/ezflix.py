@@ -5,7 +5,6 @@ from extractor.yts import yts
 from extractor.eztv import eztv
 from argument_parser import Parser
 import os
-import uuid
 
 try:
     from urllib import quote_plus as quote_plus
@@ -52,14 +51,32 @@ def get_torrents():
     return torrents
 
 
+def find_subtitles(title):
+    os.system("subliminal download -l %s '%s'" % (args.language, title))
+    cur_dir = os.getcwd()
+    file_list = os.listdir(cur_dir)
+    for f in file_list:
+        if title in f:
+            return f
+    return
+
+
 def display(torrents):
     if torrents is None or len(torrents) == 0:
         sys.exit(colorful.red('No results found.'))
 
     if args.latest:
+
         latest = torrents[0]
+        file_path = ''
+
+        if args.subtitles:
+            file_path = find_subtitles(latest['title'])
+
         print("Playing " + latest['title'])
-        peerflix(latest['magnet'], media_player, args.media_type, args.subtitles, args.remove)
+
+        peerflix(latest['magnet'], media_player, args.media_type, args.subtitles, args.remove, file_path)
+
         sys.exit()
 
     for result in torrents:
@@ -91,12 +108,7 @@ def select(torrents):
         file_path = ''
 
         if args.subtitles:
-            os.system("subliminal download -l en '%s'" % magnet['title'])
-            cur_dir = os.getcwd()
-            file_list = os.listdir(cur_dir)
-            for f in file_list:
-                if magnet['title'] in f:
-                    file_path = f
+            file_path = find_subtitles(magnet['title'])
 
         peerflix(magnet['magnet'], media_player, args.media_type, args.subtitles, args.remove, file_path)
 

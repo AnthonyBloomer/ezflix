@@ -46,12 +46,12 @@ Usage
 ::
 
     usage: ezflix [-h] [--limit [LIMIT]] [--minimum_rating [MINIMUM_RATING]]
-                  [--media_player [{mpv,vlc,mplayer,smplayer,mpchc,potplayer,webplay,omx,airplay}]]
-                  [--latest] [--subtitles]
-                  [--sort_by [{download_count,like_count,date_added,seeds,peers,rating,title,year}]]
-                  [--sort_order [{asc,desc}]] [--quality [{720p,1080p,3d}]]
-                  [--genre GENRE] [--remove]
-                  [{movie,tv}] query
+              [--media_player [{mpv,vlc,mplayer,smplayer,mpchc,potplayer,webplay,omx,airplay}]]
+              [--latest] [--subtitles]
+              [--sort_by [{download_count,like_count,date_added,seeds,peers,rating,title,year}]]
+              [--sort_order [{asc,desc}]] [--quality [{720p,1080p,3d}]]
+              [--genre GENRE] [--remove] [--language LANGUAGE]
+              [{movie,tv}] query
 
     positional arguments:
       {movie,tv}            The media type.
@@ -75,7 +75,8 @@ Usage
       --genre GENRE         Used to filter by a given genre (See
                             http://www.imdb.com/genre/ for full list)
       --remove              Remove files on exit.
-
+      --language LANGUAGE   Language as IETF code. Set this argument to download
+                            subtitles in a given language.
 
 Examples
 ~~~~~~~~
@@ -107,6 +108,7 @@ Search for thrillers released in 2017 and order by download count descending.
 .. code:: bash
 
     ezflix movie '2017' --sort_by=download_count --sort_order=desc --genre=thriller
+
 
 Run development version
 ~~~~~~~~~~~~~~~~~~~~~~~
