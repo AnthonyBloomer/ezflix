@@ -38,7 +38,7 @@ Below is a list of media players supported in Peerflix.
 
 In ezflix, the default player is mpv. It will fallback to vlc if mpv isn't found.
 
-You can use the media_player flag to set your media player.
+You can use the media_player argument to set your media player.
 
 Usage
 ~~~~~
@@ -104,7 +104,8 @@ Before any new changes are pushed to PyPi, you can clone the development version
 
 .. code:: bash
 
-    git clone https://github.com/AnthonyBloomer/ezflix.git && cd ezflix
+    git clone https://github.com/AnthonyBloomer/ezflix.git
+    cd ezflix
     virtualenv env
     source env/bin/activate
     pip install -r requirements.txt
