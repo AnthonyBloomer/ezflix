@@ -61,7 +61,8 @@ setup(
     install_requires=[
         'beautifulsoup4',
         'requests',
-        'colorful'
+        'colorful',
+        'subliminal'
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',
