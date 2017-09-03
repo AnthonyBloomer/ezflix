@@ -1,7 +1,7 @@
 import requests
 
 
-def yts(q, sort_by, sort_order, quality, minimum_rating, limit=20):
+def yts(q, limit=20, minimum_rating=4, quality='720p', sort_by='seeds', sort_order='desc'):
     params = {
         'query_term': q,
         'sort_by': sort_by,
