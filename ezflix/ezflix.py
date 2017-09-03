@@ -13,12 +13,10 @@ except:
 parser = Parser()
 args = parser.parse()
 
-media_player = args.media_player
-
 if not cmd_exists('peerflix'):
     sys.exit('This program requires Peerflix. https://github.com/mafintosh/peerflix')
 
-if not cmd_exists('mpv') and media_player == 'mpv':
+if not cmd_exists('mpv') and args.media_player == 'mpv':
     media_player = 'vlc'
 
 if not args.query:
@@ -111,7 +109,7 @@ def main():
     ezflix = Ezflix(media_type=args.media_type,
                     search_query=args.query,
                     latest=args.latest,
-                    player=media_player,
+                    player=args.media_player,
                     limit=int(args.limit),
                     subtitles=args.subtitles,
                     sort_by=args.sort_by,
