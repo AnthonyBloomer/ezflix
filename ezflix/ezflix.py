@@ -57,7 +57,7 @@ def display(torrents):
     if args.latest:
         latest = torrents[0]
         print("Playing " + latest['title'])
-        peerflix(latest['magnet'], media_player, args.media_type, args.subtitles)
+        peerflix(latest['magnet'], media_player, args.media_type, args.subtitles, args.remove)
         sys.exit()
 
     for result in torrents:
@@ -86,7 +86,7 @@ def select(torrents):
 
         print("Playing " + magnet['title'])
 
-        peerflix(magnet['magnet'], media_player, args.media_type, args.subtitles)
+        peerflix(magnet['magnet'], media_player, args.media_type, args.subtitles, args.remove)
 
 
 def main():

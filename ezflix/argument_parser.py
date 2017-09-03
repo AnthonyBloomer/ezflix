@@ -12,7 +12,8 @@ class Parser(object):
             'mpchc',
             'potplayer',
             'webplay',
-            'omx'
+            'omx',
+            'airplay'
         ]
 
         self._sort_types = [
@@ -107,6 +108,13 @@ class Parser(object):
         self._parser.add_argument(
             '--genre',
             help='Used to filter by a given genre (See http://www.imdb.com/genre/ for full list)'
+        )
+
+        self._parser.add_argument(
+            '--remove',
+            help='Remove files on exit.',
+            dest='remove',
+            action='store_true'
         )
 
     def parse(self):
