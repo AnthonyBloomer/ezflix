@@ -88,16 +88,17 @@ def select(torrents):
 
         print("Playing " + magnet['title'])
 
+        file_path = ''
+
         if args.subtitles:
             os.system("subliminal download -l en '%s'" % magnet['title'])
             cur_dir = os.getcwd()
             file_list = os.listdir(cur_dir)
-            file_path = ''
             for f in file_list:
                 if magnet['title'] in f:
                     file_path = f
 
-            peerflix(magnet['magnet'], media_player, args.media_type, args.subtitles, args.remove, file_path)
+        peerflix(magnet['magnet'], media_player, args.media_type, args.subtitles, args.remove, file_path)
 
 
 def main():
