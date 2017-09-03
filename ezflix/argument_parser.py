@@ -104,6 +104,10 @@ class Parser(object):
             nargs='?',
             choices=self._qualities
         )
+        self._parser.add_argument(
+            '--genre',
+            help='Used to filter by a given genre (See http://www.imdb.com/genre/ for full list)'
+        )
 
     def parse(self):
         return self._parser.parse_args()
