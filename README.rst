@@ -109,7 +109,7 @@ Search for thrillers released in 2017 and order by download count descending.
 
     ezflix movie '2017' --sort_by=download_count --sort_order=desc --genre=thriller
 
-Automatically download subtitles for your chosen TV show or movie. 
+Automatically download German subtitles for your chosen TV show or movie. 
 
 .. code:: bash
 
