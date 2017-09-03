@@ -39,11 +39,11 @@ Usage
 -----
 
     usage: ezflix [-h] [--limit [LIMIT]] [--minimum_rating [MINIMUM_RATING]]
-              [--media_player [{mpv,vlc,mplayer,smplayer,mpchc,potplayer,webplay,omx}]]
+              [--media_player [{mpv,vlc,mplayer,smplayer,mpchc,potplayer,webplay,omx,airplay}]]
               [--latest] [--subtitles]
               [--sort_by [{download_count,like_count,date_added,seeds,peers,rating,title,year}]]
               [--sort_order [{asc,desc}]] [--quality [{720p,1080p,3d}]]
-              [--genre GENRE]
+              [--genre GENRE] [--remove]
               [{movie,tv}] query
 
     positional arguments:
@@ -55,7 +55,7 @@ Usage
       --limit [LIMIT]       The number of results to return.
       --minimum_rating [MINIMUM_RATING]
                             Used to filter movie by a given minimum IMDb rating
-      --media_player [{mpv,vlc,mplayer,smplayer,mpchc,potplayer,webplay,omx}]
+      --media_player [{mpv,vlc,mplayer,smplayer,mpchc,potplayer,webplay,omx,airplay}]
                             The media player.
       --latest              Play the latest TV episode.
       --subtitles           Load subtitles file.
@@ -67,6 +67,8 @@ Usage
                             Use this argument to set the min quality.
       --genre GENRE         Used to filter by a given genre (See
                             http://www.imdb.com/genre/ for full list)
+      --remove              Remove files on exit.
+
 
 
 Examples
