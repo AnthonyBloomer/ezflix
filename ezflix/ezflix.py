@@ -7,7 +7,7 @@ from argument_parser import Parser
 
 try:
     from urllib import quote_plus as quote_plus
-except:
+except ImportError:
     from urllib import parse as quote_plus
 
 parser = Parser()
