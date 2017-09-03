@@ -113,7 +113,7 @@ Automatically download German subtitles for your chosen TV show or movie.
 
 .. code:: bash
 
-    ezflix movie 'Goodfellas' --subtitles --language=ger
+    ezflix movie 'Goodfellas' --subtitles --language=de
 
 
 Run development version
