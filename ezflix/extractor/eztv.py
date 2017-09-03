@@ -15,12 +15,13 @@ def eztv(q, limit):
 
     arr, count = [], 1
     for magnet in magnets:
+        
         if count == limit + 1:
             break
 
         if q.lower().strip()[0] in magnet['title'].lower():
             arr.append({'id': count, 'title': magnet['title'][:-12], 'magnet': magnet['href']})
-
+        
         count += 1
-
+    
     return arr
