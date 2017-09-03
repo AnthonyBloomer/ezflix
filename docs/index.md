@@ -106,7 +106,7 @@ ezflix movie '2017' --sort_by=download_count --sort_order=desc --genre=thriller
 Automatically download German subtitles for your chosen TV show or movie.
 
 ``` sourceCode
-ezflix movie 'Goodfellas' --subtitles --language=ger
+ezflix movie 'Goodfellas' --subtitles --language=de
 ```
 
 Run development version
