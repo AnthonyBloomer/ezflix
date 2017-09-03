@@ -65,7 +65,7 @@ def display(torrents):
 
 
 def select(torrents):
-    print("Make selection: ")
+    print("Make selection: (Enter quit to close the program)")
     while True:
         read = raw_input()
 
