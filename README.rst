@@ -46,11 +46,12 @@ Usage
 ::
 
     usage: ezflix [-h] [--limit [LIMIT]] [--minimum_rating [MINIMUM_RATING]]
-                  [--media_player [{mpv,vlc,mplayer,smplayer,mpchc,potplayer,webplay,omx}]]
-                  [--latest] [--subtitles]
-                  [--sort_by [{download_count,like_count,date_added,seeds,peers,rating,title,year}]]
-                  [--sort_order [{asc,desc}]] [--quality [{720p,1080p,3d}]]
-                  [{movie,tv}] query
+              [--media_player [{mpv,vlc,mplayer,smplayer,mpchc,potplayer,webplay,omx}]]
+              [--latest] [--subtitles]
+              [--sort_by [{download_count,like_count,date_added,seeds,peers,rating,title,year}]]
+              [--sort_order [{asc,desc}]] [--quality [{720p,1080p,3d}]]
+              [--genre GENRE]
+              [{movie,tv}] query
 
     positional arguments:
       {movie,tv}            The media type.
@@ -71,6 +72,8 @@ Usage
                             Use this argument to set the sort order.
       --quality [{720p,1080p,3d}]
                             Use this argument to set the min quality.
+      --genre GENRE         Used to filter by a given genre (See
+                            http://www.imdb.com/genre/ for full list)
 
 Examples
 ~~~~~~~~
@@ -96,6 +99,12 @@ Search for movies released in 2017 and order by like count descending.
 .. code:: bash
 
     ezflix movie '2017' --sort_by=like_count --sort_order=desc
+
+Search for thrillers released in 2017 and order by download count descending.
+
+.. code:: bash
+
+    ezflix movie '2017' --sort_by=download_count --sort_order=desc --genre=thriller
 
 Run development version
 ~~~~~~~~~~~~~~~~~~~~~~~
