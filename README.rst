@@ -45,11 +45,12 @@ Usage
 
 ::
 
-    usage: __main__.py [-h] [--limit [LIMIT]] [--minimum_rating [MINIMUM_RATING]]
-                       [--media_player [MEDIA_PLAYER]] [--latest] [--subtitles]
-                       [--sort_by [{download_count,like_count,date_added,seeds,peers,rating,title,year}]]
-                       [--sort_order [{asc,desc}]] [--quality [{720p,1080p,3d}]]
-                       [{movie,tv}] query
+    usage: ezflix [-h] [--limit [LIMIT]] [--minimum_rating [MINIMUM_RATING]]
+                  [--media_player [{mpv,vlc,mplayer,smplayer,mpchc,potplayer,webplay,omx}]]
+                  [--latest] [--subtitles]
+                  [--sort_by [{download_count,like_count,date_added,seeds,peers,rating,title,year}]]
+                  [--sort_order [{asc,desc}]] [--quality [{720p,1080p,3d}]]
+                  [{movie,tv}] query
 
     positional arguments:
       {movie,tv}            The media type.
@@ -60,7 +61,7 @@ Usage
       --limit [LIMIT]       The number of results to return.
       --minimum_rating [MINIMUM_RATING]
                             Used to filter movie by a given minimum IMDb rating
-      --media_player [MEDIA_PLAYER]
+      --media_player [{mpv,vlc,mplayer,smplayer,mpchc,potplayer,webplay,omx}]
                             The media player.
       --latest              Play the latest TV episode.
       --subtitles           Load subtitles file.
