@@ -99,6 +99,7 @@ Search for thrillers released in 2017 and order by download count descending.
 ``` sourceCode
 ezflix movie '2017' --sort_by=download_count --sort_order=desc --genre=thriller
 ```
+
 Run development version
 -----------------------
 
