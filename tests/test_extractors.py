@@ -1,5 +1,5 @@
 import unittest
-from ezflix.extractor import yts, eztv
+from ezflix.extractors import yts, eztv
 
 
 class ExtractorTests(unittest.TestCase):
