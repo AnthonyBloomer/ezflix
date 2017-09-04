@@ -13,13 +13,12 @@ class EzflixTests(unittest.TestCase):
     def test_get_torrents(self):
         """
          This method tests the get_torrents function
-         The test asserts the function returns a list that's greater than 0 and <= 20
+         The test asserts the function returns a list that's > 0 and <= 20
         :return:
         """
         ezflix = Ezflix(query='Breaking Bad', limit=20)
         torrents = ezflix.get_torrents()
-        self.assertTrue(len(torrents) >= 0)
-        self.assertTrue(len(torrents) == 20)
+        self.assertTrue(0 <= len(torrents) <= 20)
 
     def test_get_magnet(self):
         """
