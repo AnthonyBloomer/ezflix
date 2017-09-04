@@ -13,24 +13,24 @@ class Ezflix(object):
                  minimum_rating=None,
                  language='en'
                  ):
-        self.torrents = []
-        self.query = query
-        self.media_type = media_type
-        self.limit = limit
-        self.sort_by = sort_by
-        self.sort_order = sort_order
-        self.quality = quality
-        self.minimum_rating = minimum_rating
-        self.language = language
+        self._torrents = []
+        self._query = query
+        self._media_type = media_type
+        self._limit = limit
+        self._sort_by = sort_by
+        self._sort_order = sort_order
+        self._quality = quality
+        self._minimum_rating = minimum_rating
+        self._language = language
 
     def get_magnet(self, val):
-        for result in self.torrents:
+        for result in self._torrents:
             if result['id'] == int(val):
                 return result
         return None
 
     def find_subtitles(self, title):
-        os.system("subliminal download -l %s '%s'" % (self.language, title))
+        os.system("subliminal download -l %s '%s'" % (self._language, title))
         cur_dir = os.getcwd()
         file_list = os.listdir(cur_dir)
         for f in file_list:
@@ -40,16 +40,16 @@ class Ezflix(object):
 
     def get_torrents(self):
 
-        if self.media_type == 'tv':
-            self.torrents = eztv(self.query.replace(' ', '-').lower(), limit=self.limit)
+        if self._media_type == 'tv':
+            self._torrents = eztv(self._query.replace(' ', '-').lower(), limit=self._limit)
 
-        elif self.media_type == 'movie':
-            self.torrents = yts(q=self.query,
-                                limit=self.limit,
-                                sort_by=self.sort_by,
-                                sort_order=self.sort_order,
-                                quality=self.quality,
-                                minimum_rating=self.minimum_rating
-                                )
+        elif self._media_type == 'movie':
+            self._torrents = yts(q=self._query,
+                                 limit=self._limit,
+                                 sort_by=self._sort_by,
+                                 sort_order=self._sort_order,
+                                 quality=self._quality,
+                                 minimum_rating=self._minimum_rating
+                                 )
 
-        return self.torrents
+        return self._torrents

@@ -16,6 +16,14 @@ class ExtractorTests(unittest.TestCase):
         self.assertTrue(len(torrents) > 0)
         self.assertTrue('Goodfellas' in torrents[0]['title'])
 
+    def test_yts_limit(self):
+        """
+        This method tests the limiting in the yts function.
+        The test asserts the function returns a list that is equal to the limit defined.
+        """
+        torrents = yts(q='Scarface', limit=1)
+        self.assertTrue(len(torrents) == 1)
+
     def test_eztv(self):
         """
         This method tests the yts function.
@@ -24,3 +32,11 @@ class ExtractorTests(unittest.TestCase):
         torrents = eztv(q='Breaking Bad', limit=20)
         self.assertTrue(len(torrents) > 0)
         self.assertTrue('Breaking Bad' in torrents[0]['title'])
+
+    def test_eztv_limit(self):
+        """
+        This method tests the limiting in the eztv function.
+        The test asserts the function returns a list that is equal to the limit defined.
+        """
+        torrents = eztv(q='Breaking Bad', limit=1)
+        self.assertTrue(len(torrents) == 1)
