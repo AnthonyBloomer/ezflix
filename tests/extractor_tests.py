@@ -3,11 +3,14 @@ from ezflix.extractor import yts, eztv
 
 
 class ExtractorTests(unittest.TestCase):
+    """
+    This test class tests the extractors built into Ezflix.
+    """
+
     def test_yts(self):
         """
         This method tests the yts function.
         The test asserts the function returns a list > 0 and the first result matches the search query.
-        :return:
         """
         torrents = yts(q='Goodfellas')
         self.assertTrue(len(torrents) > 0)
@@ -17,7 +20,6 @@ class ExtractorTests(unittest.TestCase):
         """
         This method tests the yts function.
         The test asserts the function returns a list > 0 and the first result matches the search query.
-        :return:
         """
         torrents = eztv(q='Breaking Bad', limit=20)
         self.assertTrue(len(torrents) > 0)

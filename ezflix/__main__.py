@@ -1,3 +1,3 @@
-from .ezflix import main
+from .main import main
 
 main()
