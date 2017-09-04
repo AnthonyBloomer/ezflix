@@ -131,7 +131,29 @@ Before any new changes are pushed to PyPi, you can clone the development version
     python setup.py install
 
 
+Programmatic Usage
+~~~~~~~~~~~~~~~~~~
 
+You can use Ezflix programmatically in your own applications. Consider the following example:
+
+.. code:: python
+
+    from ezflix import Ezflix
+
+    ezflix = Ezflix(query="Goodfellas", media_type='movie')
+
+    torrents = ezflix.get_torrents()
+    
+    if len(torrents) > 0:
+        for torrent in torrents:
+            print(torrent['title'])
+            print(torrent['magnet'])
+
+    
+        first = torrents[0]
+        file_path = ezflix.find_subtitles(first['title'])
+        print(file_path)
+        
 Contributing
 ~~~~~~~~~~~~
 
