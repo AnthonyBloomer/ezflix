@@ -1,4 +1,4 @@
-from extractor import eztv, yts
+from extractors import eztv, yts
 import os
 
 

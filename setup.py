@@ -47,11 +47,11 @@ class PublishCommand(Command):
 
 setup(
     name="ezflix",
-    packages=["ezflix", "ezflix.extractor"],
+    packages=["ezflix", "ezflix.extractors"],
     entry_points={
         "console_scripts": ['ezflix = ezflix.ezflix:main']
     },
-    version='1.0.8',
+    version='1.0.9',
     keywords=['torrents', 'streaming', 'movies', 'tv', 'yify', 'eztv', 'peerflix'],
     description="Command line utility to search for TV and movie torrents and stream using Peerflix automatically.",
     long_description=long_descr,
