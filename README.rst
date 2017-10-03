@@ -9,7 +9,7 @@ Install
 
 ezflix is available on the Python Package Index (PyPI) at https://pypi.python.org/pypi/ezflix
 
-You can ezflix using pip.
+You can install ezflix using pip.
 
 ::
 
