@@ -1,5 +1,6 @@
 from extractors import eztv, yts
 import os
+from halo import Halo
 
 
 class Ezflix(object):
@@ -39,7 +40,8 @@ class Ezflix(object):
         return None
 
     def get_torrents(self):
-
+        spinner = Halo(text='Searching...', spinner='dots')
+        spinner.start()
         if self._media_type == 'tv':
             self._torrents = eztv(self._query.replace(' ', '-').lower(), limit=self._limit)
 
@@ -51,5 +53,6 @@ class Ezflix(object):
                                  quality=self._quality,
                                  minimum_rating=self._minimum_rating
                                  )
-
+        spinner.stop()
+        spinner.clear()
         return self._torrents

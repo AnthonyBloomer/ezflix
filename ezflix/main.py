@@ -3,6 +3,7 @@ import sys
 import colorful
 from argument_parser import Parser
 from ezflix import Ezflix
+from prettytable import PrettyTable
 
 parser = Parser()
 args = parser.parse()
@@ -17,7 +18,6 @@ if not cmd_exists('mpv') and args.media_player == 'mpv':
 
 if not args.query:
     sys.exit(colorful.red("Search query not valid."))
-
 
 def main():
     ezflix = Ezflix(query=args.query,
@@ -49,10 +49,15 @@ def main():
 
         sys.exit()
 
+    row = PrettyTable()
+    row.field_names = ["Id", "Torrent"]
+    row.align = 'l'
     for result in torrents:
-        print(colorful.bold('| ' + str(result['id'])) + ' | ' + result['title'])
+        row.add_row([result['id'], result['title']])
 
-    print("Make selection: (Enter quit to close the program)")
+    print(row)
+
+    print(colorful.bold("Make selection: (Enter quit to close the program)"))
 
     while True:
         read = raw_input()

@@ -62,7 +62,9 @@ setup(
         'beautifulsoup4',
         'requests',
         'colorful',
-        'subliminal'
+        'subliminal',
+        'halo',
+        'PTable'
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',
