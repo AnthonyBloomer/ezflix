@@ -2,7 +2,6 @@ import requests
 
 
 def yts(q, limit=20, minimum_rating=4, quality='720p', sort_by='seeds', sort_order='desc'):
-
     params = {
         'query_term': q,
         'sort_by': sort_by,
@@ -20,9 +19,10 @@ def yts(q, limit=20, minimum_rating=4, quality='720p', sort_by='seeds', sort_ord
             if req['data']['movie_count'] > 0:
                 arr, count = [], 1
                 for r in req['data']['movies']:
-                    title = '%s (%s) (%s)' % (r['title'], r['year'], r['torrents'][0]['quality'])
-                    arr.append({'id': count,
-                                'title': title,
-                                'magnet': r['torrents'][0]['url']})
-                    count += 1
+                    for torrent in r['torrents']:
+                        title = '%s (%s) (%s)' % (r['title'], r['year'], torrent['quality'])
+                        arr.append({'id': count,
+                                    'title': title,
+                                    'magnet': torrent['url']})
+                        count += 1
                 return arr

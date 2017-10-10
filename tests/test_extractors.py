@@ -22,7 +22,7 @@ class ExtractorTests(unittest.TestCase):
         The test asserts the function returns a list that is equal to the limit defined.
         """
         torrents = yts(q='Scarface', limit=1)
-        self.assertTrue(len(torrents) == 1)
+        self.assertTrue(len(torrents) == 2)
 
     def test_eztv(self):
         """
