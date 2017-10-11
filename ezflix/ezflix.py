@@ -1,4 +1,4 @@
-from extractors import eztv, yts
+from .extractors import eztv, yts
 import os
 from halo import Halo
 
@@ -37,6 +37,7 @@ class Ezflix(object):
         for f in file_list:
             if title in f:
                 return f
+
         return None
 
     def get_torrents(self):

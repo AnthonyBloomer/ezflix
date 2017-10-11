@@ -1,1 +1,1 @@
-from ezflix import Ezflix
+from .ezflix import Ezflix

@@ -1,8 +1,8 @@
-from utils import cmd_exists, peerflix
+from .utils import cmd_exists, peerflix
 import sys
 import colorful
-from argument_parser import Parser
-from ezflix import Ezflix
+from .argument_parser import Parser
+from .ezflix import Ezflix
 from prettytable import PrettyTable
 
 parser = Parser()
@@ -60,7 +60,7 @@ def main():
     print(colorful.bold("Make selection: (Enter quit to close the program)"))
 
     while True:
-        read = raw_input()
+        read = input()
 
         if read == 'quit':
             sys.exit()

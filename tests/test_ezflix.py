@@ -28,7 +28,7 @@ class EzflixTests(unittest.TestCase):
         """
         ezflix = Ezflix(query='Breaking Bad', limit=20)
         torrents = ezflix.get_torrents()
-        self.assertTrue(torrents > 0)
+        self.assertTrue(len(torrents) > 0)
         self.assertTrue(ezflix.get_magnet(1) is not None)
 
     def test_get_subtitles(self):
@@ -41,7 +41,7 @@ class EzflixTests(unittest.TestCase):
         """
         ezflix = Ezflix(query='2017', media_type='movie', limit=20)
         torrents = ezflix.get_torrents()
-        self.assertTrue(torrents > 0)
+        self.assertTrue(len(torrents) > 0)
         random_index = randrange(0, len(torrents))
         first = torrents[random_index]['title']
         subtitles = ezflix.find_subtitles(first)
