@@ -51,7 +51,7 @@ setup(
     entry_points={
         "console_scripts": ['ezflix = ezflix.main:main']
     },
-    version='1.1.0',
+    version='1.3.0',
     keywords=['torrents', 'streaming', 'movies', 'tv', 'yify', 'eztv', 'peerflix'],
     description="Command line utility to search for TV and movie torrents and stream using Peerflix automatically.",
     long_description=long_descr,
@@ -67,13 +67,14 @@ setup(
         'PTable'
     ],
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 5 - Production/Stable',
         'Environment :: Console',
         'Intended Audience :: Developers',
         'Intended Audience :: End Users/Desktop',
         'Operating System :: OS Independent',
         'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python :: 2.7'
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.6'
     ],
     cmdclass={
         'publish': PublishCommand,
