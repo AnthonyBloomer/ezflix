@@ -130,6 +130,14 @@ Before any new changes are pushed to PyPi, you can clone the development version
     pip install -r requirements.txt
     python setup.py install
 
+Tests
+~~~~~
+
+The Python unittest module contains its own test discovery function, which you can run from the command line:
+
+::
+
+    $ python -m unittest discover tests/
 
 Programmatic Usage
 ~~~~~~~~~~~~~~~~~~

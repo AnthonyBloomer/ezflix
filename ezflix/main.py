@@ -67,7 +67,7 @@ def main():
 
         try:
             int_val = int(read)
-        except ValueError:
+        except (ValueError, TypeError) as error:
             print(colorful.red('Invalid selection.'))
             continue
 
