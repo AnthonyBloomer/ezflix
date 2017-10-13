@@ -1,6 +1,8 @@
 ezflix
 ======
 
+|Build Status|
+
 Command line utility that allows you to search for TV and movie torrents and
 stream using Peerflix automatically. Ezflix provides advanced search capabilities including filtering by sort type (download count, seeds, likes), genres, minimum rating, etc. Ezflix also includes subtitle support where subtitles can be downloaded automatically for the chosen TV show or movie. 
 
@@ -169,3 +171,6 @@ Contributing
 - Create a new branch for what you're going to work on.
 - Push to your origin repository.
 - Create a new pull request in GitHub.
+
+.. |Build Status| image:: https://travis-ci.org/AnthonyBloomer/ezflix.svg?branch=master
+   :target: https://travis-ci.org/AnthonyBloomer/ezflix
