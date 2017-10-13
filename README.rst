@@ -125,12 +125,12 @@ Before any new changes are pushed to PyPi, you can clone the development version
 
 .. code:: bash
 
-    git clone https://github.com/AnthonyBloomer/ezflix.git
-    cd ezflix
-    virtualenv env
-    source env/bin/activate
-    pip install -r requirements.txt
-    python setup.py install
+    $ git clone https://github.com/AnthonyBloomer/ezflix.git
+    $ cd ezflix
+    $ virtualenv env
+    $ source env/bin/activate
+    $ pip install -r requirements.txt
+    $ python setup.py install
 
 Tests
 ~~~~~
