@@ -15,13 +15,13 @@ You can install ezflix using pip.
 
 ::
 
-    pip install ezflix
+    $ pip install ezflix
 
 This program requires Peerflix. You can install Peerflix via NPM.
 
 ::
 
-    npm install -g peerflix
+    $ npm install -g peerflix
 
 Supported Media Players
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -85,37 +85,37 @@ Examples
 
 .. code:: bash
 
-    ezflix "The Man in the High Castle"
+    $ ezflix "The Man in the High Castle"
 
 Pass '--latest' to watch the latest episode of a given TV series.
 
 .. code:: bash
 
-    ezflix "South Park" --latest
+    $ ezflix "South Park" --latest
 
 To search for movies, pass the 'movie' argument.
 
 .. code:: bash
 
-    ezflix movie "Mad Max"
+    $ ezflix movie "Mad Max"
 
 Search for movies released in 2017 and order by like count descending.
 
 .. code:: bash
 
-    ezflix movie '2017' --sort_by=like_count --sort_order=desc
+    $ ezflix movie '2017' --sort_by=like_count --sort_order=desc
 
 Search for thrillers released in 2017 and order by download count descending.
 
 .. code:: bash
 
-    ezflix movie '2017' --sort_by=download_count --sort_order=desc --genre=thriller
+    $ ezflix movie '2017' --sort_by=download_count --sort_order=desc --genre=thriller
 
 Automatically download German subtitles for your chosen TV show or movie. 
 
 .. code:: bash
 
-    ezflix movie 'Goodfellas' --subtitles --language=de
+    $ ezflix movie 'Goodfellas' --subtitles --language=de
 
 
 Run development version
