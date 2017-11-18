@@ -19,6 +19,7 @@ if not cmd_exists('mpv') and args.media_player == 'mpv':
 if not args.query:
     sys.exit(colorful.red("Search query not valid."))
 
+
 def main():
     ezflix = Ezflix(query=args.query,
                     media_type=args.media_type,
@@ -59,7 +60,13 @@ def main():
 
     print(colorful.bold("Make selection: (Enter quit to close the program)"))
 
+    try:
+        input = raw_input
+    except NameError:
+        pass
+
     while True:
+
         read = input()
 
         if read == 'quit':
