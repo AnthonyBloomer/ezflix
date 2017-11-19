@@ -117,6 +117,12 @@ Automatically download German subtitles for your chosen TV show or movie.
 
     $ ezflix movie 'Goodfellas' --subtitles --language=de
 
+Pass the quality argument to only list torrents of a given quality.
+
+..code:: bash
+
+    $ ezflix movie 'They Live' --quality=720p
+
 
 Run development version
 ~~~~~~~~~~~~~~~~~~~~~~~

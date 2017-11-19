@@ -48,7 +48,8 @@ class Parser(object):
         self._parser.add_argument(
             'media_type',
             help="The media type.",
-            default='tv', nargs='?',
+            default='tv',
+            nargs='?',
             choices=self._media_types
         )
         self._parser.add_argument(
@@ -101,7 +102,6 @@ class Parser(object):
         self._parser.add_argument(
             '--quality',
             help="Use this argument to set the min quality.",
-            default='720p',
             nargs='?',
             choices=self._qualities
         )

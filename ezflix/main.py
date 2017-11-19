@@ -33,7 +33,7 @@ def main():
 
     torrents = ezflix.get_torrents()
 
-    if torrents is None:
+    if torrents is None or len(torrents) == 0:
         sys.exit(colorful.red('No results found.'))
 
     if args.latest:
