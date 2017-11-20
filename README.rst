@@ -119,7 +119,8 @@ Automatically download German subtitles for your chosen TV show or movie.
 
 Pass the quality argument to only list torrents of a given quality.
 
-..code:: bash
+
+.. code:: bash
 
     $ ezflix movie 'They Live' --quality=720p
 
