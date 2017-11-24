@@ -24,11 +24,14 @@ def yts(q, quality=None, limit=20, minimum_rating=4, sort_by='seeds', sort_order
     arr, count = [], 1
     for r in req['data']['movies']:
         for torrent in r['torrents']:
-            title = '%s (%s) (%s)' % (r['title'], r['year'], torrent['quality'])
-            if quality is not None and quality == torrent['quality']:
-                arr.append({'id': count, 'title': title, 'magnet': torrent['url']})
-                count += 1
+
+            if quality is not None:
+                if quality == torrent['quality']:
+                    title = '%s (%s) (%s)' % (r['title'], r['year'], torrent['quality'])
+                    arr.append({'id': count, 'title': title, 'magnet': torrent['url']})
+                    count += 1
             else:
+                title = '%s (%s) (%s)' % (r['title'], r['year'], torrent['quality'])
                 arr.append({'id': count, 'title': title, 'magnet': torrent['url']})
                 count += 1
     return arr
