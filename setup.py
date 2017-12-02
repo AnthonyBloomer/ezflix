@@ -64,7 +64,8 @@ setup(
         'colorful',
         'subliminal',
         'halo',
-        'PTable'
+        'PTable',
+        'future'
     ],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
