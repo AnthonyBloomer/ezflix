@@ -51,7 +51,7 @@ setup(
     entry_points={
         "console_scripts": ['ezflix = ezflix.main:main']
     },
-    version='1.4.1',
+    version='1.4.2',
     keywords=['torrents', 'streaming', 'movies', 'tv', 'yify', 'eztv', 'peerflix'],
     description="Command line utility to search for TV and movie torrents and stream using Peerflix automatically.",
     long_description=long_descr,
