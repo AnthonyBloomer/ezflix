@@ -15,6 +15,7 @@ dogpile.cache==0.6.4
 enum34==1.1.6
 enzyme==0.4.1
 ezflix==1.0.3
+future==0.16.0
 futures==3.1.1
 guessit==2.1.4
 halo==0.0.6

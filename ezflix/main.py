@@ -4,6 +4,7 @@ import colorful
 from .argument_parser import Parser
 from .ezflix import Ezflix
 from prettytable import PrettyTable
+from builtins import input
 
 parser = Parser()
 args = parser.parse()
@@ -49,10 +50,6 @@ def main():
         row.add_row([result['id'], result['title']])
     print(row)
     print(colorful.bold("Make selection: (Enter quit to close the program)"))
-    try:
-        input = raw_input
-    except NameError:
-        pass
     while True:
         read = input()
         if read == 'quit':
