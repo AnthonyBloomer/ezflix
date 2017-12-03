@@ -47,7 +47,7 @@ class Ezflix(object):
             self._torrents = eztv(self._query.replace(' ', '-').lower(), limit=self._limit, quality=self._quality)
 
         elif self._media_type == 'movie':
-            self._torrents = yts(q=self._query,
+            self._torrents = yts(query_term=self._query,
                                  limit=self._limit,
                                  sort_by=self._sort_by,
                                  sort_order=self._sort_order,
