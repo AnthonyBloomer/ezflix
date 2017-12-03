@@ -12,7 +12,7 @@ class ExtractorTests(unittest.TestCase):
         This method tests the yts function.
         The test asserts the function returns a list > 0 and the first result matches the search query.
         """
-        torrents = yts(q='Goodfellas')
+        torrents = yts(query_term='Goodfellas')
         self.assertTrue(len(torrents) > 0)
         self.assertTrue('Goodfellas' in torrents[0]['title'])
 
@@ -21,7 +21,7 @@ class ExtractorTests(unittest.TestCase):
         This method tests the limiting in the yts function.
         The test asserts the function returns a list that is equal to the limit defined.
         """
-        torrents = yts(q='Scarface', limit=1)
+        torrents = yts(query_term='Scarface', limit=1)
         self.assertTrue(len(torrents) == 2)
 
     def test_eztv(self):
