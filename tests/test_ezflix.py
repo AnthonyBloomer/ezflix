@@ -39,7 +39,7 @@ class EzflixTests(unittest.TestCase):
         list and asserts we can find subtitles for that movie.
         :return:
         """
-        ezflix = Ezflix(query='2017', media_type='movie', limit=20)
+        ezflix = Ezflix(query='2014', media_type='movie', limit=20)
         torrents = ezflix.get_torrents()
         self.assertTrue(len(torrents) > 0)
         random_index = randrange(0, len(torrents))
