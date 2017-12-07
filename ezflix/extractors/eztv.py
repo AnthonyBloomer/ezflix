@@ -24,13 +24,14 @@ def eztv(q, limit, quality=None):
             break
 
         if q.lower().strip()[0] in magnet['title'].lower():
-            seeds = magnet.find_parent().find_parent().find("font").get_text()
+            seeds = magnet.find_parent().find_parent().find("font").get_text() # verified for the edge cases
+            peers = "-" # as eztv doesn't give any peers detail, atleast not on the search page.
             if quality is not None:
                 if quality in magnet['title']:
-                    arr.append({'id': count, 'title': magnet['title'][:-12], 'magnet': magnet['href'], 'seeds': seeds})
+                    arr.append({'id': count, 'title': magnet['title'][:-12], 'magnet': magnet['href'], 'seeds': seeds, 'peers': peers})
                     count += 1
             else:
-                arr.append({'id': count, 'title': magnet['title'][:-12], 'magnet': magnet['href'], 'seeds': seeds})
+                arr.append({'id': count, 'title': magnet['title'][:-12], 'magnet': magnet['href'], 'seeds': seeds, 'peers': peers})
                 count += 1
 
     return arr
