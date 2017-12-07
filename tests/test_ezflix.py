@@ -39,13 +39,12 @@ class EzflixTests(unittest.TestCase):
         list and asserts we can find subtitles for that movie.
         :return:
         """
-        ezflix = Ezflix(query='2014', media_type='movie', limit=20)
+        ezflix = Ezflix(query='Mad Max', media_type='movie', limit=20)
         torrents = ezflix.get_torrents()
         self.assertTrue(len(torrents) > 0)
-        random_index = randrange(0, len(torrents))
-        first = torrents[random_index]['title']
-        subtitles = ezflix.find_subtitles(first)
-        self.assertIsNotNone(subtitles)
+        movie_title = torrents[0]['title']
+        subtitles = ezflix.find_subtitles(movie_title)
+        self.assertIsNotNone(subtitles) 
         cur_dir = os.getcwd()
         file_list = os.listdir(cur_dir)
         for f in file_list:
