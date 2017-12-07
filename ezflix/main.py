@@ -44,10 +44,10 @@ def main():
         peerflix(latest['magnet'], media_player, args.media_type, args.subtitles, args.remove, file_path)
         sys.exit()
     row = PrettyTable()
-    row.field_names = ["Id", "Torrent"]
+    row.field_names = ["Id", "Torrent", "Seeds"]
     row.align = 'l'
     for result in torrents:
-        row.add_row([result['id'], result['title']])
+        row.add_row([result['id'], result['title'], result['seeds']])
     print(row)
     print(colorful.bold("Make selection: (Enter quit to close the program)"))
     while True:
