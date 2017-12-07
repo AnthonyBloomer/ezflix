@@ -48,5 +48,5 @@ class EzflixTests(unittest.TestCase):
         cur_dir = os.getcwd()
         file_list = os.listdir(cur_dir)
         for f in file_list:
-            if movie_tile in f:
+            if movie_title in f:
                 os.remove(f)
