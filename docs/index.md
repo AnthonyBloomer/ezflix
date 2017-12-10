@@ -133,7 +133,7 @@ Run development version
 Before any new changes are pushed to PyPi, you can clone the development
 version to avail of any new features.
 
-``` {.sourceCode .bash}
+```
 $ git clone https://github.com/AnthonyBloomer/ezflix.git
 $ cd ezflix
 $ virtualenv env
