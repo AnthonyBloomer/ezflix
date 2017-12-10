@@ -42,7 +42,7 @@ Below is a list of media players supported in Peerflix.
 -   omx
 
 In ezflix, the default player is mpv. It will fallback to vlc if mpv
-isn\'t found.
+isn't found.
 
 You can use the media\_player argument to set your media player.
 
@@ -85,45 +85,45 @@ Usage
 Examples
 --------
 
-``` {.sourceCode .bash}
+```
 $ ezflix "The Man in the High Castle"
 ```
 
-Pass \'\--latest\' to watch the latest episode of a given TV series.
+Pass the latest argument to watch the latest episode of a given TV series.
 
-``` {.sourceCode .bash}
+```
 $ ezflix "South Park" --latest
 ```
 
-To search for movies, pass the \'movie\' argument.
+To search for movies, pass the movie argument.
 
-``` {.sourceCode .bash}
+```
 $ ezflix movie "Mad Max"
 ```
 
 Search for movies released in 2017 and order by like count descending.
 
-``` {.sourceCode .bash}
+```
 $ ezflix movie '2017' --sort_by=like_count --sort_order=desc
 ```
 
 Search for thrillers released in 2017 and order by download count
 descending.
 
-``` {.sourceCode .bash}
+```
 $ ezflix movie '2017' --sort_by=download_count --sort_order=desc --genre=thriller
 ```
 
 Automatically download German subtitles for your chosen TV show or
 movie.
 
-``` {.sourceCode .bash}
+```
 $ ezflix movie 'Goodfellas' --subtitles --language=de
 ```
 
 Pass the quality argument to only list torrents of a given quality.
 
-``` {.sourceCode .bash}
+```
 $ ezflix movie 'They Live' --quality=720p
 ```
 
