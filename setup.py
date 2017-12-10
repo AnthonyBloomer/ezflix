@@ -9,8 +9,13 @@ from setuptools import setup, Command
 with open("README.rst", "rb") as f:
     long_descr = f.read().decode("utf-8")
 
-here = os.path.abspath(os.path.dirname(__file__))
+HERE = os.path.abspath(os.path.dirname(__file__))
 
+version_ns = {}
+
+with open(os.path.join(HERE, 'ezflix', '__version__.py')) as f:
+    exec(f.read(), {}, version_ns)
+    
 
 class PublishCommand(Command):
     """Support setup.py publish."""
@@ -32,7 +37,7 @@ class PublishCommand(Command):
     def run(self):
         try:
             self.status('Removing previous builds…')
-            rmtree(os.path.join(here, 'dist'))
+            rmtree(os.path.join(HERE, 'dist'))
         except:
             pass
 
@@ -51,7 +56,7 @@ setup(
     entry_points={
         "console_scripts": ['ezflix = ezflix.main:main']
     },
-    version='1.4.2',
+    version=version_ns['__version__'],
     keywords=['torrents', 'streaming', 'movies', 'tv', 'yify', 'eztv', 'peerflix'],
     description="Command line utility to search for TV and movie torrents and stream using Peerflix automatically.",
     long_description=long_descr,
