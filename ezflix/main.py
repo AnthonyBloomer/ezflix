@@ -5,6 +5,10 @@ from .argument_parser import Parser
 from .ezflix import Ezflix
 from prettytable import PrettyTable
 from builtins import input
+import logging
+
+logging.basicConfig()
+logger = logging.getLogger(__file__)
 
 parser = Parser()
 args = parser.parse()
@@ -15,6 +19,7 @@ if not cmd_exists('peerflix'):
     sys.exit('This program requires Peerflix. https://github.com/mafintosh/peerflix')
 
 if not cmd_exists('mpv') and args.media_player == 'mpv':
+    logger.warning("In ezflix, the default player is mpv. It will fallback to vlc if mpv isn't found. You can use the media_player argument to set your media player.")
     media_player = 'vlc'
 
 if not (args.query and args.query.strip()): 
