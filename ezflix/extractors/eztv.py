@@ -5,6 +5,7 @@ import sys
 
 def eztv(q, limit, quality=None):
     limit = int(limit)
+    url = 'https://eztv.ag/search/' + q
     req = requests.get(url)
 
     if not req.ok:
@@ -28,8 +29,6 @@ def eztv(q, limit, quality=None):
                 seeds = magnet.find_parent().find_parent().find("font").get_text() # verified for the edge cases
             except AttributeError as e:
                 pass
-            if seeds is None:
-                print("No seeds for %s" %q)
             peers = "-" # as eztv doesn't give any peers detail, atleast not on the search page.
             if quality is not None:
                 if quality in magnet['title']:
@@ -38,5 +37,6 @@ def eztv(q, limit, quality=None):
             else:
                 arr.append({'id': count, 'title': magnet['title'][:-12], 'magnet': magnet['href'], 'seeds': seeds, 'peers': peers})
                 count += 1
-
+    if seeds is None:
+        print("No seeds for %s" %s)
     return arr
