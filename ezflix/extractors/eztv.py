@@ -37,6 +37,4 @@ def eztv(q, limit, quality=None):
             else:
                 arr.append({'id': count, 'title': magnet['title'][:-12], 'magnet': magnet['href'], 'seeds': seeds, 'peers': peers})
                 count += 1
-    if seeds is None:
-        print("No seeds for %s" %s)
     return arr
