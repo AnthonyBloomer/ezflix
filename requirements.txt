@@ -13,7 +13,7 @@ enum34==1.1.6
 enzyme==0.4.1
 ezflix==1.4.8
 future==0.16.0
-futures==3.2.0
+futures==3.1.1
 guessit==2.1.4
 halo==0.0.10
 idna==2.6
