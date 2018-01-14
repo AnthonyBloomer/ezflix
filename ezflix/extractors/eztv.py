@@ -30,10 +30,9 @@ def eztv(q, limit, quality=None):
             except AttributeError as e:
                 pass
             peers = "-" # as eztv doesn't give any peers detail, atleast not on the search page.
-            if quality is not None:
-                if quality in magnet['title']:
-                    arr.append({'id': count, 'title': magnet['title'][:-12], 'magnet': magnet['href'], 'seeds': seeds, 'peers': peers})
-                    count += 1
+            if quality is not None and quality in magnet['title']:
+                arr.append({'id': count, 'title': magnet['title'][:-12], 'magnet': magnet['href'], 'seeds': seeds, 'peers': peers})
+                count += 1
             else:
                 arr.append({'id': count, 'title': magnet['title'][:-12], 'magnet': magnet['href'], 'seeds': seeds, 'peers': peers})
                 count += 1
