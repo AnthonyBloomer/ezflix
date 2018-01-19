@@ -4,7 +4,7 @@ import sys
 
 
 def eztv(q, limit, quality=None):
-    limit = int(limit)
+    limit = int(limit) + 1
     url = 'https://eztv.ag/search/' + q
     req = requests.get(url)
 
@@ -20,20 +20,29 @@ def eztv(q, limit, quality=None):
     arr, count = [], 1
     for magnet in magnets:
 
-        if count == limit + 1:
+        if count == limit:
             break
 
         if q.lower().strip()[0] in magnet['title'].lower():
             seeds = None
             try:
-                seeds = magnet.find_parent().find_parent().find("font").get_text() # verified for the edge cases
+                seeds = magnet.find_parent().find_parent().find("font").get_text()  # verified for the edge cases
             except AttributeError as e:
                 pass
-            peers = "-" # as eztv doesn't give any peers detail, atleast not on the search page.
-            if quality is not None and quality in magnet['title']:
-                arr.append({'id': count, 'title': magnet['title'][:-12], 'magnet': magnet['href'], 'seeds': seeds, 'peers': peers})
-                count += 1
+            peers = "-"  # as eztv doesn't give any peers detail, atleast not on the search page.
+            title = magnet['title'][:-12]
+            magnet = magnet['href']
+            obj = {'id': count,
+                   'title': title,
+                   'magnet': magnet,
+                   'seeds': seeds,
+                   'peers': peers}
+            if quality is not None:
+                if quality in title:
+                    arr.append(obj)
+                    count += 1
             else:
-                arr.append({'id': count, 'title': magnet['title'][:-12], 'magnet': magnet['href'], 'seeds': seeds, 'peers': peers})
+                arr.append(obj)
                 count += 1
+
     return arr
