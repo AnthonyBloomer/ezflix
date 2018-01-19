@@ -7,22 +7,16 @@ def eztv(q, limit, quality=None):
     limit = int(limit) + 1
     url = 'https://eztv.ag/search/' + q
     req = requests.get(url)
-
     if not req.ok:
         return
-
     soup = BeautifulSoup(req.text, 'html.parser')
     magnets = soup.find_all('a', {'class': 'magnet'}, href=True)
-
     if magnets is None:
         sys.exit('No results found')
-
     arr, count = [], 1
     for magnet in magnets:
-
         if count == limit:
             break
-
         if q.lower().strip()[0] in magnet['title'].lower():
             seeds = None
             try:

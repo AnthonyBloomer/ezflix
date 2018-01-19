@@ -12,15 +12,11 @@ def yts(query_term, quality=None, limit=20, minimum_rating=4, sort_by='date_adde
 
     }
     req = requests.get('https://yts.ag/api/v2/list_movies.json', params=params)
-
     if not req.ok:
         return
-
     req = req.json()
-
     if not req['status'] == 'ok' or not req['data']['movie_count'] > 0:
         return
-
     arr, count = [], 1
     for r in req['data']['movies']:
         if 'torrents' in r:
