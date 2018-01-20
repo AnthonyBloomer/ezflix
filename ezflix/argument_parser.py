@@ -1,5 +1,12 @@
 from argparse import ArgumentParser
+import os 
 
+HERE = os.path.abspath(os.path.dirname(__file__))
+
+version_ns = {}
+
+with open(os.path.join(HERE, '__version__.py')) as f:
+    exec(f.read(), {}, version_ns)
 
 class Parser(object):
     def __init__(self):
@@ -122,6 +129,8 @@ class Parser(object):
             help='Language as IETF code. Set this argument to download subtitles in a given language.',
             default='en'
         )
+        
+        self._parser.add_argument('-v', '--version', action='version', version="%(prog)s ("+version_ns['__version__']+")")
 
     def parse(self):
         return self._parser.parse_args()
