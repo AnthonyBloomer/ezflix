@@ -22,7 +22,7 @@ def eztv(q, limit, quality=None):
             try:
                 seeds = magnet.find_parent().find_parent().find("font").get_text()  # verified for the edge cases
             except AttributeError as e:
-                pass
+                continue
             peers = "-"  # as eztv doesn't give any peers detail, atleast not on the search page.
             title = magnet['title'][:-12]
             magnet = magnet['href']
