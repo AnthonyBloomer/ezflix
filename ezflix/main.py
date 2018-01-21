@@ -31,8 +31,7 @@ if not cmd_exists('mpv') and args.media_player == 'mpv':
 if not (args.query and args.query.strip()):
     sys.exit(colorful.red("Search query not valid."))
 
-
-def main():
+def get_torrents(page=1):
     ezflix = Ezflix(query=args.query,
                     media_type=args.media_type,
                     limit=args.limit,
@@ -40,7 +39,8 @@ def main():
                     sort_order=args.sort_order,
                     quality=args.quality,
                     minimum_rating=args.minimum_rating,
-                    language=args.language
+                    language=args.language,
+                    page=page
                     )
 
     torrents = ezflix.get_torrents()
@@ -62,11 +62,26 @@ def main():
         if not (result['seeds'] == 0 or result['seeds'] is None):
             row.add_row([result['id'], result['title'], result['seeds'], result['peers']])
     print(row)
-    print(colorful.bold("Make selection: (Enter quit to close the program)"))
+    print(colorful.bold("Make selection:"))
+    print("Enter the ID of the movie or TV show to stream.")
+    print("Enter 'quit' to close the program.")
+    print("Enter 'next' to see the next page of movies.")
+    print("Enter 'prev' to see the previous page of movies.")    
+def main():
+    get_torrents()
+    page = 1
     while True:
         read = input()
         if read == 'quit':
             sys.exit()
+        elif read == 'next':
+            page += 1
+            get_torrents(page)
+            continue
+        elif read == 'prev':
+            page -= 1 if page > 1 else 1
+            get_torrents(page)
+            continue
         try:
             int_val = int(read)
         except (ValueError, TypeError) as error:

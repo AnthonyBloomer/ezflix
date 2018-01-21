@@ -12,7 +12,8 @@ class Ezflix(object):
                  sort_order='desc',
                  quality=None,
                  minimum_rating=None,
-                 language='en'
+                 language='en',
+                 page=1
                  ):
         self._torrents = []
         self._query = query
@@ -23,6 +24,7 @@ class Ezflix(object):
         self._quality = quality
         self._minimum_rating = minimum_rating
         self._language = language
+        self._page = page
 
     def get_magnet(self, val):
         for result in self._torrents:
@@ -52,7 +54,8 @@ class Ezflix(object):
                                  sort_by=self._sort_by,
                                  sort_order=self._sort_order,
                                  quality=self._quality,
-                                 minimum_rating=self._minimum_rating
+                                 minimum_rating=self._minimum_rating,
+                                 page=self._page
                                  )
         spinner.stop()
         spinner.clear()
