@@ -67,7 +67,7 @@ class Parser(object):
         
         self._parser.add_argument(
             '--limit',
-            help="The number of results to return.",
+            help="TThe limit of results per page that has been set",
             default='20',
             nargs='?'
         )

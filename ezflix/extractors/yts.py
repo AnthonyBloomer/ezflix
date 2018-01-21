@@ -35,4 +35,4 @@ def yts(query_term, quality=None, limit=20, minimum_rating=4, sort_by='date_adde
                 else:
                     arr.append(obj)
                     count += 1
-    return arr
+    return arr[0:limit]

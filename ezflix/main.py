@@ -34,7 +34,7 @@ if not (args.query and args.query.strip()):
 def get_torrents(page=1):
     ezflix = Ezflix(query=args.query,
                     media_type=args.media_type,
-                    limit=args.limit,
+                    limit=int(args.limit),
                     sort_by=args.sort_by,
                     sort_order=args.sort_order,
                     quality=args.quality,
