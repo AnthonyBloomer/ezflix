@@ -67,6 +67,7 @@ def get_torrents(page=1):
     print("Enter 'quit' to close the program.")
     print("Enter 'next' to see the next page of movies.")
     print("Enter 'prev' to see the previous page of movies.")    
+    
 def main():
     get_torrents()
     page = 1
@@ -79,8 +80,9 @@ def main():
             get_torrents(page)
             continue
         elif read == 'prev':
-            page -= 1 if page > 1 else 1
-            get_torrents(page)
+            if page > 1:
+                page -= 1
+                get_torrents(page)
             continue
         try:
             int_val = int(read)
