@@ -59,21 +59,25 @@ class Parser(object):
             nargs='?',
             choices=self._media_types
         )
+        
         self._parser.add_argument(
             'query',
             help="The search query."
         )
+        
         self._parser.add_argument(
             '--limit',
             help="The number of results to return.",
             default='20',
             nargs='?'
         )
+        
         self._parser.add_argument(
             '--minimum_rating',
             help="Used to filter movie by a given minimum IMDb rating",
             nargs='?'
         )
+        
         self._parser.add_argument(
             '--media_player',
             help="The media player.",
@@ -81,37 +85,43 @@ class Parser(object):
             nargs='?',
             choices=self._supported_players
         )
+        
         self._parser.add_argument(
             '--latest',
             help="Play the latest TV episode.",
             dest='latest',
             action='store_true'
         )
+        
         self._parser.add_argument(
             '--subtitles',
             help="Load subtitles file.",
             dest='subtitles',
             action='store_true')
+            
         self._parser.add_argument(
             '--sort_by',
-            help="Use this argument to sort the torrents.",
-            default='seeds',
+            help="Sorts the results by choosen value",
+            default='date_added',
             nargs='?',
             choices=self._sort_types
         )
+        
         self._parser.add_argument(
             '--sort_order',
-            help="Use this argument to set the sort order.",
+            help="Orders the results by either Ascending or Descending order",
             default='desc',
             nargs='?',
             choices=self._sort_orders
         )
+        
         self._parser.add_argument(
             '--quality',
-            help="Use this argument to set the min quality.",
+            help="Used to filter by a given quality.",
             nargs='?',
             choices=self._qualities
         )
+        
         self._parser.add_argument(
             '--genre',
             help='Used to filter by a given genre (See http://www.imdb.com/genre/ for full list)'
