@@ -130,10 +130,11 @@ class Parser(object):
             default='en'
         )
         
-        self._parser.add_argument('-v', 
-                                  '--version', 
-                                  action='version', 
-                                  version="%(prog)s ("+version_ns['__version__']+")"
+        self._parser.add_argument(
+            '-v', 
+            '--version', 
+            action='version', 
+            version="%(prog)s ("+version_ns['__version__']+")"
         )
 
     def parse(self):
