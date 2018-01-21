@@ -62,14 +62,13 @@ def get_torrents(page=1):
         if not (result['seeds'] == 0 or result['seeds'] is None):
             row.add_row([result['id'], result['title'], result['seeds'], result['peers']])
     print(row)
-    print(colorful.bold("Make selection:"))
-    print("Enter the ID of the movie or TV show to stream.")
-    print("Enter 'quit' to close the program.")
-    print("Enter 'next' to see the next page of movies.")
-    print("Enter 'prev' to see the previous page of movies.")    
     
 def main():
     get_torrents()
+    print(colorful.bold("Make selection:"))
+    print("Enter 'quit' to close the program.")
+    print("Enter 'next' to see the next page of movies.")
+    print("Enter 'prev' to see the previous page of movies.")
     page = 1
     while True:
         read = input()
