@@ -19,7 +19,7 @@ parser = Parser()
 
 if len(sys.argv) == 1:
     parser.error()
-    sys.exit(1)
+    sys.exit(0)
 
 args = parser.parse()
 

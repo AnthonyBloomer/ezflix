@@ -161,8 +161,8 @@ class Parser(object):
                 ╚══════╝╚══════╝╚═╝     ╚══════╝╚═╝╚═╝  ╚═╝                                                                                        
         ''')
         print("Ezflix v" + version_ns['__version__'])
-        print(self._parser.print_help())
-        sys.exit(1)
+        self._parser.print_help()
+        sys.exit(0)
 
     def parse(self):
         return self._parser.parse_args()
