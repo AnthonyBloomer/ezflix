@@ -64,12 +64,12 @@ def get_torrents(page=1):
     print(row)
     
 def main():
-    get_torrents()
+    page = 1
+    get_torrents(page)
     print(colorful.bold("Make selection:"))
     print("Enter 'quit' to close the program.")
     print("Enter 'next' to see the next page of movies.")
     print("Enter 'prev' to see the previous page of movies.")
-    page = 1
     while True:
         read = input()
         if read == 'quit':
