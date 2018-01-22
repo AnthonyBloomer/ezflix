@@ -54,11 +54,9 @@ def get_torrents(page=1):
         sys.exit(colorful.red('No results found.'))
     if args.latest:
         latest = torrents[0]
-        file_path = ''
-        if args.subtitles:
-            file_path = ezflix.find_subtitles(latest['title'])
+        file_path = ezflix.find_subtitles(latest['title']) if args.subtitles else None
         print("Playing " + latest['title'])
-        time.sleep(5)
+        time.sleep(2.5)
         peerflix(latest['magnet'], media_player, args.media_type, args.subtitles, args.remove, file_path)
         sys.exit()
     row = PrettyTable()
