@@ -62,11 +62,11 @@ def get_torrents(page=1):
         peerflix(latest['magnet'], media_player, args.media_type, args.subtitles, args.remove, file_path)
         sys.exit()
     row = PrettyTable()
-    row.field_names = ["Id", "Torrent", "Seeds", "Peers"]
+    row.field_names = ["Id", "Torrent", "Seeds", "Peers", "Released"]
     row.align = 'l'
     for result in torrents:
         if not (result['seeds'] == 0 or result['seeds'] is None):
-            row.add_row([result['id'], result['title'], result['seeds'], result['peers']])
+            row.add_row([result['id'], result['title'], result['seeds'], result['peers'], result['release_date']])
     print(row)
 
 
@@ -83,9 +83,8 @@ def main():
         if read == 'quit':
             sys.exit()
         elif read == 'next':
-            if page < args.limit:
-                page += 1
-                get_torrents(page)
+            page += 1
+            get_torrents(page)
             continue
         elif read == 'prev':
             if page > 1:

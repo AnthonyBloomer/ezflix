@@ -23,6 +23,7 @@ def eztv(q, limit, quality=None):
                 seeds = magnet.find_parent().find_parent().find("font").get_text()  # verified for the edge cases
             except AttributeError as e:
                 continue
+            release_date = magnet.find_parent().find_parent().find_all("td", {'class': 'forum_thread_post'})
             peers = "-"  # as eztv doesn't give any peers detail, atleast not on the search page.
             title = magnet['title'][:-12]
             magnet = magnet['href']
@@ -30,7 +31,9 @@ def eztv(q, limit, quality=None):
                    'title': title,
                    'magnet': magnet,
                    'seeds': seeds,
-                   'peers': peers}
+                   'peers': peers,
+                   'release_date': release_date[4].text
+                   }
             if quality is not None:
                 if quality in title:
                     arr.append(obj)

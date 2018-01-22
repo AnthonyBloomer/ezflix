@@ -3,41 +3,22 @@ from ezflix.extractors import yts, eztv
 
 
 class ExtractorTests(unittest.TestCase):
-    """
-    This test class tests the extractors built into Ezflix.
-    """
 
     def test_yts(self):
-        """
-        This method tests the yts function.
-        The test asserts the function returns a list > 0 and the first result matches the search query.
-        """
         torrents = yts(query_term='Goodfellas')
         self.assertTrue(len(torrents) > 0)
         self.assertTrue('Goodfellas' in torrents[0]['title'])
 
     def test_yts_limit(self):
-        """
-        This method tests the limiting in the yts function.
-        The test asserts the function returns a list that is equal to the limit defined.
-        """
         torrents = yts(query_term='Scarface', limit=1)
-        self.assertTrue(len(torrents) == 2)
+        self.assertTrue(len(torrents) == 1)
 
     def test_eztv(self):
-        """
-        This method tests the yts function.
-        The test asserts the function returns a list > 0 and the first result matches the search query.
-        """
         torrents = eztv(q='Breaking Bad', limit=20)
         self.assertTrue(len(torrents) > 0)
         self.assertTrue('Breaking Bad' in torrents[0]['title'])
 
     def test_eztv_limit(self):
-        """
-        This method tests the limiting in the eztv function.
-        The test asserts the function returns a list that is equal to the limit defined.
-        """
         torrents = eztv(q='Breaking Bad', limit=1)
         self.assertTrue(len(torrents) == 1)
         
