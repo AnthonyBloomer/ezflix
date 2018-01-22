@@ -1,12 +1,16 @@
+# -*- coding: utf-8 -*-
+
 from argparse import ArgumentParser
-import os 
+import os
+import sys
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 
 version_ns = {}
 
 with open(os.path.join(HERE, '__version__.py')) as f:
-    exec(f.read(), {}, version_ns)
+    exec (f.read(), {}, version_ns)
+
 
 class Parser(object):
     def __init__(self):
@@ -59,25 +63,25 @@ class Parser(object):
             nargs='?',
             choices=self._media_types
         )
-        
+
         self._parser.add_argument(
             'query',
             help="The search query."
         )
-        
+
         self._parser.add_argument(
             '--limit',
             help="TThe limit of results per page that has been set",
             default='20',
             nargs='?'
         )
-        
+
         self._parser.add_argument(
             '--minimum_rating',
             help="Used to filter movie by a given minimum IMDb rating",
             nargs='?'
         )
-        
+
         self._parser.add_argument(
             '--media_player',
             help="The media player.",
@@ -85,20 +89,20 @@ class Parser(object):
             nargs='?',
             choices=self._supported_players
         )
-        
+
         self._parser.add_argument(
             '--latest',
             help="Play the latest TV episode.",
             dest='latest',
             action='store_true'
         )
-        
+
         self._parser.add_argument(
             '--subtitles',
             help="Load subtitles file.",
             dest='subtitles',
             action='store_true')
-            
+
         self._parser.add_argument(
             '--sort_by',
             help="Sorts the results by choosen value",
@@ -106,7 +110,7 @@ class Parser(object):
             nargs='?',
             choices=self._sort_types
         )
-        
+
         self._parser.add_argument(
             '--sort_order',
             help="Orders the results by either Ascending or Descending order",
@@ -114,14 +118,14 @@ class Parser(object):
             nargs='?',
             choices=self._sort_orders
         )
-        
+
         self._parser.add_argument(
             '--quality',
             help="Used to filter by a given quality.",
             nargs='?',
             choices=self._qualities
         )
-        
+
         self._parser.add_argument(
             '--genre',
             help='Used to filter by a given genre (See http://www.imdb.com/genre/ for full list)'
@@ -139,13 +143,26 @@ class Parser(object):
             help='Language as IETF code. Set this argument to download subtitles in a given language.',
             default='en'
         )
-        
+
         self._parser.add_argument(
-            '-v', 
-            '--version', 
-            action='version', 
-            version="%(prog)s ("+version_ns['__version__']+")"
+            '-v',
+            '--version',
+            action='version',
+            version="%(prog)s (" + version_ns['__version__'] + ")"
         )
+
+    def error(self):
+        print('''              
+                ███████╗███████╗███████╗██╗     ██╗██╗  ██╗
+                ██╔════╝╚══███╔╝██╔════╝██║     ██║╚██╗██╔╝
+                █████╗    ███╔╝ █████╗  ██║     ██║ ╚███╔╝ 
+                ██╔══╝   ███╔╝  ██╔══╝  ██║     ██║ ██╔██╗ 
+                ███████╗███████╗██║     ███████╗██║██╔╝ ██╗
+                ╚══════╝╚══════╝╚═╝     ╚══════╝╚═╝╚═╝  ╚═╝                                                                                        
+        ''')
+        print("Ezflix v" + version_ns['__version__'])
+        print(self._parser.print_help())
+        sys.exit(1)
 
     def parse(self):
         return self._parser.parse_args()
