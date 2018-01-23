@@ -101,6 +101,7 @@ def main():
         print("Playing " + magnet['title'])
         file_path = ezflix.find_subtitles(magnet['title']) if args.subtitles else None
         peerflix(magnet['magnet'], media_player, args.media_type, args.subtitles, args.remove, file_path)
+        sys.exit()
 
 
 if __name__ == '__main__':
