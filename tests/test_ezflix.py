@@ -1,6 +1,5 @@
 import unittest
 import os
-
 from ezflix import Ezflix
 
 
