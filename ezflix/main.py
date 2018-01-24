@@ -37,7 +37,7 @@ if not (args.query and args.query.strip()):
     sys.exit(colorful.red("Search query not valid."))
 
 
-def get_torrents(page=1, term=None):
+def search(page=1, term=None):
     global ezflix
     ezflix = Ezflix(query=args.query if term is None else term,
                     media_type=args.media_type,
@@ -70,7 +70,7 @@ def get_torrents(page=1, term=None):
 
 def main():
     page = 1
-    get_torrents(page)
+    search(page)
     print(colorful.bold("Make selection:"))
     print("Enter 'quit' to close the program.")
     if args.media_type == 'movie':
@@ -83,16 +83,16 @@ def main():
             sys.exit()
         elif read == 'search':
             refined_query = input("Enter search query: ")
-            get_torrents(page=1, term=refined_query)
+            search(page=1, term=refined_query)
             continue
         elif read == 'next':
             page += 1
-            get_torrents(page)
+            search(page)
             continue
         elif read == 'prev':
             if page > 1:
                 page -= 1
-                get_torrents(page)
+                search(page)
             continue
         try:
             int_val = int(read)
