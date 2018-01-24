@@ -1,14 +1,14 @@
 import requests
 from bs4 import BeautifulSoup
 import sys
+from ezflix.request import Request
 
 
 def eztv(q, limit, quality=None):
     limit = int(limit) + 1
     url = 'https://eztv.ag/search/' + q
-    req = requests.get(url)
-    if not req.ok:
-        return
+    r = Request()
+    req = r.get(url)
     soup = BeautifulSoup(req.text, 'html.parser')
     magnets = soup.find_all('a', {'class': 'magnet'}, href=True)
     if magnets is None:
