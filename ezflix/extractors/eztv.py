@@ -35,7 +35,7 @@ def eztv(q, limit, quality=None):
                    'release_date': release_date[4].text
                    }
             if quality is not None:
-                if quality in title:
+                if quality.lower() in title:
                     arr.append(obj)
                     count += 1
             else:
