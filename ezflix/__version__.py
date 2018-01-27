@@ -1,2 +1,2 @@
-VERSION_TUPLE = (1, 5, 0)
+VERSION_TUPLE = (1, 5, 1)
 __version__ = ".".join(map(str, VERSION_TUPLE))

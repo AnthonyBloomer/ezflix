@@ -76,7 +76,7 @@ def main():
     if args.media_type == 'movie':
         print("Enter 'next' to see the next page of movies.")
         print("Enter 'prev' to see the previous page of movies.")
-        print("Enter 'search' to refine your search.")
+    print("Enter 'search' to refine your search.")
     while True:
         read = input()
         if read == 'quit':
