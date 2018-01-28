@@ -71,7 +71,7 @@ def search(page=1, term=None):
 def main():
     page = 1
     search(page)
-    print(colorful.bold("Make selection:"))
+    print(colorful.bold("Make selection (Select the ID of the media you want to stream):"))
     print("Enter 'quit' to close the program.")
     if args.media_type == 'movie':
         print("Enter 'next' to see the next page of movies.")
