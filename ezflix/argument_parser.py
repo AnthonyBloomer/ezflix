@@ -134,6 +134,7 @@ class Parser(object):
         self._parser.add_argument(
             '--remove',
             help='Remove files on exit.',
+            default=True,
             dest='remove',
             action='store_true'
         )
