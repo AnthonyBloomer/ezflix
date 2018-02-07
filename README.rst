@@ -161,7 +161,7 @@ You can use Ezflix programmatically in your own applications. Consider the follo
 
 .. code:: python
 
-    from ezflix import Ezflix
+    from ezflix import Ezflix, peerflix
 
     ezflix = Ezflix(query="Goodfellas", media_type='movie')
 
@@ -176,6 +176,7 @@ You can use Ezflix programmatically in your own applications. Consider the follo
         first = torrents[0]
         file_path = ezflix.find_subtitles(first['title'])
         print(file_path)
+		peerflix(magnet_link=first['magnet'], media_type='movie', media_player='mpv', subtitles=True, remove=True, file_path=file_path)
         
 Contributing
 ~~~~~~~~~~~~
