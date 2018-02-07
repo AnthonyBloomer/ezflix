@@ -23,7 +23,7 @@ You can install ezflix using pip.
 
     $ pip install ezflix
 
-This program requires Peerflix. You can install Peerflix via NPM.
+This program requires Peerflix. You can install Peerflix via `npm <https://www.npmjs.com/package/peerflix>`_.
 
 ::
 
@@ -191,3 +191,4 @@ Contributing
    
 .. |codecov| image:: https://codecov.io/gh/AnthonyBloomer/ezflix/branch/master/graph/badge.svg
    :target: https://codecov.io/gh/AnthonyBloomer/ezflix
+ 
