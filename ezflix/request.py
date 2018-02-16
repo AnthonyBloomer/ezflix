@@ -10,10 +10,6 @@ class Request:
 
     def get(self, url, params=None):
         req = requests.get(url, headers=self._headers, params=params, timeout=120)
-
         if not req.ok:
-            if req.status_code == 522:
-                time.sleep(5)
-                self.get(url, params)
-
+            req.raise_for_status()
         return req
