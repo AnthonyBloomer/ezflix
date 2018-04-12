@@ -4,9 +4,16 @@ ezflix
 |Build Status| |codecov|
 
 Command line utility that allows you to search for TV and movie torrents and
-stream using Peerflix automatically. Ezflix provides advanced search capabilities including filtering by sort type (download count, seeds, likes), genres, minimum rating, etc. Ezflix also includes subtitle support where subtitles can be downloaded automatically for the chosen TV show or movie. 
+stream using Peerflix automatically. 
 
+Features
+~~~~~~~~
 
+- Provides advanced search functionality. Filter by sort type (download count, seeds, likes), genres, minimum rating. 
+- Includes subtitle support where subtitles can be downloaded automatically for the chosen TV show or movie. 
+
+Demo
+~~~~
 |asciicast|
 
 .. |asciicast| image:: https://asciinema.org/a/wazWQXnE8bdqXNTjshqtKIuWj.png
@@ -29,6 +36,17 @@ This program requires Peerflix. You can install Peerflix via `npm <https://www.n
 
     $ npm install -g peerflix
 
+Before any new changes are pushed to PyPi, you can clone the development version to avail of any new features.
+
+.. code:: bash
+
+    $ git clone https://github.com/AnthonyBloomer/ezflix.git
+    $ cd ezflix
+    $ virtualenv env
+    $ source env/bin/activate
+    $ pip install -r requirements.txt
+    $ python setup.py install
+    
 Supported Media Players
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -48,7 +66,7 @@ In ezflix, the default player is mpv. It will fallback to vlc if mpv isn't found
 
 You can use the media_player argument to set your media player.
 
-Usage
+CLI Usage
 ~~~~~
 
 ::
@@ -129,21 +147,6 @@ Pass the quality argument to only list torrents of a given quality.
 .. code:: bash
 
     $ ezflix movie 'They Live' --quality=720p
-
-
-Run development version
-~~~~~~~~~~~~~~~~~~~~~~~
-
-Before any new changes are pushed to PyPi, you can clone the development version to avail of any new features.
-
-.. code:: bash
-
-    $ git clone https://github.com/AnthonyBloomer/ezflix.git
-    $ cd ezflix
-    $ virtualenv env
-    $ source env/bin/activate
-    $ pip install -r requirements.txt
-    $ python setup.py install
 
 Tests
 ~~~~~
