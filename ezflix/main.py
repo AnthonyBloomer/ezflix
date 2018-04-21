@@ -62,10 +62,16 @@ def search(page=1, term=None):
     row = PrettyTable()
     row.field_names = ["Id", "Torrent", "Seeds", "Peers", "Released"]
     row.align = 'l'
+    t = 0
     for result in torrents:
-        if not (result['seeds'] == 0 or result['seeds'] is None):
+        if not (result['seeds'] == 0 or result['seeds'] is None) or args.no_seeds is True:
             row.add_row([result['id'], result['title'], result['seeds'], result['peers'], result['release_date']])
-    print(row)
+            t += 1
+    if t > 0 or args.no_seeds:
+        print(row) 
+    else: 
+        print(colorful.red("No results found."))
+        sys.exit(0)
 
 
 def main():

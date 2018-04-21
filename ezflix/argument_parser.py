@@ -138,6 +138,14 @@ class Parser(object):
             dest='remove',
             action='store_true'
         )
+        
+        self._parser.add_argument(
+            '--no_seeds',
+            help='Include torrents that have no seeds',
+            default=False,
+            dest='no_seeds',
+            action='store_true'
+        )
 
         self._parser.add_argument(
             '--language',
