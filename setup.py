@@ -70,7 +70,8 @@ setup(
         'subliminal',
         'halo',
         'PTable',
-        'future'
+        'future',
+        'tmdbv3api'
     ],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
