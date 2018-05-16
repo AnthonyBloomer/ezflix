@@ -5,10 +5,6 @@ from ezflix import Ezflix
 
 class EzflixTests(unittest.TestCase):
     def test_movie_get_torrents_by_quality(self):
-        ezflix = Ezflix(query='The Sinners', limit=20, quality="720p")
-        torrents = ezflix.get_torrents()
-        for torrent in torrents:
-            self.assertTrue("720" in torrent['title'])
 
         ezflix = Ezflix(query='Mad Max', media_type="movie", limit=20, quality="720p")
         torrents = ezflix.get_torrents()
