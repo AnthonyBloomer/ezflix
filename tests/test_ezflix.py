@@ -5,7 +5,7 @@ from ezflix import Ezflix
 
 class EzflixTests(unittest.TestCase):
     def test_movie_get_torrents_by_quality(self):
-        ezflix = Ezflix(query='Breaking Bad', limit=20, quality="720p")
+        ezflix = Ezflix(query='The Sinners', limit=20, quality="720p")
         torrents = ezflix.get_torrents()
         for torrent in torrents:
             self.assertTrue("720" in torrent['title'])
@@ -16,12 +16,12 @@ class EzflixTests(unittest.TestCase):
             self.assertTrue("720" in torrent['title'])
 
     def test_get_torrents(self):
-        ezflix = Ezflix(query='Breaking Bad', limit=20)
+        ezflix = Ezflix(query='Man in the high castle', limit=20)
         torrents = ezflix.get_torrents()
         self.assertTrue(0 <= len(torrents) <= 20)
 
     def test_get_magnet(self):
-        ezflix = Ezflix(query='Breaking Bad', limit=20)
+        ezflix = Ezflix(query='Man in the high castle', limit=20)
         torrents = ezflix.get_torrents()
         self.assertTrue(len(torrents) > 0)
         self.assertTrue(ezflix.get_magnet(1) is not None)
