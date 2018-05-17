@@ -27,8 +27,13 @@ def eztv(q, limit, page=1, quality=None):
                'peers': result['peers'],
                'release_date': result['date_released_unix']
                }
-        results.append(obj)
-        count += 1
+        if quality is not None:
+            if quality.lower() in result['title']:
+                results.append(obj)
+                count += 1
+        else:
+            results.append(obj)
+            count += 1
     return results
 
 
