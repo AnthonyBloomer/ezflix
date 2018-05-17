@@ -1,5 +1,6 @@
 import requests
 import pprint
+import datetime
 from tmdbv3api import TMDb, TV
 
 
@@ -10,8 +11,9 @@ def eztv(q, limit, page=1, quality=None):
     search = tv.search(q)
     if not search:
         return
+    url = 'https://eztv.ag/api/get-torrents'
     details = tv.external_ids(search[0].id)
-    req = requests.get('https://eztv.ag/api/get-torrents?imdb_id=%s&page=%s' % (details['imdb_id'][2:], page))
+    req = requests.get('%s?imdb_id=%s&page=%s&limit=%s' % (url, details['imdb_id'][2:], page, limit))
     if not req.ok:
         return
     results, count = [], 1
@@ -25,7 +27,7 @@ def eztv(q, limit, page=1, quality=None):
                'magnet': result['magnet_url'],
                'seeds': result['seeds'],
                'peers': result['peers'],
-               'release_date': result['date_released_unix']
+               'release_date': datetime.datetime.fromtimestamp(int(result['date_released_unix'])).strftime('%Y-%m-%d %H:%M:%S')
                }
         if quality is not None:
             if quality.lower() in result['title']:
