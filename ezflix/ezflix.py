@@ -46,7 +46,7 @@ class Ezflix(object):
         spinner = Halo(text='Searching...', spinner='dots')
         spinner.start()
         if self._media_type == 'tv':
-            self._torrents = eztv(self._query.replace(' ', '-').lower(), limit=self._limit, quality=self._quality)
+            self._torrents = eztv(self._query.replace(' ', '-').lower(), page=self._page, limit=self._limit, quality=self._quality)
 
         elif self._media_type == 'movie':
             self._torrents = yts(query_term=self._query,

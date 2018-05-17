@@ -3,7 +3,7 @@ import pprint
 from tmdbv3api import TMDb, TV
 
 
-def eztv(q, limit, quality=None):
+def eztv(q, limit, page=1, quality=None):
     tmdb = TMDb()
     tmdb.api_key = 'e1076b74406e0a7d0efb5318f1b662d0'
     tv = TV()
@@ -11,7 +11,7 @@ def eztv(q, limit, quality=None):
     if not search:
         return
     details = tv.external_ids(search[0].id)
-    req = requests.get('https://eztv.ag/api/get-torrents?imdb_id=%s' % details['imdb_id'][2:])
+    req = requests.get('https://eztv.ag/api/get-torrents?imdb_id=%s&page=%s' % (details['imdb_id'][2:], page))
     if not req.ok:
         return
     results, count = [], 1
