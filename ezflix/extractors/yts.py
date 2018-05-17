@@ -1,4 +1,4 @@
-from ezflix.request import Request
+import requests
 from datetime import datetime
 
 def yts(query_term, quality=None, limit=20, minimum_rating=4, sort_by='date_added', sort_order='asc', page=1):
@@ -12,8 +12,7 @@ def yts(query_term, quality=None, limit=20, minimum_rating=4, sort_by='date_adde
         'page': page
 
     }
-    r = Request()
-    req = r.get('https://yts.ag/api/v2/list_movies.json', params=params)
+    req = requests.get('https://yts.ag/api/v2/list_movies.json', params=params)
     req = req.json()
     if 'movies' not in req['data'] or not req['status'] == 'ok' or not req['data']['movie_count'] > 0:
         return
