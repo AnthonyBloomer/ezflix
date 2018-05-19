@@ -3,8 +3,7 @@ ezflix
 
 |Build Status| |codecov|
 
-Command line utility that allows you to search for TV and movie torrents and
-stream using Peerflix automatically. 
+Command line utility that enables users to search for TV and movie torrents and stream using Peerflix automatically.
 
 Features
 ~~~~~~~~
