@@ -15,8 +15,8 @@ Demo
 ~~~~
 |asciicast|
 
-.. |asciicast| image:: https://asciinema.org/a/wazWQXnE8bdqXNTjshqtKIuWj.png
-   :target: https://asciinema.org/a/wazWQXnE8bdqXNTjshqtKIuWj
+.. |asciicast| image:: https://asciinema.org/a/0P0zIWnEdCGgrvSk3KBjcjCs0.png
+   :target: https://asciinema.org/a/0P0zIWnEdCGgrvSk3KBjcjCs0
    
 Install
 ~~~~~~~
