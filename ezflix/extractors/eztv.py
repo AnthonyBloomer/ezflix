@@ -1,8 +1,8 @@
 import requests
 import pprint
-import datetime
+from datetime import datetime
 from tmdbv3api import TMDb, TV
-
+from prettytable import PrettyTable
 
 def eztv(q, limit, page=1, quality=None):
     tmdb = TMDb()
@@ -11,8 +11,26 @@ def eztv(q, limit, page=1, quality=None):
     search = tv.search(q)
     if not search:
         return
+    print("Found %d items for TV query %s" % (len(search), q))
+    count = 1
+    tmdb_results = []
+    row = PrettyTable()
+    row.field_names = ["Id", "TV Title"]
+    row.align = 'l'
+    for result in search:
+        row.add_row([count, result.name])
+        count+=1
+    print(row)
+    while True:
+        read = input()
+        try:
+            int_val = int(read)
+            break
+        except (ValueError, TypeError) as error:
+            print(colorful.red('Invalid selection.'))
+            continue
     url = 'https://eztv.ag/api/get-torrents'
-    details = tv.external_ids(search[0].id)
+    details = tv.external_ids(search[int_val - 1].id)
     req = requests.get('%s?imdb_id=%s&page=%s&limit=%s' % (url, details['imdb_id'][2:], page, limit))
     if not req.ok:
         return
@@ -22,13 +40,14 @@ def eztv(q, limit, page=1, quality=None):
         return
 
     for result in search_results['torrents']:
-        obj = {'id': count,
-               'title': result['title'],
-               'magnet': result['magnet_url'],
-               'seeds': result['seeds'],
-               'peers': result['peers'],
-               'release_date': datetime.datetime.fromtimestamp(int(result['date_released_unix'])).strftime('%Y-%m-%d %H:%M:%S')
-               }
+        obj = {
+            'id': count,
+            'title': result['title'],
+            'magnet': result['magnet_url'],
+            'seeds': result['seeds'],
+            'peers': result['peers'],
+            'release_date': datetime.fromtimestamp(int(result['date_released_unix'])).strftime('%Y-%m-%d %H:%M:%S')
+        }
         if quality is not None:
             if quality.lower() in result['title']:
                 results.append(obj)
