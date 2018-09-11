@@ -26,28 +26,28 @@ class Ezflix(object):
         self._language = language
         self._page = page
 
-    def get_magnet(self, val):
-        for result in self._torrents:
-            if result['id'] == int(val):
-                return result
+    def magnet(self, val):
+        for magnet in self._torrents:
+            if magnet['id'] == int(val):
+                return magnet
         return None
 
-    def find_subtitles(self, title):
-        os.system("subliminal download -l %s '%s'" % (self._language, title))
+    def search_subtitles(self, media_title):
+        os.system("subliminal download -l %s '%s'" % (self._language, media_title))
         cur_dir = os.getcwd()
         file_list = os.listdir(cur_dir)
         for f in file_list:
-            if title in f:
+            if media_title in f:
                 return f
 
         return None
 
-    def get_torrents(self):
+    def search(self):
         spinner = Halo(text='Searching...', spinner='dots')
         spinner.start()
         if self._media_type == 'tv':
-            self._torrents = eztv(self._query.replace(' ', '-').lower(), page=self._page, limit=self._limit, quality=self._quality)
-
+            self._torrents = eztv(self._query.replace(' ', '-').lower(), page=self._page, limit=self._limit,
+                                  quality=self._quality)
         elif self._media_type == 'movie':
             self._torrents = yts(query_term=self._query,
                                  limit=self._limit,
@@ -58,5 +58,4 @@ class Ezflix(object):
                                  page=self._page
                                  )
         spinner.stop()
-        spinner.clear()
         return self._torrents

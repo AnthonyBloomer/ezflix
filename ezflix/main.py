@@ -49,12 +49,12 @@ def search(page=1, term=None):
                     language=args.language,
                     page=page
                     )
-    torrents = ezflix.get_torrents()
+    torrents = ezflix.search()
     if torrents is None or len(torrents) == 0:
         sys.exit(colorful.red('No results found.'))
     if args.latest:
         latest = torrents[0]
-        file_path = ezflix.find_subtitles(latest['title']) if args.subtitles else None
+        file_path = ezflix.search_subtitles(latest['title']) if args.subtitles else None
         print("Playing " + latest['title'])
         time.sleep(2.5)
         peerflix(latest['magnet'], media_player, args.media_type, args.subtitles, args.remove, file_path)
@@ -104,12 +104,12 @@ def main():
         except (ValueError, TypeError) as error:
             print(colorful.red('Invalid selection.'))
             continue
-        magnet = ezflix.get_magnet(int_val)
+        magnet = ezflix.magnet(int_val)
         if not magnet:
             print(colorful.red('Invalid selection.'))
             continue
         print("Playing " + magnet['title'])
-        file_path = ezflix.find_subtitles(magnet['title']) if args.subtitles else None
+        file_path = ezflix.search_subtitles(magnet['title']) if args.subtitles else None
         peerflix(magnet['magnet'], media_player, args.media_type, args.subtitles, args.remove, file_path)
         sys.exit()
 
