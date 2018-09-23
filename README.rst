@@ -8,6 +8,7 @@ Command line utility that enables users to search for TV and movie torrents and 
 Features
 ~~~~~~~~
 
+- Extracts Torrent data from multiple APIs.
 - Provides advanced search functionality. Filter by sort type (download count, seeds, likes), genres, minimum rating. 
 - Includes subtitle support where subtitles can be downloaded automatically for the chosen TV show or movie. 
 
@@ -182,6 +183,11 @@ You can use Ezflix programmatically in your own applications. Consider the follo
         
 Contributing
 ~~~~~~~~~~~~
+
+Pull Requests and Feedback on how to improve this project is always welcome!
+
+PR Guidelines
+~~~~~~~~~~~~~~~~~~~~~~~
 
 - Fork the project and clone locally.
 - Create a new branch for what you're going to work on.
