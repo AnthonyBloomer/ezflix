@@ -1,6 +1,7 @@
 import requests
 from datetime import datetime
 
+
 def yts(query_term, quality=None, limit=20, minimum_rating=4, sort_by='date_added', sort_order='asc', page=1):
     params = {
         'query_term': query_term,
@@ -26,6 +27,7 @@ def yts(query_term, quality=None, limit=20, minimum_rating=4, sort_by='date_adde
                        'magnet': torrent['url'],
                        'seeds': torrent['seeds'],
                        'peers': torrent['peers'],
+                       'overview': r['synopsis'],
                        'release_date': datetime.strptime(torrent['date_uploaded'], '%Y-%m-%d %H:%M:%S').date()}
                 if quality is not None:
                     if quality == torrent['quality']:

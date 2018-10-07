@@ -82,6 +82,7 @@ def main():
     print("Enter 'next' to see the next page of movies.")
     print("Enter 'prev' to see the previous page of movies.")
     print("Enter 'search' to refine your search.")
+    print("Enter 'info' and the id of the torrent to get the movie/tv show overview.")
     while True:
         read = input()
         if read == 'quit':
@@ -99,9 +100,14 @@ def main():
                 page -= 1
                 search(page)
             continue
+        elif 'info' in read:
+            sp = read.split()
+            magnet = ezflix.magnet(sp[1])
+            print(magnet['overview'])
+            continue
         try:
             int_val = int(read)
-        except (ValueError, TypeError) as error:
+        except (ValueError, TypeError):
             print(colorful.red('Invalid selection.'))
             continue
         magnet = ezflix.magnet(int_val)
