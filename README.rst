@@ -104,6 +104,16 @@ CLI Usage
       --language LANGUAGE   Language as IETF code. Set this argument to download
                             subtitles in a given language.
 
+Once you get the list of torrents returned, these options are available:
+
+- Enter the id of the search result you want to stream. This will start streaming the torrent in the media player specified.
+- Enter 'quit' to close the program.
+- Enter 'next' to see the next page of movies.
+- Enter 'prev' to see the previous page of movies.
+- Enter 'search' to refine your search.
+- Enter 'info' and the id of the torrent to get the movie/tv show overview.
+- Enter 'trailer' and the id of the torrent to play the movie trailer.
+
 Examples
 ~~~~~~~~
 
