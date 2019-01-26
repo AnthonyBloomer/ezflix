@@ -28,6 +28,7 @@ def yts(query_term, quality=None, limit=20, minimum_rating=4, sort_by='date_adde
                        'seeds': torrent['seeds'],
                        'peers': torrent['peers'],
                        'overview': r['synopsis'],
+                       'trailer': r['yt_trailer_code'],
                        'release_date': datetime.strptime(torrent['date_uploaded'], '%Y-%m-%d %H:%M:%S').date()}
                 if quality is not None:
                     if quality == torrent['quality']:

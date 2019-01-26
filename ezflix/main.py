@@ -7,6 +7,7 @@ from prettytable import PrettyTable
 from builtins import input
 import logging
 import time
+import subprocess
 
 logging.basicConfig()
 logger = logging.getLogger(__file__)
@@ -68,8 +69,8 @@ def search(page=1, term=None):
             row.add_row([result['id'], result['title'], result['seeds'], result['peers'], result['release_date']])
             t += 1
     if t > 0 or args.no_seeds:
-        print(row) 
-    else: 
+        print(row)
+    else:
         print(colorful.red("No results found."))
         sys.exit(0)
 
@@ -83,6 +84,7 @@ def main():
     print("Enter 'prev' to see the previous page of movies.")
     print("Enter 'search' to refine your search.")
     print("Enter 'info' and the id of the torrent to get the movie/tv show overview.")
+    print("Enter 'trailer' and the id of the torrent to play the movie trailer.")
     while True:
         read = input()
         if read == 'quit':
@@ -104,6 +106,12 @@ def main():
             sp = read.split()
             magnet = ezflix.magnet(sp[1])
             print(magnet['overview'])
+            continue
+        elif 'trailer' in read:
+            sp = read.split()
+            magnet = ezflix.magnet(sp[1])
+            subprocess.Popen(
+                ['/bin/bash', '-c', "%s https://www.youtube.com/watch?v=%s" % (media_player, magnet['trailer'])])
             continue
         try:
             int_val = int(read)
