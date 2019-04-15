@@ -104,11 +104,17 @@ def main():
             continue
         elif 'info' in read:
             sp = read.split()
+            if not len(sp) > 1:
+                print(colorful.bold("Incorrect usage. Enter 'info' and the id of the torrent to get the movie/tv show overview."))
+                continue
             magnet = ezflix.magnet(sp[1])
             print(magnet['overview'])
             continue
         elif 'trailer' in read:
             sp = read.split()
+            if not len(sp) > 1:
+                print(colorful.bold("Incorrect usage. Enter 'trailer' and the id of the torrent to play the movie trailer."))
+                continue
             magnet = ezflix.magnet(sp[1])
             subprocess.Popen(
                 ['/bin/bash', '-c', "%s https://www.youtube.com/watch?v=%s" % (media_player, magnet['trailer'])])
