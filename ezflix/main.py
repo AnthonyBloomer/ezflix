@@ -8,6 +8,7 @@ from builtins import input
 import logging
 import time
 import subprocess
+from .extractors.yts import find_similar
 
 logging.basicConfig()
 logger = logging.getLogger(__file__)
@@ -37,6 +38,30 @@ if not cmd_exists('mpv') and args.media_player == 'mpv':
 if not (args.query and args.query.strip()):
     sys.exit(colorful.red("Search query not valid."))
 
+def display_menu():
+    print(colorful.bold("Make selection (Select the ID of the media you want to stream):"))
+    print("Enter 'quit' to close the program.")
+    print("Enter 'next' to see the next page of movies.")
+    print("Enter 'prev' to see the previous page of movies.")
+    print("Enter 'search' to refine your search.")
+    print("Enter 'info' and the id of the torrent to get the movie/tv show overview.")
+    print("Enter 'trailer' and the id of the torrent to play the movie trailer.")
+    print("Enter 'similar' and the id of the torrent to find similar movies.")
+    
+def display_table(torrents):
+    row = PrettyTable()
+    row.field_names = ["Id", "Torrent", "Seeds", "Peers", "Released"]
+    row.align = 'l'
+    t = 0
+    for result in torrents:
+        if not (result['seeds'] == 0 or result['seeds'] is None) or args.no_seeds is True:
+            row.add_row([result['id'], result['title'], result['seeds'], result['peers'], result['release_date']])
+            t += 1
+    if t > 0 or args.no_seeds:
+        print(row)
+    else:
+        print(colorful.red("No results found."))
+        sys.exit(0)
 
 def search(page=1, term=None):
     global ezflix
@@ -60,31 +85,12 @@ def search(page=1, term=None):
         time.sleep(2.5)
         peerflix(latest['magnet'], media_player, args.media_type, args.subtitles, args.remove, file_path)
         sys.exit()
-    row = PrettyTable()
-    row.field_names = ["Id", "Torrent", "Seeds", "Peers", "Released"]
-    row.align = 'l'
-    t = 0
-    for result in torrents:
-        if not (result['seeds'] == 0 or result['seeds'] is None) or args.no_seeds is True:
-            row.add_row([result['id'], result['title'], result['seeds'], result['peers'], result['release_date']])
-            t += 1
-    if t > 0 or args.no_seeds:
-        print(row)
-    else:
-        print(colorful.red("No results found."))
-        sys.exit(0)
-
-
+    display_table(torrents)
+    
 def main():
     page = 1
     search(page)
-    print(colorful.bold("Make selection (Select the ID of the media you want to stream):"))
-    print("Enter 'quit' to close the program.")
-    print("Enter 'next' to see the next page of movies.")
-    print("Enter 'prev' to see the previous page of movies.")
-    print("Enter 'search' to refine your search.")
-    print("Enter 'info' and the id of the torrent to get the movie/tv show overview.")
-    print("Enter 'trailer' and the id of the torrent to play the movie trailer.")
+    display_menu()
     while True:
         read = input()
         if read == 'quit':
@@ -105,15 +111,28 @@ def main():
         elif 'info' in read:
             sp = read.split()
             if not len(sp) > 1:
-                print(colorful.bold("Incorrect usage. Enter 'info' and the id of the torrent to get the movie/tv show overview."))
+                print(colorful.bold(
+                    "Incorrect usage. Enter 'info' and the id of the torrent to get the movie/tv show overview."))
                 continue
             magnet = ezflix.magnet(sp[1])
             print(magnet['overview'])
             continue
+        elif 'similar' in read:
+            sp = read.split()
+            if not len(sp) > 1:
+                print(colorful.bold(
+                    "Incorrect usage. Enter 'similar' and the id of the torrent to find similar movies."))
+                continue
+            magnet = ezflix.magnet(sp[1])
+            print(magnet['yts_id'])
+            torrents = find_similar(magnet['yts_id'])
+            display_table(torrents)
+            continue
         elif 'trailer' in read:
             sp = read.split()
             if not len(sp) > 1:
-                print(colorful.bold("Incorrect usage. Enter 'trailer' and the id of the torrent to play the movie trailer."))
+                print(colorful.bold(
+                    "Incorrect usage. Enter 'trailer' and the id of the torrent to play the movie trailer."))
                 continue
             magnet = ezflix.magnet(sp[1])
             subprocess.Popen(
