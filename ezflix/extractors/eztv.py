@@ -6,7 +6,7 @@ from ezflix.torrent import Torrent
 
 tmdb = TMDb()
 tmdb.api_key = "e1076b74406e0a7d0efb5318f1b662d0"
-URL = "https://eztv.io/api/get-torrents"
+URL = "https://eztv.re/api/get-torrents"
 
 
 def search_tmdb_shows(q):
