@@ -37,7 +37,13 @@ if not cmd_exists("mpv") and args.media_player == "mpv":
         )
     )
     media_player = "vlc"
-
+if not cmd_exists(media_player):
+    print(
+        colorful.bold(
+            f"not suported command {media_player} choosing default for peerflix(web player)"
+        )
+    )
+    media_player ="w"
 if not (args.query and args.query.strip()):
     sys.exit(colorful.red("Search query not valid."))
 
